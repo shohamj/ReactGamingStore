@@ -11,8 +11,59 @@ export default {
     module: {
         rules: [
             {
-                loaders: [ 'babel-loader' ]
-            }
+                loaders: [ 'babel-loader']
+            },
+            {
+                test:/\.css$/,
+                use:['style-loader','css-loader']
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: [
+                  {
+                    loader: 'file-loader',
+                    options: {
+                      // path where the  client/images will be saved
+                      name: '[name].[ext]',
+                      outputPath: 'images',
+                      publicPath:'images'
+                    }
+                  },
+                //   {
+                //     loader: 'url-loader',
+                //   },
+                  {
+                    loader: 'image-webpack-loader',
+                    options: {
+                      mozjpeg: {
+                        quality: 65
+                      },
+                      pngquant:{
+                        quality: "10-20",
+                        speed: 4
+                      },
+                      svgo:{
+                        plugins: [
+                          {
+                            removeViewBox: false
+                          },
+                          {
+                            removeEmptyAttrs: false
+                          }
+                        ]
+                      },
+                      gifsicle: {
+                        optimizationLevel: 7,
+                        interlaced: false
+                      },
+                      optipng: {
+                        optimizationLevel: 7,
+                        interlaced: false
+                      }
+                    }
+                  }
+                ]
+              }
         ]
     },
     plugins: [

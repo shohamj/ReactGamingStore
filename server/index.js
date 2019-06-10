@@ -9,6 +9,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.config.dev.js'
 
 let app = express();
+app.use(express.static('public'))
 
 //Using webpack as middleware to bundle all js
 const compiler = webpack(webpackConfig);
