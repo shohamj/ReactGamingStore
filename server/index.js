@@ -1,8 +1,8 @@
-//Packeges needed for express
+//Packages needed for express
 import express from 'express'
 import path from 'path'
 
-//Packeges needed for webpack
+//Packages needed for webpack
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';

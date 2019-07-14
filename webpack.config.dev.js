@@ -6,13 +6,14 @@ export default {
     output: {
         filename: 'bundle.js',
         path: '/',
-        publicPath: '/', 
+        publicPath: 'http://localhost:3000/', 
     },
     module: {
         rules: [
             {
                 loaders: [ 'babel-loader']
             },
+            { test: /\.(woff|woff2|eot|ttf)$/, loader: 'url-loader' },
             {
                 test:/\.css$/,
                 use:['style-loader','css-loader']
@@ -24,9 +25,7 @@ export default {
                     loader: 'file-loader',
                     options: {
                       // path where the  client/images will be saved
-                      name: '[name].[ext]',
-                      outputPath: 'images',
-                      publicPath:'images'
+                      name: '[path][name].[ext]',
                     }
                   },
                 //   {
@@ -63,7 +62,7 @@ export default {
                     }
                   }
                 ]
-              }
+            }
         ]
     },
     plugins: [
