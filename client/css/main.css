@@ -38,6 +38,24 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
+.center {
+  margin: auto;
+  width: 40%;
+}
+
+.pad-bot {
+  padding-bottom: 100px;
+}
+.pad-top {
+  padding-top: 20px;
+}
+.small-helper {
+  margin-top: -15px;
+}
+.boxshadow{
+  box-shadow: 0px 10px grey;
+
+}
 
 @font-face {
   font-family: Poppins-Regular;
@@ -2255,6 +2273,9 @@ input.num-product::-webkit-inner-spin-button {
 
 /*//////////////////////////////////////////////////////////////////
 [ M-Text 16 - 25 ]*/
+.underline {
+  text-decoration: underline;
+}
 .mtext-101 {
   font-family: Poppins-Medium;
   font-size: 18px;
@@ -3328,5 +3349,7 @@ input.num-product::-webkit-inner-spin-button {
   .respon3 {
     padding: 20px;
   }
+
+ 
 
 }

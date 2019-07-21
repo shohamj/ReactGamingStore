@@ -12,7 +12,7 @@ export default class SideBar extends React.Component {
   }
   closeSidebar()
   {
-    this.props.store.showSidebar = false;
+    this.props.store.setShowSidebar(false);
   }
     render() {
       return (
@@ -58,9 +58,6 @@ export default class SideBar extends React.Component {
               </li>
             </ul>
             <div className="sidebar-gallery w-full p-tb-30">
-              <span className="mtext-101 cl5">
-                @ CozaStore
-              </span>
               <div className="flex-w flex-sb p-t-36 gallery-lb">
                 {/* item gallery sidebar */}
                 <div className="wrap-item-gallery m-b-10">
