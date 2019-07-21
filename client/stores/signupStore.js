@@ -33,10 +33,7 @@ class signupStore {
               if (response.status == 200)
                 throw "Status is 200";
             return response.json();
-          }).then(
-              (data)=> {this.Errors = data},
-              (data)=> {console.log(data)}
-          )
+          })
           .catch(error => console.error('Error:', error));    
     }
 }

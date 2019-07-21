@@ -9,6 +9,7 @@ import emailIcon from '@iconify/icons-mdi-light/email';
 import userIcon from '@iconify/icons-feather/user';
 import lockOutline from '@iconify/icons-ant-design/lock-outline';
 
+import signupValidator from '../../../../shared/validation/signupValidation.js'
 
 @observer
 export default class SignUp extends React.Component {
@@ -37,12 +38,25 @@ export default class SignUp extends React.Component {
     }
     onSubmit(e){
       e.preventDefault();
-      this.props.store.submitForm();
+      let data = {"username": this.props.store.Username,
+                   "email": this.props.store.Email,
+                   "password": this.props.store.Password,
+                   "confirmPassword": this.props.store.ConfirmPassword};
+      const {errors, isValid} = signupValidator(data);
+      if (!isValid){
+        this.props.store.Errors = errors;
+      }
+      else
+        this.props.store.submitForm()
+        .then(
+          (data)=> {this.props.store.Errors = data},
+          (data)=> {console.log(data)}
+      )
     }
     render(){
         const {Username, Email, Password, ConfirmPassword, Errors} = this.props.store;
         return (
-        <div className="pad-bot ">
+        <div className="pad-bot">
             <form className="center pad-top" onSubmit={this.onSubmit}>
                 <h4 className="mtext-105 cl2 txt-center p-b-30">
                   Sign Up
