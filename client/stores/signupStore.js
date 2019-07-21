@@ -1,5 +1,6 @@
 import {autorun, observable, action} from "mobx"
- 
+import signupValidator from '../../shared/validation/signupValidation.js'
+
 class signupStore {
 
     //***********Observables***********//
@@ -17,6 +18,11 @@ class signupStore {
                    "email": this.Email,
                    "password": this.Password,
                    "confirmPassword": this.ConfirmPassword};
+        const {errors, isValid} = signupValidator(data);
+        if (!isValid){
+          this.Errors = errors;
+          return;
+        }
         fetch('/api/users/signup', {
             method: 'POST', 
             body: JSON.stringify(data), 

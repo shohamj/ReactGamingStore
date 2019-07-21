@@ -9,6 +9,7 @@ import emailIcon from '@iconify/icons-mdi-light/email';
 import userIcon from '@iconify/icons-feather/user';
 import lockOutline from '@iconify/icons-ant-design/lock-outline';
 
+
 @observer
 export default class SignUp extends React.Component {
     constructor(props) {
