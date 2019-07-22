@@ -19,7 +19,7 @@ export default class SignIn extends React.Component {
     onMessageDismiss(){
       this.props.signinStore.Message=""
       this.props.signinStore.MessageType=""
-
+      this.props.signinStore.HasMessage = false;
     }
     render(){
         return (
@@ -28,8 +28,8 @@ export default class SignIn extends React.Component {
                 <h4 className="mtext-105 cl2 txt-center p-b-30">
                   Sign In
                 </h4>
-                <Alert color={this.props.signinStore.MessageType} isOpen={this.props.signinStore.Message} toggle={this.onMessageDismiss}>
-                  <h4 className="alert-heading">Well done!</h4>
+                <Alert color={this.props.signinStore.MessageType} isOpen={this.props.signinStore.HasMessage} toggle={this.onMessageDismiss}>
+                  <h4 className="alert-heading">User added!</h4>
                   <p>
                     {this.props.signinStore.Message}
                   </p>

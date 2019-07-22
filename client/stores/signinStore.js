@@ -8,6 +8,7 @@ class signinStore {
     @observable Password = "";
     @observable Message = "";
     @observable MessageType = "";
+    @observable HasMessage = false;
     @observable Errors = {};
 
     //***********Actions***********//

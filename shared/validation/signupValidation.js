@@ -14,6 +14,8 @@ function signupValidator(data){
         errors.password = "This field is required";
     if (validator.isEmpty(data.confirmPassword))
         errors.confirmPassword = "This field is required";
+    if (data.password != data.confirmPassword)
+        errors.confirmPassword = "Passwords must match";
     
     return {
         errors,
