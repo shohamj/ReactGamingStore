@@ -18,12 +18,7 @@ class signupStore {
                    "email": this.Email,
                    "password": this.Password,
                    "confirmPassword": this.ConfirmPassword};
-        const {errors, isValid} = signupValidator(data);
-        if (!isValid){
-          this.Errors = errors;
-          return;
-        }
-        fetch('/api/users/signup', {
+        return fetch('/api/users/signup', {
             method: 'POST', 
             body: JSON.stringify(data), 
             headers:{
@@ -33,12 +28,11 @@ class signupStore {
               if (response.status == 200)
                 throw "Status is 200";
             return response.json();
-          })
-          .catch(error => console.error('Error:', error));    
+          })   
     }
 }
 
 var store = new signupStore;
 export default store;
 
-autorun(() => {console.log(store.Username, store.Email, store.Password, store.ConfirmPassword, store.Errors.username)})
+// autorun(() => {console.log(store.Username, store.Email, store.Password, store.ConfirmPassword, store.Errors.username)})

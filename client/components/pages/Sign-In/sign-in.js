@@ -9,13 +9,13 @@ export default class SignIn extends React.Component {
 
     render(){
         return (
-        <div className="center pad-bot pad-top">
-            <form>
+        <div className="pad-bot">
+            <form className="center pad-top">
                 <h4 className="mtext-105 cl2 txt-center p-b-30">
                   Sign In
                 </h4>
                 <div className="bor8 m-b-20 how-pos4-parent">
-                  <input className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Enter User Name" />
+                  <input className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30 form-control" type="text" name="email" placeholder="Enter User Name" />
                   <Icon icon={userIcon} width="22" height="18" className="how-pos4 pointer-none"/>               
                 </div>
                 <div className="bor8 m-b-20 how-pos4-parent">

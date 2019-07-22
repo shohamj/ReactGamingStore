@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 import {observer} from "mobx-react"
 import classnames from 'classnames'
+import { withRouter } from "react-router-dom";
 
 // Icons
 import { Icon, InlineIcon } from '@iconify/react';
@@ -12,7 +13,7 @@ import lockOutline from '@iconify/icons-ant-design/lock-outline';
 import signupValidator from '../../../../shared/validation/signupValidation.js'
 
 @observer
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
     constructor(props) {
       super(props);
 
@@ -49,8 +50,8 @@ export default class SignUp extends React.Component {
       else
         this.props.store.submitForm()
         .then(
-          (data)=> {this.props.store.Errors = data},
-          (data)=> {console.log(data)}
+          (data)=> {this.props.store.Errors = data},//Fail
+          (data)=> {this.props.history.push("sign-in");} // Success
       )
     }
     render(){
@@ -103,4 +104,5 @@ export default class SignUp extends React.Component {
         </div>)
     }
 }
+export default withRouter(SignUp);
     
