@@ -1,5 +1,5 @@
 import {autorun, observable, action} from "mobx"
-import signupValidator from '../../shared/validation/signupValidation.js'
+import {CreateKeyFromPublic, Encrypt} from '../../shared/encryption/RSAUtills'
 
 class signupStore {
 
@@ -14,17 +14,22 @@ class signupStore {
     @action
     submitForm(){
         this.Errors = {};
-        let data = {"username": this.Username,
-                   "email": this.Email,
-                   "password": this.Password,
-                   "confirmPassword": this.ConfirmPassword};
-        return fetch('/api/users/signup', {
+        console.log(this.Password === this.ConfirmPassword)
+        return fetch('api/users/key')
+        .then(response => response.text())
+        .then(publicKeyString => CreateKeyFromPublic(publicKeyString))
+        .then(key => { return {"username": this.Username,
+               "email": this.Email,
+               "password": Encrypt(this.Password, key),
+               "confirmPassword": Encrypt(this.ConfirmPassword, key)}})
+        .then(data => fetch('/api/users/signup', {
             method: 'POST', 
             body: JSON.stringify(data), 
             headers:{
               'Content-Type': 'application/json'
             }
-          }).then(function(response) {
+          }))
+          .then(function(response) {
               if (response.status == 200)
                 throw "Status is 200";
             return response.json();

@@ -41,18 +41,14 @@ app.get("/*",  (req,res) =>{
 })
 
 
+// requires the model with Passport-Local Mongoose plugged in
+import User from './models/user';
 
-//Sessions
-app.use(session({
-    name: 'users.sid',         // the name of session ID cookie
-    secret: "secret",            // the secret for signing the session ID cookie
-    resave: false,             // do we need to resave unchanged session? (only if touch does not work)
-    saveUninitialized: false,  // do we need to save an 'empty' session object?
-    rolling: true,             // do we send the session ID cookie with each response?
-    cookie: { maxAge: 900000, httpOnly: true, sameSite: true }  // cookie parameters
-    // NB: maxAge is used for session object expiry setting in the storage backend as well
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+// use static authenticate method of model in LocalStrategy
+passport.use(User.createStrategy());
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.listen("3000", () => {console.log("Running on port localhost:3000")})

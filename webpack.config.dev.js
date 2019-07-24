@@ -6,12 +6,33 @@ export default {
     output: {
         filename: 'bundle.js',
         path: '/',
-        publicPath: 'http://localhost:3000/', 
+        publicPath: '', 
     },
     module: {
         rules: [
             {
-                loaders: [ 'babel-loader']
+              test: /\.m?js$/,
+              exclude: /(node_modules|bower_components)/,
+              use: {
+                loader: 'babel-loader',
+                options: {
+                  "presets": ["@babel/preset-env","@babel/preset-react"],
+                  "plugins": [
+                      [
+                        "@babel/plugin-proposal-decorators",
+                        {
+                          "legacy": true
+                        }
+                      ],
+                      [
+                        "@babel/plugin-proposal-class-properties",
+                        {
+                          "loose": true
+                        }
+                      ],
+                  ]
+              }
+              }
             },
             { test: /\.(woff|woff2|eot|ttf)$/, loader: 'url-loader' },
             {

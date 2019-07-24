@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import passportLocalMongoose from 'passport-local-mongoose';
 
 const userSchema = mongoose.Schema({
     name: String,
@@ -10,7 +11,7 @@ const userSchema = mongoose.Schema({
     admin: Boolean,
     created_at: Date,
     updated_at: Date,
-    versionKey: false
-})
+},{ versionKey: false })
 
+userSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model("Users", userSchema); 

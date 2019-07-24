@@ -61,7 +61,8 @@ class SignUp extends React.Component {
             if (!isValid) {
                 this.props.signupStore.Errors = {...this.props.signupStore.Errors,...errors};
                 console.log(this.props.signupStore.Errors);
-            } else
+            }
+            else
                 this.props.signupStore.submitForm()
                 .then(
                     (data) => { this.props.signupStore.Errors = data }, //Fail
