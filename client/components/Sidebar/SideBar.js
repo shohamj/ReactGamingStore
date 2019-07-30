@@ -1,113 +1,87 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 import {observer} from "mobx-react"
+import { withRouter } from "react-router-dom";
 
+import { Icon, InlineIcon } from '@iconify/react';
+import accountIcon from '@iconify/icons-zmdi/account';
+import formatListBulleted from '@iconify/icons-zmdi/format-list-bulleted';
+import shoppingCart from '@iconify/icons-zmdi/shopping-cart';
+import signOut from '@iconify/icons-gridicons/sign-out';
+
+@withRouter
 @observer
 export default class SideBar extends React.Component {
+
   constructor(props) {
     super(props);
-
-    // This binding is necessary to make `this` work in the callback
     this.closeSidebar = this.closeSidebar.bind(this);
+    this.onSignOut = this.onSignOut.bind(this);
+    this.onOutsideClick = this.onOutsideClick.bind(this);
   }
+
+  
   closeSidebar()
   {
-    this.props.store.setShowSidebar(false);
+    this.props.navbarStore.setShowSidebar(false);
   }
-    render() {
-      return (
-        <aside className={"wrap-sidebar js-sidebar " + (this.props.store.showSidebar ? 'show-sidebar' : "")}>
-        <div className="s-full js-hide-sidebar" />
-        <div className="sidebar flex-col-l p-t-22 p-b-25">
-          <div className="flex-r w-full p-b-30 p-r-27">
-            <div className="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-sidebar" onClick={this.closeSidebar}>
-              <i className="zmdi zmdi-close" />
-            </div>
-          </div>
-          <div className="sidebar-content flex-w w-full p-lr-65 js-pscroll">
-            <ul className="sidebar-link w-full">
-              <li className="p-b-13">
-                <a href="index.html" className="stext-102 cl2 hov-cl1 trans-04">
-                  Home
-                </a>
-              </li>
-              <li className="p-b-13">
-                <a href="#" className="stext-102 cl2 hov-cl1 trans-04">
-                  My Wishlist
-                </a>
-              </li>
-              <li className="p-b-13">
-                <a href="#" className="stext-102 cl2 hov-cl1 trans-04">
-                  My Account
-                </a>
-              </li>
-              <li className="p-b-13">
-                <a href="#" className="stext-102 cl2 hov-cl1 trans-04">
-                  Track Oder
-                </a>
-              </li>
-              <li className="p-b-13">
-                <a href="#" className="stext-102 cl2 hov-cl1 trans-04">
-                  Refunds
-                </a>
-              </li>
-              <li className="p-b-13">
-                <a href="#" className="stext-102 cl2 hov-cl1 trans-04">
-                  Help &amp; FAQs
-                </a>
-              </li>
-            </ul>
-            <div className="sidebar-gallery w-full p-tb-30">
-              <div className="flex-w flex-sb p-t-36 gallery-lb">
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-01.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-01.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-02.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-02.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-03.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-03.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-04.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-04.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-05.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-05.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-06.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-06.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-07.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-07.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-08.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-08.jpg")'}} />
-                </div>
-                {/* item gallery sidebar */}
-                <div className="wrap-item-gallery m-b-10">
-                  <a className="item-gallery bg-img1" href="images/gallery-09.jpg" data-lightbox="gallery" style={{backgroundImage: 'url("images/gallery-09.jpg")'}} />
-                </div>
-              </div>
-            </div>
-            <div className="sidebar-gallery w-full">
-              <span className="mtext-101 cl5">
-                About Us
-              </span>
-              <p className="stext-108 cl6 p-t-27">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate hendrerit. Praesent faucibus erat vitae rutrum gravida. Vestibulum tempus mi enim, in molestie sem fermentum quis. 
-              </p>
-            </div>
+  onSignOut(){
+    this.props.authStore.signOut();
+    this.closeSidebar()
+    this.props.history.push("/");
+  }
+  onOutsideClick(e){
+    if (e.target.classList.contains("js-hide-sidebar")){
+      this.closeSidebar()
+    }
+  }
+  render() {
+    return (
+      <aside className={"wrap-sidebar js-sidebar " + (this.props.navbarStore.showSidebar ? 'show-sidebar' : "")}  onClick={this.onOutsideClick}>
+      <div className="s-full js-hide-sidebar"/>
+      <div className="sidebar flex-col-l p-t-22 p-b-25" onClick={this.onClick}>
+        <div className="flex-r w-full p-b-30 p-r-27">
+          <div className="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-sidebar" onClick={this.closeSidebar}>
+            <i className="zmdi zmdi-close" />
           </div>
         </div>
-      </aside>
-      );
-    }
+        <div className="sidebar-content flex-w w-full p-lr-65 js-pscroll">
+          <ul className="sidebar-link w-full">
+            <li className="p-b-13">
+              <h4 className="mtext-105 cl2">
+                  {"Welcome " + this.props.authStore.currentUser + "!"}
+              </h4>
+            </li>
+            <li className="p-b-13">
+            </li>
+            <li className="p-b-13">
+              <NavLink to="/account" className="stext-102 cl2 hov-cl1 trans-04 centered-label">
+                <Icon icon={accountIcon} width="15" height="15"/>
+                &nbsp;&nbsp;My Account
+              </NavLink>
+            </li>
+            <li className="p-b-13">
+              <NavLink to="/cart" className="stext-102 cl2 hov-cl1 trans-04 centered-label">
+                <Icon icon={shoppingCart} width="15" height="15"/>
+                &nbsp;&nbsp;Cart
+              </NavLink>
+            </li>
+            <li className="p-b-13">
+              <NavLink to="/orders" className="stext-102 cl2 hov-cl1 trans-04 centered-label">
+                <Icon icon={formatListBulleted} width="15" height="15"/>
+                &nbsp;&nbsp;Order History
+              </NavLink>
+            </li>
+            <li className="p-b-13">
+              <button className="stext-102 cl2 hov-cl1 trans-04 centered-label" onClick={this.onSignOut}>
+                <Icon icon={signOut} width="15" height="15"/>
+                &nbsp;&nbsp;Sign Out
+              </button>
+            </li>
+          </ul>
+          </div>
+        </div>
+    </aside>
+    );
+  }
 }

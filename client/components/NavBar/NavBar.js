@@ -1,11 +1,10 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink, Link} from 'react-router-dom'
 import {observer} from "mobx-react"
 
 import { Icon, InlineIcon } from '@iconify/react';
 import shoppingCart from '@iconify/icons-zmdi/shopping-cart';
-import searchIcon from '@iconify/icons-zmdi/search';
-import menuIcon from '@iconify/icons-zmdi/menu';
+import accountIcon from '@iconify/icons-zmdi/account';
 @observer
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -18,12 +17,12 @@ export default class NavBar extends React.Component {
 
   openSidebar()
   {
-    this.props.store.setShowSidebar(true);
+    this.props.navbarStore.setShowSidebar(true);
   }
 
   onTabClick(tab)
   {
-    return () => {this.props.store.setSelectedTab(tab)}
+    return () => {this.props.navbarStore.setSelectedTab(tab)}
   }
 
   render() {
@@ -37,46 +36,53 @@ export default class NavBar extends React.Component {
                 </a>
                 <div className="menu-desktop">
                   <ul className="main-menu">
-                    <li className= { this.props.store.selectedTab == "Home"? "active-menu": "" } onClick={this.onTabClick("Home")}>
-                      <NavLink to="/">Home</NavLink>     
+                    <li>
+                      <NavLink exact to="/" activeStyle={{color: "#717fe0"}}>Home</NavLink>     
                     </li>
-                    <li className= { this.props.store.selectedTab == "Shop"? "active-menu": "" } onClick={this.onTabClick("Shop")}>
-                      <a href="product.html" >Shop</a>
+                    <li>
+                      <NavLink to="/shop" activeStyle={{color: "#717fe0"}}>Shop</NavLink>
                       <ul className="sub-menu">
-                        <li ><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/aaa">AAA</NavLink></li>
+                        <li><NavLink exact to="/shop/shoes" activeStyle={{color: "#717fe0"}}>Home</NavLink></li>
+                        <li><NavLink exact to="/shop/something" activeStyle={{color: "#717fe0"}}>AAA</NavLink></li>
                       </ul>
                     </li>
-                    <li className= { this.props.store.selectedTab == "Blog"? "active-menu": "" } onClick={this.onTabClick("Blog")}>
-                      <a href="blog.html">Blog</a>
+                    <li>
+                      <NavLink to="/blog" activeStyle={{color: "#717fe0"}}>Blog</NavLink>
                     </li>
-                    <li className= { this.props.store.selectedTab == "About"? "active-menu": "" } onClick={this.onTabClick("About")}>
-                        <NavLink to="/about">About</NavLink>     
+                    <li>
+                        <NavLink to="/about" activeStyle={{color: "#717fe0"}}>About</NavLink>     
                     </li>
-                    <li className= { this.props.store.selectedTab == "Contact"? "active-menu": "" } onClick={this.onTabClick("Contact")}>
-                        <NavLink to="/contact">Contact</NavLink>     
-                    </li>
-                    <li className= {this.props.store.selectedTab == "Sign In"? "active-menu": "" }  data-label1="hot" onClick={this.onTabClick("Sign In")}>
-                        <NavLink to="/sign-in">Sign In</NavLink>     
+                    <li>
+                        <NavLink to="/contact" activeStyle={{color: "#717fe0"}}>Contact</NavLink>     
                     </li>
                   </ul>
                 </div>	
                 <div className="wrap-icon-header flex-w flex-r-m h-full">
                   <div className="flex-c-m h-full p-r-24">
+                  { !this.props.authStore.currentUser &&      
                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
-                    <Icon icon={searchIcon} />
+                      <Link to="/sign-in">
+                        <button className="flex-c-m stext-101 cl0 size-107  bg1 bor1 hov-btn1 p-lr-15 trans-04" onClick={this.onTabClick("Sign In")}>
+                          Sign In
+                        </button>
+                      </Link>
                     </div>
+                  }
                   </div>
+                  { this.props.authStore.currentUser &&      
                   <div className="flex-c-m h-full p-l-18 p-r-25 bor5">
                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={2}>
                       <Icon icon={shoppingCart} />
                     </div>
                   </div>
+                  }
+                  { this.props.authStore.currentUser &&      
                   <div className="flex-c-m h-full p-lr-19">
                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar" onClick={this.openSidebar}>
-                      <Icon icon={menuIcon} />
+                      <Icon icon={accountIcon} />
                     </div>
                   </div>
+                  }
                 </div>
               </nav>
             </div>	

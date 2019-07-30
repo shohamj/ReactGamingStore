@@ -8,9 +8,10 @@ const userSchema = mongoose.Schema({
     email: { type: String, unique: true},
     resetPasswordToken: String,
     resetPasswordExpires: Date,
-    admin: Boolean,
     created_at: Date,
     updated_at: Date,
+    role: { type: String, required: true },
+
 },{ versionKey: false })
 
 userSchema.plugin(passportLocalMongoose);

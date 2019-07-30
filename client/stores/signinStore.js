@@ -1,5 +1,5 @@
 import {autorun, observable, action} from "mobx"
-import signupValidator from '../../shared/validation/signupValidation.js'
+import pbkdf2_sha256_promise from '../../shared/encryption/pbkdf2'
 
 class signinStore {
 
@@ -7,29 +7,45 @@ class signinStore {
     @observable Username = "";
     @observable Password = "";
     @observable Message = "";
+    @observable MessageTitle = "";
     @observable MessageType = "";
     @observable HasMessage = false;
+    @observable Loading = false;    
     @observable Errors = {};
 
     //***********Actions***********//
     @action
     submitForm(){
         this.Errors = {};
-        let data = {"username": this.Username,
-                   "email": this.Email,
-                   "password": this.Password,
-                   "confirmPassword": this.ConfirmPassword};
-        return fetch('/api/users/signup', {
+        var data = {username: this.Username, password:this.Password};
+        var challenge = "";
+        var Loading = this.Loading = true;
+        return fetch('/api/users/challenge_response', {
+          method: 'POST', 
+          body: JSON.stringify({username:this.Username}), 
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(json => {challenge=json.challenge;
+          return pbkdf2_sha256_promise(data.password, json.salt)})
+        .then(hash => pbkdf2_sha256_promise(hash, challenge))
+        .then(res => fetch('/api/users/signin', {
             method: 'POST', 
-            body: JSON.stringify(data), 
+            body: JSON.stringify({"username": data.username,"password": res}), 
             headers:{
               'Content-Type': 'application/json'
             }
-          }).then(function(response) {
+        }))
+        .catch(err => {Loading = false; return {general:"Server error: " + err}}) 
+        .then(function(response) {
+            Loading = false;
               if (response.status == 200)
-                throw "Status is 200";
+                throw data.username;
             return response.json();
-          })   
+        })
+           
     }
 }
 

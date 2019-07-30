@@ -1,15 +1,17 @@
 import express from 'express';
 import signupValidator from '../../shared/validation/signupValidation.js';
+import signinValidator from '../../shared/validation/signinValidation.js';
 import User from '../models/user';
 import isEmpty from 'lodash/isEmpty';
 import {getKey, getPublicKey} from '../../shared/encryption/RSAKey.js';
+import pbkdf2_sha256_promise from '../../shared/encryption/pbkdf2.js';
 import {Decrypt, CreateKeyFromPublic, Encrypt} from '../../shared/encryption/RSAUtills.js';
+import crypto from 'crypto';
 
 let router = express.Router();  
 
-
-function extendedSignupValidator(data, signupValidator){
-    let {errors} = signupValidator(data);
+function extendedSignupValidator(data, validator){
+    let {errors} = validator(data);
     return User.find().or([{username: data.username}, {email:data.email}]).exec()
     .then(users => {
         users.forEach(function(user){
@@ -21,6 +23,29 @@ function extendedSignupValidator(data, signupValidator){
         return { errors, isValid: isEmpty(errors) }
     })
 }
+
+function extendedSigninValidator(data, challenge, validator){
+    let {errors} = validator(data);
+    console.log(challenge);
+    return User.findOne({username:data.username}).select("+hash")
+    .then(user => {
+        if (user == null){
+            errors.general = "Username and password do not match";
+            return ""
+        }
+        return user.hash;
+    })
+    .then(hash => pbkdf2_sha256_promise(hash, challenge))
+    .then(res => {
+        console.log(res);
+        console.log("********************************************************************");
+        console.log(data.password);
+        if (res !== data.password)
+            errors.general = "Username and password do not match";
+    })
+    .catch(err => {console.log(err);errors.general="Database error"})
+    .then( () => {return { errors, isValid: isEmpty(errors)}})
+}
 router.post('/signup', (req,res) => {
     let key = getKey();
     let pub = getPublicKey();
@@ -30,10 +55,11 @@ router.post('/signup', (req,res) => {
     extendedSignupValidator(req.body, signupValidator)
     .then(({errors, isValid}) => {
         if (!isValid){
+            //setTimeout(() => res.status(400).json(errors), 5000);
             res.status(400).json(errors);
         }
         else{
-            const data = {...req.body, admin: false};
+            const data = {...req.body, role: "customer"};
             let password = data.password;
             delete data.confirmPassword;
             delete data.password;
@@ -45,10 +71,65 @@ router.post('/signup', (req,res) => {
     ).catch(err=>{console.log(err);res.status(500).json(err);})
 })
 
+router.post('/signin', (req,res) => {
+    console.log(req.session);
+    extendedSigninValidator(req.body, req.session.challenge, signinValidator)
+    .then(({errors, isValid}) => {
+        if (!isValid){
+            console.log(errors);
+            res.status(400).json(errors);
+        }
+        else
+        {
+            User.findOne({username:req.body.username})
+            .then(user => req.logIn(user, function(){
+                res.send(req.body.username)
+            }))    
+        }
+    }
+    ).catch(err=>{console.log(err);res.status(500).json(err);})
+})
+
+router.get('/signout', (req,res) => {
+    req.logout();
+    res.send("Success");
+})
+
 router.get('/key', (req,res) => {
-    let pub = getPublicKey();
-    let pubkey = CreateKeyFromPublic(pub);
-    console.log(pub);
-    res.send(pub);
+    //setTimeout(() => res.send(getPublicKey()), 5000);
+    res.send(getPublicKey());
+})
+
+//Async and not promise because we were noobs at lab7
+router.post('/challenge_response', async (req, res) => {
+        console.log(req.body);
+    User.findOne({
+      username: req.body.username
+    }, function (err, user) {
+      console.log(err, user);
+      if (user !== null) {
+        crypto.randomBytes(32, function (err, buf) {
+          let challenge = buf.toString('hex');
+          let salt = user.salt;
+          req.session.challenge = challenge;
+          console.log(req.session);
+          return res.send({
+            salt,
+            challenge
+          });
+        });
+      } 
+      else{
+        req.session.challenge = "";
+        res.send({salt:"", challenge:""});
+      }        
+    }).select("+salt")
+  });
+
+router.get('/user', (req,res) => {
+    if (req.user)
+        res.send(req.user.username);
+    else
+        res.send(undefined);  
 })
 export default router;
