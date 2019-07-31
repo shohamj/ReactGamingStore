@@ -62,6 +62,7 @@
     "react-responsive-carousel": "^3.1.49",
     "react-responsive-modal": "^4.0.1",
     "react-router-dom": "^5.0.1",
+    "react-slidedown": "^2.4.4",
     "react-toast-notifications": "^2.2.1",
     "reactstrap": "^8.0.1",
     "save": "^2.4.0",

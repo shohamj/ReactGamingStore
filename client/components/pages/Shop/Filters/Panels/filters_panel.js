@@ -1,13 +1,14 @@
 import React from 'react';
 import {observer} from "mobx-react";
+import MyDropdown from '../../../../dropdown.js'
 
 @observer
 export default class FiltersPanel extends React.Component {
 
     render(){
         return(
-            <div className={"panel-filter w-full p-t-10 " + (this.props.shopStore.isFiltersPanelOpen?"":"dis-none")}>
-              <div className="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+            <MyDropdown className={"panel-filter w-full p-t-10 "} open={this.props.shopStore.isFiltersPanelOpen}>
+              <div className="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm ">
                 <div className="filter-col1 p-r-15 p-b-27">
                   <div className="mtext-102 cl2 p-b-15">
                     Sort By
@@ -160,7 +161,7 @@ export default class FiltersPanel extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
+            </MyDropdown>
         )
     }
 }
