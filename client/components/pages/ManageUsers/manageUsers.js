@@ -4,7 +4,8 @@ import MUIDataTable from "mui-datatables";
 import {toJS} from "mobx"
 import {observer} from "mobx-react";
 import Modali, { useModali } from 'modali';
-
+import ManageUsersTitle from "./managerUserTitle";
+import managerUserCss from "./../../../css/mangmentTables.css"
 
 @observer
 export default class ManageUsers extends React.Component {
@@ -13,57 +14,10 @@ export default class ManageUsers extends React.Component {
         this.props.userStore.getUsers();
     }
     render() {
-
-        const columns = [
-            {
-             name: "_id",
-             label: "ID",
-             options: {
-              filter: true,
-              sort: true,
-             }
-            },
-            {
-             name: "username",
-             label: "Username",
-             options: {
-              filter: true,
-              sort: true,
-             }
-            },
-            {
-             name: "email",
-             label: "Email",
-             options: {
-              filter: true,
-              sort: true,
-             }
-            },
-            {
-             name: "role",
-             label: "Role",
-             options: {
-              filter: true,
-              sort: true,
-             }
-            },
-           ];
-        const options = {
-          filterType: 'checkbox',
-          print: false
-        };
         return (
         <div>
-        <PageBanner title="Manage Users"/>
-          <div className="container p-t-50 p-b-116">
-            <MUIDataTable
-              title={"User List"}
-              data={toJS(this.props.userStore.users)}
-              columns={columns}
-              options={options}
-            />
+          <ManageUsersTitle users={toJS(this.props.userStore.users)}/>
         </div>
-      </div>
       );
     }
 }
