@@ -65,7 +65,7 @@ export default class NavBar extends React.Component {
                     </div>
                   }
                   </div>
-                  { this.props.authStore.currentUser &&      
+                  { (this.props.authStore.currentUser && this.props.authStore.role == "customer") &&      
                   <div className="flex-c-m h-full p-l-18 p-r-25 bor5">
                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={2}>
                       <Icon icon={shoppingCart} />
@@ -73,7 +73,7 @@ export default class NavBar extends React.Component {
                   </div>
                   }
                   { this.props.authStore.currentUser &&      
-                  <div className="flex-c-m h-full p-lr-19">
+                  <div className={"flex-c-m h-full p-lr-19 " + (this.props.authStore.role != "customer" ? "bor5":"")}>
                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-sidebar" onClick={this.openSidebar}>
                       <Icon icon={accountIcon} />
                     </div>

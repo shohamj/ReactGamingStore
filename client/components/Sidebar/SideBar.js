@@ -8,6 +8,9 @@ import accountIcon from '@iconify/icons-zmdi/account';
 import formatListBulleted from '@iconify/icons-zmdi/format-list-bulleted';
 import shoppingCart from '@iconify/icons-zmdi/shopping-cart';
 import signOut from '@iconify/icons-gridicons/sign-out';
+import SidebarLink from './sidebarLink.js'
+import logoGameControllerB from '@iconify/icons-ion/logo-game-controller-b';
+import userFriends from '@iconify/icons-fa-solid/user-friends';
 
 @withRouter
 @observer
@@ -36,6 +39,7 @@ export default class SideBar extends React.Component {
     }
   }
   render() {
+    const role = this.props.authStore.role;
     return (
       <aside className={"wrap-sidebar js-sidebar " + (this.props.navbarStore.showSidebar ? 'show-sidebar' : "")}  onClick={this.onOutsideClick}>
       <div className="s-full js-hide-sidebar"/>
@@ -51,27 +55,13 @@ export default class SideBar extends React.Component {
               <h4 className="mtext-105 cl2">
                   {"Welcome " + this.props.authStore.currentUser + "!"}
               </h4>
+              <br></br>
             </li>
-            <li className="p-b-13">
-            </li>
-            <li className="p-b-13">
-              <NavLink to="/account" className="stext-102 cl2 hov-cl1 trans-04 centered-label">
-                <Icon icon={accountIcon} width="15" height="15"/>
-                &nbsp;&nbsp;My Account
-              </NavLink>
-            </li>
-            <li className="p-b-13">
-              <NavLink to="/cart" className="stext-102 cl2 hov-cl1 trans-04 centered-label">
-                <Icon icon={shoppingCart} width="15" height="15"/>
-                &nbsp;&nbsp;Cart
-              </NavLink>
-            </li>
-            <li className="p-b-13">
-              <NavLink to="/orders" className="stext-102 cl2 hov-cl1 trans-04 centered-label">
-                <Icon icon={formatListBulleted} width="15" height="15"/>
-                &nbsp;&nbsp;Order History
-              </NavLink>
-            </li>
+              <SidebarLink to="/account" icon={accountIcon} text="My Account" onClick={this.closeSidebar}/>
+              {role == "employee" || role == "manager" && <SidebarLink to="/manage_games" icon={logoGameControllerB} text="Manage Games" onClick={this.closeSidebar}/>}
+              {role == "employee" || role == "manager" && <SidebarLink to="/manage_users" icon={userFriends} text="Manage Users" onClick={this.closeSidebar}/>}
+              {role == "customer" && <SidebarLink to="/cart" icon={shoppingCart} text="Cart" onClick={this.closeSidebar}/>}
+              <SidebarLink to="/orders" icon={formatListBulleted} text="Order History" onClick={this.closeSidebar}/>  
             <li className="p-b-13">
               <button className="stext-102 cl2 hov-cl1 trans-04 centered-label" onClick={this.onSignOut}>
                 <Icon icon={signOut} width="15" height="15"/>

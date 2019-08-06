@@ -65,9 +65,9 @@ class SignIn extends React.Component {
               this.props.signinStore.HasMessage = true;
             }
           }, //Fail
-          username => {
+          user => {
             this.props.signinStore.Loading = false;
-            this.props.authStore.signIn(username)
+            this.props.authStore.pullUser()
             this.props.history.push("/");
           } // Success
         );

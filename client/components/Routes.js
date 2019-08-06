@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router'
 import Favicon from 'react-favicon';
+import {observer} from "mobx-react";
 
 // Components
 import NotFound from './pages/404/NotFound';
@@ -15,14 +17,18 @@ import NavBar from "./NavBar/NavBar";
 import SideBar from './SideBar/SideBar';
 import Footer from './Footer/Footer';
 import GameDetails from './pages/Shop/Games/gameDetails.js'
+import ManageUsers from './pages/ManageUsers/manageUsers.js'
 // Stores
 import navbarStore from "../stores/navbarStore.js"
 import signupStore from "../stores/signupStore.js"
 import signinStore from "../stores/signinStore.js"
 import authStore from "../stores/authStore.js"
 import shopStore from "../stores/shopStore.js"
+import userStore from "../stores/userStore.js"
 
+import ReactLoading from "react-loading";
 
+@observer
 export default class Routes extends React.Component {
 
   componentWillMount() {
@@ -30,6 +36,8 @@ export default class Routes extends React.Component {
   }
   
   render() {
+      if (authStore.loading)
+        return "";
       return (
           <BrowserRouter>
               <div>
@@ -41,26 +49,57 @@ export default class Routes extends React.Component {
                     <Route path="/about" exact component={About} />
                     <Route path="/contact" exact component={Contact} />
                     <Route
+                      path="/manage_users"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined && authStore.role == "manager")? 
+                          <ManageUsers userStore={userStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
                       path="/shop"
                       exact
-                      render={() => <Shop shopStore={shopStore} />}
+                      render={() => (
+                        authStore.currentUser != undefined ? 
+                          <Shop shopStore={shopStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
                     />
                     <Route
                       path="/shop/games/:gameID"
                       exact
-                      render={(req) => <GameDetails shopStore={shopStore} gameID={req.match.params.gameID}/>}
+                      render={(req) => (
+                        authStore.currentUser != undefined ? 
+                          <GameDetails shopStore={shopStore} gameID={req.match.params.gameID}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )}
                     />
                     <Route
                       path="/sign-up"
                       exact
-                      render={() => <SignUp signupStore={signupStore} signinStore={signinStore}/>}
+                      render={() => (
+                        authStore.currentUser == undefined ? 
+                          <SignUp signupStore={signupStore} signinStore={signinStore}/>
+                          :
+                          <Redirect to="/"/> 
+                      )}
                     />
                     <Route
                       path="/sign-in"
                       exact
-                      render={() => <SignIn signinStore={signinStore} authStore={authStore}/>}
+                      render={() => (
+                        authStore.currentUser == undefined ? 
+                          <SignIn signinStore={signinStore} authStore={authStore}/>
+                          :
+                          <Redirect to="/"/> 
+                      )}
                     />
-                    <Route path="/aaa" exact component={aaa} />
                     <Route component={NotFound}/>
                   </Switch>
                   <Footer />

@@ -8,23 +8,24 @@ import ReactLoading from "react-loading";
 export default class GameDetails extends React.Component {
     constructor(props) {
         super(props);
-        this.state ={id:undefined, name:undefined, price:undefined, images:undefined, desc:undefined};
+        this.state ={};
     }
     componentDidMount(){
         fetch('/api/games/game/' + this.props.gameID)
         .then(res => res.json())
         .then(res => this.setState(res))
-        .catch(err => this.state.id = err)
+        .catch(err => this.state._id = err)
     }
     render(){
         return (
             <section className="sec-product-detail bg0 p-t-65 p-b-60">
-            {this.state.id === undefined && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={100} width={100}/>}
-            {this.state.id && <div className="container">
+            {this.state._id === undefined && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={100} width={100}/>}
+            {this.state._id && <div className="container">
                 <div className="row">
                   <div className="col-md-6 col-lg-7 p-b-30">
                     <Carousel showArrows={true} interval={4000} transitionTime={1000} autoPlay={true} showThumbs={true} showStatus={false} infiniteLoop={true}>
-                        {this.state.images.map( (img, index) => (
+                        <img src={require('../../../../images/games/' + this.state.mainImage)}/>
+                        {this.state.extraImages.map( (img, index) => (
                             <img src={require('../../../../images/games/' + img)} key={index}/>
                         ))}
                     </Carousel>
@@ -38,7 +39,7 @@ export default class GameDetails extends React.Component {
                         ${this.state.price}
                       </span>
                       <p className="stext-102 cl3 p-t-23">
-                        {this.state.desc}
+                        {this.state.description}
                       </p>
                       {/*  */}
                       <div className="p-t-33">

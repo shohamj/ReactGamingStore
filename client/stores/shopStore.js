@@ -11,35 +11,32 @@ class shopStore {
     @observable genre = "";
     @observable platform = "";
     @observable price = [0];
-
-
-    
-
-    @observable games = [
-    {id:"507f191e810c19729de860ea", name:"Enslaved", price:13.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC"], sold:15, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860eb", name:"Another Game", price:39.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ec", name:"I don't know", price:16.99, image:"enslaved/main.png", genre:["Adventure", "Indie"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ed", name:"Please", price:13.99, image:"enslaved/main.png", genre:["Indie"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ee", name:"Help", price:39.99, image:"enslaved/main.png", genre:["Indie"], platform:["PC"], sold:3, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ef", name:"Me", price:16.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC", "MAC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860eg", name:"I'm", price:13.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC"], sold:1, released: new Date(), added: new Date(), controller: true},
-    {id:"507f191e810c19729de860eh", name:"Trying To", price:39.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:8, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:100, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:11, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:2, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:2, released: new Date(), added: new Date(), controller: false},
-    {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:0, released: new Date(), added: new Date(), controller: false},
-    ];
+    @observable games = []
+    // @observable games = [
+    // {id:"507f191e810c19729de860ea", name:"Enslaved", price:13.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC"], sold:15, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860eb", name:"Another Game", price:39.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ec", name:"I don't know", price:16.99, image:"enslaved/main.png", genre:["Adventure", "Indie"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ed", name:"Please", price:13.99, image:"enslaved/main.png", genre:["Indie"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ee", name:"Help", price:39.99, image:"enslaved/main.png", genre:["Indie"], platform:["PC"], sold:3, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ef", name:"Me", price:16.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC", "MAC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860eg", name:"I'm", price:13.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC"], sold:1, released: new Date(), added: new Date(), controller: true},
+    // {id:"507f191e810c19729de860eh", name:"Trying To", price:39.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:8, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:100, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:11, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:2, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:2, released: new Date(), added: new Date(), controller: false},
+    // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:0, released: new Date(), added: new Date(), controller: false},
+    // ];
 
     @computed get filteredGames(){
         var self = this;
         let categorized = this.games;
         if (this.category == "top_selling"){
-            categorized.sort(function(a,b){
+            categorized.slice().sort(function(a,b){
                 b.sold - a.sold;
             })
             categorized = categorized.slice(0, 10);
@@ -49,11 +46,10 @@ class shopStore {
             (self.genre == "" || game.genre.includes(self.genre)) &&
             (game.price > self.price[0] && (self.price.length < 2 || game.price <= self.price[1])) &&
             (self.platform == "" || game.platform.includes(self.platform)) &&
-            (self.category != "recent" || (new Date() - game.added) < 60 * 60 * 24 * 5 * 1000) &&
+            (self.category != "recent" || (new Date() - Date.parse(game.added)) < 60 * 60 * 24 * 5 * 1000) &&
             (self.category != "controller" || game.controller)
-
         });
-        filtered.sort(function (a,b){
+        filtered.slice().sort(function (a,b){
             if(self.sort == "Popularity"){
                 if( a.sold < b.sold )
                     return 1;
@@ -62,16 +58,16 @@ class shopStore {
                 return -1;
             }
             if(self.sort == "Newest to Oldest"){
-                if( a.released < b.released )
+                if( Date.parse(a.released) < Date.parse(b.released) )
                     return 1;
-                if ( a.released == b.released )
+                if ( Date.parse(a.released) == Date.parse(b.released) )
                     return 0;
                 return -1;
             }
             if(self.sort == "Oldest to Newest"){
-                if( a.released > b.released )
+                if( Date.parse(a.released) > Date.parse(b.released) )
                     return 1;
-                if ( a.released == b.released )
+                if ( Date.parse(a.released) == Date.parse(b.released) )
                     return 0;
                 return -1;
             }
@@ -96,6 +92,14 @@ class shopStore {
     
 
     //***********Actions***********//
+    @action 
+    getGames(){
+        var self = this;
+        fetch('/api/games/gamesList')
+        .then(res => res.json())
+        .then(res => self.games = res)
+        .catch(err => console.log(err))
+    }
     @action 
     toggleSearchPanel(){
         this.isSearchPanelOpen = !this.isSearchPanelOpen;

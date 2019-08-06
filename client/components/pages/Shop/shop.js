@@ -9,6 +9,13 @@ import GameCard from './Games/gameCard.js';
 import { CSSGrid, layout } from 'react-stonecutter';
 @observer
 export default class Shop extends React.Component {
+    constructor(props) {
+      super(props);
+      //this.changeCategory = this.changeCategory.bind(this);
+    }
+    componentDidMount(){
+      this.props.shopStore.getGames();
+    }
     render(){
         return (
             <div className="bg0 m-t-23 p-b-140">
@@ -42,7 +49,7 @@ export default class Shop extends React.Component {
                   easing="ease-out">
                   {this.props.shopStore.filteredGames.map( (game, index) => (
                     <div key={index} className="col-sm-6 col-md-4 col-lg-3 p-b-35" itemHeight={200}> 
-                      <GameCard name={game.name} price={game.price} image={game.image} id={game.id} />
+                      <GameCard name={game.name} price={game.price} image={game.mainImage} id={game._id} />
                     </div>
                   ))}
                 </CSSGrid>

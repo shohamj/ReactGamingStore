@@ -83,7 +83,7 @@ router.post('/signin', (req,res) => {
         {
             User.findOne({username:req.body.username})
             .then(user => req.logIn(user, function(){
-                res.send(req.body.username)
+                res.send({username:req.body.username, role:req.body.role})
             }))    
         }
     }
@@ -128,8 +128,14 @@ router.post('/challenge_response', async (req, res) => {
 
 router.get('/user', (req,res) => {
     if (req.user)
-        res.send(req.user.username);
+        res.json({username:req.user.username, role:req.user.role})
     else
-        res.send(undefined);  
+        res.json({});  
 })
+
+router.get('/usersList', function(req, res) {
+    User.find({}, function(err, users) {
+      res.send(users);  
+    });
+  });
 export default router;
