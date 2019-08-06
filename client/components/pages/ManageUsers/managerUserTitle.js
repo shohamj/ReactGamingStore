@@ -1,6 +1,7 @@
 import React from 'react';
 import {observer} from "mobx-react";
 import ManageSingleUser from "./manageSingleUser";
+import ManageUserBottom from "./ManagmentUserBottom"
 
 @observer
 export default class ManageUsersTitle extends React.Component {
@@ -38,6 +39,7 @@ export default class ManageUsersTitle extends React.Component {
                     })}
                 </tbody>
                 </table>
+                <ManageUserBottom />
             </div>
         </div>   
         );
