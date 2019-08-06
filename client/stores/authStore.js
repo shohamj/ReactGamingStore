@@ -13,12 +13,12 @@ class authStore {
     @action 
     signOut(){
         this.currentUser = undefined;
-        fetch('api/users/signout')
+        fetch('/api/users/signout')
     }
     @action 
     pullUser(){
         var self = this;
-        fetch('api/users/user')
+        fetch('/api/users/user')
         .then(response => response.text())
         .then(user => {
             if (user === "")

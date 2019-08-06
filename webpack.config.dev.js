@@ -6,7 +6,7 @@ export default {
     output: {
         filename: 'bundle.js',
         path: '/',
-        publicPath: '', 
+        publicPath: '/', 
     },
     module: {
         rules: [

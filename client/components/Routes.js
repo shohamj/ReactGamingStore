@@ -14,7 +14,7 @@ import aaa from "./pages/aaa.js"
 import NavBar from "./NavBar/NavBar";
 import SideBar from './SideBar/SideBar';
 import Footer from './Footer/Footer';
-
+import GameDetails from './pages/Shop/Games/gameDetails.js'
 // Stores
 import navbarStore from "../stores/navbarStore.js"
 import signupStore from "../stores/signupStore.js"
@@ -44,6 +44,11 @@ export default class Routes extends React.Component {
                       path="/shop"
                       exact
                       render={() => <Shop shopStore={shopStore} />}
+                    />
+                    <Route
+                      path="/shop/games/:gameID"
+                      exact
+                      render={(req) => <GameDetails shopStore={shopStore} gameID={req.match.params.gameID}/>}
                     />
                     <Route
                       path="/sign-up"

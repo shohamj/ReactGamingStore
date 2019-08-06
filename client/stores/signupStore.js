@@ -19,7 +19,7 @@ class signupStore {
         this.Errors = {};
         console.log(this.Password === this.ConfirmPassword)
         this.LoadingMessage = "Encrypting password";
-        return fetch('api/users/key')
+        return fetch('/api/users/key')
         .then(response => response.text())
         .then(publicKeyString => CreateKeyFromPublic(publicKeyString))
         .then(key => { return {"username": this.Username,
