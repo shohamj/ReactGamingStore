@@ -4,7 +4,7 @@ import MUIDataTable from "mui-datatables";
 import {toJS} from "mobx"
 import {observer} from "mobx-react";
 import Modali, { useModali } from 'modali';
-import ManageUsersTitle from "./managerUserTitle";
+import ManageUsersTable from "./manageUsersTable";
 import managerUserCss from "./../../../css/mangmentTables.css"
 
 @observer
@@ -16,7 +16,7 @@ export default class ManageUsers extends React.Component {
     render() {
         return (
         <div>
-          <ManageUsersTitle users={toJS(this.props.userStore.users)}/>
+          <ManageUsersTable users={toJS(this.props.userStore.users)}/>
         </div>
       );
     }
