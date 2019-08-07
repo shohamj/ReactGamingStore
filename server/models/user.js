@@ -8,8 +8,9 @@ const userSchema = mongoose.Schema({
     email: { type: String, unique: true},
     resetPasswordToken: String,
     resetPasswordExpires: Date,
-    created_at: Date,
-    updated_at: Date,
+    joined: { type: Date, required: true, default: Date.now},
+    games_bought: { type: Number, required: true, default: 0},
+    money_spent: { type: Number, required: true, default: 0},
     role: { type: String, required: true },
 
 },{ versionKey: false })
