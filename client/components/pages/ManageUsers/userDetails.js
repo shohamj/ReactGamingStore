@@ -1,13 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import classnames from "classnames";
-import { withRouter } from "react-router-dom";
-import { withToastManager } from "react-toast-notifications";
 import { Alert} from "reactstrap";
-import Modal from 'react-responsive-modal';
-
 import ReactLoading from "react-loading";
+import Select from 'react-select';
 
 // Icons
 import { Icon, InlineIcon } from "@iconify/react";
@@ -16,6 +12,12 @@ import userIcon from "@iconify/icons-feather/user";
 import lockOutline from "@iconify/icons-ant-design/lock-outline";
 
 import signupValidator from "../../../../shared/validation/signupValidation.js";
+import signupStore from "../../../stores/signupStore.js";
+const options = [
+  { value: 'customer', label: 'Customer' },
+  { value: 'employee', label: 'Employee' },
+  { value: 'manager', label: 'Manager' },
+];
 
 @observer
 class SignUp extends React.Component {
@@ -29,58 +31,63 @@ class SignUp extends React.Component {
     this.confirmPasswordChanged = this.confirmPasswordChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onMessageDismiss = this.onMessageDismiss.bind(this);
+    this.roleChanged = this.roleChanged.bind(this);
   }
 
   usernameChanged(e) {
-    this.props.signupStore.Username = e.target.value;
-    this.props.signupStore.Errors.username = undefined;
+    signupStore.Username = e.target.value;
+    signupStore.Errors.username = undefined;
   }
   emailChanged(e) {
-    this.props.signupStore.Email = e.target.value;
-    this.props.signupStore.Errors.email = undefined;
+    signupStore.Email = e.target.value;
+    signupStore.Errors.email = undefined;
+  }
+  roleChanged(e) {
+    signupStore.RoleLabel = e.label;
+    signupStore.RoleValue = e.value;
   }
   passwordChanged(e) {
-    this.props.signupStore.Password = e.target.value;
-    this.props.signupStore.Errors.password = undefined;
+    signupStore.Password = e.target.value;
+    signupStore.Errors.password = undefined;
   }
   confirmPasswordChanged(e) {
-    this.props.signupStore.ConfirmPassword = e.target.value;
-    this.props.signupStore.Errors.confirmPassword = undefined;
+    signupStore.ConfirmPassword = e.target.value;
+    signupStore.Errors.confirmPassword = undefined;
   }
   onMessageDismiss() {
-    this.props.signupStore.Errors.general = undefined;
+    signupStore.Errors.general = undefined;
+    signupStore.Message="";
+    signupStore.MessageType="";
+    signupStore.HasMessage = false;
   }
   onSubmit(e) {
     e.preventDefault();
     let data = {
-      username: this.props.signupStore.Username,
-      email: this.props.signupStore.Email,
-      password: this.props.signupStore.Password,
-      confirmPassword: this.props.signupStore.ConfirmPassword
+      username: signupStore.Username,
+      email: signupStore.Email,
+      password: signupStore.Password,
+      confirmPassword: signupStore.ConfirmPassword
     };
     const { errors, isValid } = signupValidator(data);
     if (!isValid) {
-      this.props.signupStore.Errors = {
-        ...this.props.signupStore.Errors,
+      signupStore.Errors = {
+        ...signupStore.Errors,
         ...errors
       };
-      console.log(this.props.signupStore.Errors);
+      console.log(signupStore.Errors);
     } else
-      this.props.signupStore.submitForm().then(
+      signupStore.submitForm().then(
         data => {
-          this.props.signupStore.Loading = false;
-          this.props.signupStore.Errors = data;
+          signupStore.Loading = false;
+          signupStore.Errors = data;
         }, //Fail
         data => {
-          this.props.signupStore.Loading = false;
-          this.props.signinStore.Message =
-            "Signed up successfully! You can now sign in.";
-            this.props.signinStore.MessageType = "success";
-            this.props.signinStore.MessageTitle = "User added successfully";
-            this.props.signinStore.HasMessage = true;
-          this.props.signinStore.Username = this.props.signupStore.Username;
-          this.props.signinStore.Password = this.props.signupStore.Password;
-          this.props.history.push("sign-in");
+          signupStore.Loading = false;
+          signupStore.MessageTitle =
+            "Success!";
+          signupStore.MessageType = "success";
+          signupStore.Message = "User added successfully";
+          signupStore.HasMessage = true;
         } // Success
       );
   }
@@ -91,21 +98,24 @@ class SignUp extends React.Component {
       Password,
       ConfirmPassword,
       Loading,
-      LoadingMessage,
-      Errors
-    } = this.props.signupStore;
+      MessageType,
+      MessageTitle,
+      Message,
+      HasMessage,
+      Errors,
+      RoleLabel,
+      RoleValue
+    } = signupStore;
     return (
-    <div>
+    <div >
       <div className="">
-        <form className="center pad-top" onSubmit={this.onSubmit}>
-          <h4 className="mtext-105 cl2 txt-center p-b-30">{this.props.title}</h4>
-          <Alert
-            color={"danger"}
-            isOpen={Errors.general !== undefined}
-            toggle={this.onMessageDismiss}
-          >
-            <h4 className="alert-heading">Error!</h4>
-            <p>{Errors.general}</p>
+        <form className="center80 pad-top" onSubmit={this.onSubmit}>
+          <h4 className="mtext-105 cl2 txt-center p-b-10">{this.props.title}</h4>
+          <Alert color={MessageType} isOpen={HasMessage} toggle={this.onMessageDismiss}>
+                  <h4 className="alert-heading">{MessageTitle}</h4>
+                  <p>
+                    {Message}
+                  </p>
           </Alert>
           <div className="form-group">
             <div className="bor8 m-b-20 how-pos4-parent">
@@ -213,6 +223,15 @@ class SignUp extends React.Component {
                 {Errors.confirmPassword}
               </small>
             )}
+          </div>
+          <div className="form-group">
+            <Select
+                 options={options}
+                 value={{ label: RoleLabel, value: RoleValue }}
+                 onChange={this.roleChanged}
+                 className="bor8 m-b-20 how-pos4-parent"
+                 placeholder="Select User's Role..."
+            />
           </div>
           {Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
           <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={Loading}>

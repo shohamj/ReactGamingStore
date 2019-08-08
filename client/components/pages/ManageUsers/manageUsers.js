@@ -16,7 +16,7 @@ export default class ManageUsers extends React.Component {
     render() {
         return (
         <div>
-          <ManageUsersTable userStore={this.props.userStore} signupStore={this.props.signupStore} signinStore={this.props.signinStore}/>
+          <ManageUsersTable userStore={this.props.userStore}/>
         </div>
       );
     }

@@ -45,7 +45,10 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   margin: auto;
   width: 40%;
 }
-
+.center80 {
+  margin: auto;
+  width: 80%;
+}
 .pad-bot {
   padding-bottom: 100px;
 }
@@ -3122,6 +3125,12 @@ input.num-product::-webkit-inner-spin-button {
 .hov-btn3:hover {
   border-color: #717fe0;
   background-color: #717fe0;
+  color: #fff;
+}
+
+.hov-btn4:hover {
+  border-color: #aa0c07;
+  background-color: #aa0c07;
   color: #fff;
 }
 

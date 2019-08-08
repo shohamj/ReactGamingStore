@@ -59,7 +59,9 @@ router.post('/signup', (req,res) => {
             res.status(400).json(errors);
         }
         else{
-            const data = {...req.body, role: "customer"};
+            let data = {...req.body};
+            if (data.role == undefined)
+                data.role="customer";
             let password = data.password;
             delete data.confirmPassword;
             delete data.password;
@@ -98,6 +100,28 @@ router.get('/signout', (req,res) => {
 router.get('/key', (req,res) => {
     //setTimeout(() => res.send(getPublicKey()), 5000);
     res.send(getPublicKey());
+})
+
+router.post('/deleteUser', (req,res) => {
+    User.remove({ _id: req.body.id }, function(err) {
+        if (!err) {
+            res.send("error");
+        }
+        else {
+            res.send("success");
+        }
+    });
+})
+
+router.post('/updateUser', (req,res) => {
+    User.findOneAndUpdate({ _id: req.body.id}, req.body.update , function(err) {
+        if (!err) {
+            res.send("error");
+        }
+        else {
+            res.send("success");
+        }
+    });
 })
 
 //Async and not promise because we were noobs at lab7

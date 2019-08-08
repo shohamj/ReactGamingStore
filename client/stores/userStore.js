@@ -14,6 +14,7 @@ class userStore {
     @observable users = [];
     @observable currentpage = 1;
     @observable loading = false;
+    @observable userForDelete = undefined;
     
 
     //***********Computed***********//
@@ -56,6 +57,17 @@ class userStore {
         .catch(err => console.log(err))
         .then(() => this.loading = false)        
 
+    }
+    @action 
+    deleteUser(){
+        const userForDelete = this.userForDelete;
+        fetch('/api/users/deleteUser', {
+            method: 'POST', 
+            body: JSON.stringify({"id": userForDelete}), 
+            headers:{
+              'Content-Type': 'application/json'
+            }
+        })
     }
 
     @action 

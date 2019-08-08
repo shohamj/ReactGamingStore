@@ -8,20 +8,20 @@ export default class ManageUsersTitle extends React.Component {
     render() {
         const users = this.props.users;
         return (
-            <div class="container">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-5">
+            <div className="container">
+            <div className="table-wrapper">
+                <div className="table-title">
+                    <div className="row">
+                        <div className="col-sm-5">
                             <h2>User <b>Management</b></h2>
                         </div>
-                        <div class="col-sm-7">
-                            <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
-                            <a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>						
+                        <div className="col-sm-7">
+                            <a href="#" className="btn btn-primary"><i className="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                            <a href="#" className="btn btn-primary"><i className="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>						
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-hover">
+                <table className="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -35,7 +35,7 @@ export default class ManageUsersTitle extends React.Component {
                     </thead>
                  <tbody>
                  {users.map((value, index) => {
-                     return <ManageSingleUser user={value} index={index+1} />
+                     return <ManageSingleUser user={value} index={index+1} key={index}/>
                     })}
                 </tbody>
                 </table>

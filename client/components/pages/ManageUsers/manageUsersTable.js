@@ -11,26 +11,48 @@ import ReactLoading from "react-loading";
 import SkyLight from 'react-skylight';
 import CustomScroll from 'react-custom-scroll';
 
+var dialog = {
+    height: '80%',
+    overflowY: "auto",
+    overflowX: "hidden"
+};
 
 @observer
 export default class ManageUsersTable extends React.Component {
     constructor(props) {
         super(props);
         this.reload = this.reload.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
     }
     reload(){
         this.props.userStore.getUsers();
+    }
+    deleteUser(){
+        this.props.userStore.deleteUser();
+        this.props.userStore.getUsers();
+        this.deleteUserDialog.hide();
     }
     render() {
         const pageUsers = toJS(this.props.userStore.pageUsers);
         const currentpage = toJS(this.props.userStore.currentpage);
         return (
             <div className="container">
-             <SkyLight hideOnOverlayClicked ref={ref => this.simpleDialog = ref}>
-                <CustomScroll>
-                    <UserDetails signupStore={this.props.signupStore} signinStore={this.props.signinStore} title="Add User"/>
-                </CustomScroll>
-            </SkyLight>
+            <div>
+                <SkyLight dialogStyles={dialog} hideOnOverlayClicked ref={ref => this.addUserDialog = ref} >
+                    <CustomScroll>
+                        <UserDetails title="Add User"/>
+                    </CustomScroll>
+                </SkyLight>
+                <SkyLight hideOnOverlayClicked ref={ref => this.deleteUserDialog = ref} >
+                    <h4 className="mtext-105 cl2 txt-center p-b-10">Delete User</h4>
+                    <div className="m-t-100">
+                    <p className="mtext-106 cl2 txt-center p-b-10 ">Are you sure you want to delete user?</p>
+                    <button onClick={this.deleteUser} className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn4 p-lr-15 trans-04 pointer">
+                        Delete User
+                    </button> 
+                    </div>
+                </SkyLight>
+            </div>
             <div className="table-wrapper">
                 <div className="table-title">
                     <div className="row">
@@ -38,7 +60,7 @@ export default class ManageUsersTable extends React.Component {
                             <h2>User <b>Management</b></h2>
                         </div>
                         <div className="col-sm-7">
-                            <button className="btn btn-primary" onClick={() => this.simpleDialog.show()}><i className="material-icons"><Icon className="material-icons" icon={userPlus} height="20" width="20" /></i> <span>Add New User</span></button>
+                            <button className="btn btn-primary" onClick={() => this.addUserDialog.show()}><i className="material-icons"><Icon className="material-icons" icon={userPlus} height="20" width="20" /></i> <span>Add New User</span></button>
                             <button className="btn btn-primary" onClick={this.reload}><i className="material-icons"><Icon className="material-icons" icon={arrowReload} height="20" width="20" /></i> <span>Reload Users</span></button>
                         </div>
                     </div>
@@ -59,8 +81,8 @@ export default class ManageUsersTable extends React.Component {
                         </tr>
                     </thead>
                  <tbody>
-                 {pageUsers.map((value, index) => {
-                     return <ManageSingleUser user={value} index={index+(currentpage-1)*5 + 1} key={index} />
+                 {pageUsers.map((user, index) => {
+                     return <ManageSingleUser user={user} index={index+(currentpage-1)*5 + 1} key={user._id} showDeleteDialog={() => this.deleteUserDialog.show()} userStore={this.props.userStore}/>
                     })}
                 </tbody>
                 </table>

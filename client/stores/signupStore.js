@@ -8,9 +8,15 @@ class signupStore {
     @observable Email = "";
     @observable Password = "";
     @observable ConfirmPassword = "";
+    @observable RoleLabel = "Customer";
+    @observable RoleValue = "customer";
     @observable Loading = false;
     @observable LoadingMessage = "";
     @observable Errors = {};
+    @observable Message = "";
+    @observable MessageTitle = "";
+    @observable MessageType = "";
+    @observable HasMessage = false;
     //***********Actions***********//
   
     @action
@@ -24,6 +30,7 @@ class signupStore {
         .then(publicKeyString => CreateKeyFromPublic(publicKeyString))
         .then(key => { return {"username": this.Username,
                "email": this.Email,
+               "role": this.RoleValue,
                "password": Encrypt(this.Password, key),
                "confirmPassword": Encrypt(this.ConfirmPassword, key)}})
         .then(data => {this.LoadingMessage = "Sending sign-up info to server"; return data})

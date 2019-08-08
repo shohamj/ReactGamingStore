@@ -53,7 +53,7 @@ export default class Routes extends React.Component {
                       exact
                       render={() => (
                         (authStore.currentUser != undefined && authStore.role == "manager")? 
-                          <ManageUsers userStore={userStore} signupStore={signupStore} signinStore={signinStore}/>
+                          <ManageUsers userStore={userStore}/>
                           :
                           <Redirect to="/sign-in"/> 
                       )

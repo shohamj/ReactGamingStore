@@ -65,6 +65,9 @@
 	}
 	table.table-striped.table-hover tbody tr:hover {
 		background: #f5f5f5;
+    }
+    table.table-striped.table-hover tbody input {
+		background: #f5f5f500;
 	}
     table.table th i {
         font-size: 13px;
@@ -157,11 +160,8 @@
     }
 
     .delete{
-        margin-left: 5px;
-        margin-top: 10px;
+        margin-left: 10px;
     }
 
     .edit{
-        margin-top: 5px;
-        margin-bottom: 5px;
     }
