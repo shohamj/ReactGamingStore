@@ -22,6 +22,7 @@ class shopStore {
     @observable games = [];
     @observable currentpage = 1;
     @observable loading = false;
+    @observable gameForDelete = undefined;
 
 
     // @observable games = [
@@ -83,7 +84,7 @@ class shopStore {
             (self.genre == "" || game.genre.includes(self.genre)) &&
             (game.price > self.price[0] && (self.price.length < 2 || game.price <= self.price[1])) &&
             (self.platform == "" || game.platform.includes(self.platform)) &&
-            (self.category != "recent" || (new Date() - Date.parse(game.added)) < 60 * 60 * 24 * 5 * 1000) &&
+            (self.category != "recent" || (new Date() - Date.parse(game.added)) < 60 * 60 * 24 * 1 * 1000) &&
             (self.category != "controller" || game.controller)
         });
         filtered.slice().sort(function (a,b){
@@ -138,6 +139,27 @@ class shopStore {
         .then(res => self.games = res)
         .catch(err => console.log(err))
         .finally(() => this.loading=false)
+    }
+    @action 
+    deleteGame(){
+        const gameForDelete = this.gameForDelete;
+        fetch('/api/games/deleteGame', {
+            method: 'POST', 
+            body: JSON.stringify({"id": gameForDelete}), 
+            headers:{
+              'Content-Type': 'application/json'
+            }
+        })
+    }
+    @action 
+    next(){
+        if (this.currentpage < this.maxPage)
+            this.currentpage += 1;  
+    }
+    @action 
+    previous(){
+        if (this.currentpage > 1)
+            this.currentpage -= 1;  
     }
     @action 
     toggleSearchPanel(){

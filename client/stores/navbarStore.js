@@ -5,6 +5,7 @@ class navbarStore {
     //***********Observables***********//
     @observable selectedTab = "Home";
     @observable showSidebar = false;
+    @observable showCartBar = false;
 
     //***********Actions***********//
     @action 
@@ -20,4 +21,4 @@ class navbarStore {
 var store = new navbarStore;
 export default store;
 
-autorun(() => {console.log(store.selectedTab)})
+autorun(() => {console.log(store.showCartBar)})

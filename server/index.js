@@ -19,6 +19,7 @@ import User from './models/user';
 //Routers
 import users from './api/users';
 import games from './api/games';
+import orders from './api/orders';
 
 //Mongoose 
 let sessConnStr = 'mongodb+srv://admin:q1w2e3r4@internetcourse-bu1ca.mongodb.net/ReactGamingStore?retryWrites=true';

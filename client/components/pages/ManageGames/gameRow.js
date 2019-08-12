@@ -30,29 +30,10 @@ export default class GameRow extends React.Component {
     constructor(props) {
       super(props);
       this.state = {isEditing: false},
-      this.deleteUser = this.deleteUser.bind(this);
-      this.edit = this.edit.bind(this);
-      this.cancel = this.cancel.bind(this);
-      this.onRoleChange = this.onRoleChange.bind(this);
-      this.updateUser = this.updateUser.bind(this);
+      this.deleteGame = this.deleteGame.bind(this);
     } 
 
-    updateUser(){
-      fetch('/api/users/updateUser', {
-        method: 'POST', 
-        body: JSON.stringify({id: this.props.user._id, update:{role: this.state.role}}), 
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })
-      this.props.user.role = this.state.role;
-      this.setState({isEditing: false});
-
-
-    }
-    onRoleChange(e){
-      this.setState({role: e.value});
-    }
+   
     edit(){
       this.setState({isEditing: true, lastRole: this.state.role});
     }
@@ -61,8 +42,8 @@ export default class GameRow extends React.Component {
       this.setState({role: this.state.lastRole});
 
     }
-    deleteUser(id){
-      this.props.userStore.userForDelete = id;
+    deleteGame(id){
+      this.props.gameStore.gameForDelete = id;
       this.props.showDeleteDialog();
     }
     render() {
@@ -98,7 +79,7 @@ export default class GameRow extends React.Component {
           {!this.state.isEditing &&   
 					<td>
           <button className="edit" title="Edit" onClick={this.edit}><Icon icon={editIcon} color="#428bca" height="20" width="20" className="edit"/></button>
-          <button  title="Delete" onClick={() => this.deleteUser(_id)}><Icon icon={deleteIcon} color="#d9534f" height="20" width="20" className="delete"/></button>
+          <button  title="Delete" onClick={() => this.deleteGame(_id)}><Icon icon={deleteIcon} color="#d9534f" height="20" width="20" className="delete"/></button>
 					</td>
           }
           {this.state.isEditing &&   

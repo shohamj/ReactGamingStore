@@ -12,15 +12,20 @@ import Contact from "./pages/Contact/contact.js"
 import SignIn from "./pages/Sign-In/sign-in.js"
 import SignUp from "./pages/Sign-Up/sign-up.js"
 import Shop from './pages/Shop/shop.js';
+import Cart from './pages/Cart/cart.js';
 import aaa from "./pages/aaa.js"
 import NavBar from "./NavBar/NavBar";
+import CartBar from "./CartBar/cartBar";
 import SideBar from './SideBar/SideBar';
 import Footer from './Footer/Footer';
 import GameDetails from './pages/Shop/Games/gameDetails.js'
 import ManageUsers from './pages/ManageUsers/manageUsers.js'
 import ManageGames from './pages/ManageGames/manageGames.js'
+
+
 // Stores
 import navbarStore from "../stores/navbarStore.js"
+import cartStore from "../stores/cartStore.js"
 import signupStore from "../stores/signupStore.js"
 import signinStore from "../stores/signinStore.js"
 import authStore from "../stores/authStore.js"
@@ -34,8 +39,8 @@ export default class Routes extends React.Component {
 
   componentWillMount() {
     authStore.pullUser(); 
+    cartStore.pullCart(); 
   }
-  
   render() {
       if (authStore.loading)
         return "";
@@ -43,7 +48,8 @@ export default class Routes extends React.Component {
           <BrowserRouter>
               <div>
                   <Favicon url="/images/icons/controller.png" />
-                  <NavBar navbarStore={navbarStore} authStore={authStore}/> 
+                  <NavBar navbarStore={navbarStore} authStore={authStore} cartStore={cartStore}/>
+                  <CartBar navbarStore={navbarStore} cartStore={cartStore}/> 
                   <SideBar navbarStore={navbarStore} authStore={authStore}/>
                   <Switch>
                     <Route path="/" exact component={Home} />
@@ -87,10 +93,21 @@ export default class Routes extends React.Component {
                       exact
                       render={(req) => (
                         authStore.currentUser != undefined ? 
-                          <GameDetails shopStore={shopStore} gameID={req.match.params.gameID}/>
+                          <GameDetails shopStore={shopStore} cartStore={cartStore} gameID={req.match.params.gameID}/>
                           :
                           <Redirect to="/sign-in"/> 
                       )}
+                    />
+                    <Route
+                      path="/cart"
+                      exact
+                      render={() => (
+                        authStore.currentUser != undefined ? 
+                          <Cart cartStore={cartStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
                     />
                     <Route
                       path="/sign-up"

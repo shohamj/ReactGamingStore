@@ -11,7 +11,13 @@
 		background: #f5f5f5;
 		font-family: 'Varela Round', sans-serif;
 		font-size: 13px;
-	}
+    }
+    .invalid{
+        border-style: solid;
+        border-width: 5px;
+        border-color: red;
+
+    }
 	.table-wrapper {
         background: #fff;
         padding: 20px 25px;

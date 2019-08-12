@@ -5,7 +5,7 @@ import { Alert} from "reactstrap";
 import ReactLoading from "react-loading";
 import Select from 'react-select';
 
-import signupValidator from "../../../../shared/validation/signupValidation.js";
+import gameValidator from "../../../../shared/validation/gameValidator.js";
 import addGameStore from "../../../stores/addGameStore.js";
 import Toggle from 'react-toggle'
 
@@ -37,6 +37,7 @@ class AddGame extends React.Component {
     this.controllerChanged = this.controllerChanged.bind(this);
     this.platformChanged = this.platformChanged.bind(this);
     this.genreChanged = this.genreChanged.bind(this);
+    this.descriptionChanged = this.descriptionChanged.bind(this);
   }
  
   nameChanged(e) {
@@ -68,52 +69,55 @@ class AddGame extends React.Component {
     addGameStore.Genres = options;
     addGameStore.Errors.genres = undefined;
   }
+  descriptionChanged(e) {
+    addGameStore.Description = e.target.value;
+    addGameStore.Errors.description = undefined;
+  }
   onMessageDismiss() {
     addGameStore.addGameStore.Errors.general = undefined;
     addGameStore.Message="";
     addGameStore.MessageType="";
     addGameStore.HasMessage = false;
   }
-  // onSubmit(e) {
-  //   e.preventDefault();
-  //   let data = {
-  //     username: addGameStore.Username,
-  //     email: addGameStore.Email,
-  //     password: addGameStore.Password,
-  //     confirmPassword: addGameStore.ConfirmPassword
-  //   };
-  //   const { errors, isValid } = signupValidator(data);
-  //   if (!isValid) {
-  //     addGameStore.addGameStore.Errors = {
-  //       ...addGameStore.addGameStore.Errors,
-  //       ...errors
-  //     };
-  //     console.log(addGameStore.addGameStore.Errors);
-  //   } else
-  //     addGameStore.submitForm().then(
-  //       data => {
-  //         addGameStore.Loading = false;
-  //         addGameStore.addGameStore.Errors = data;
-  //       }, //Fail
-  //       data => {
-  //         addGameStore.Loading = false;
-  //         addGameStore.MessageTitle =
-  //           "Success!";
-  //         addGameStore.MessageType = "success";
-  //         addGameStore.Message = "User added successfully";
-  //         addGameStore.HasMessage = true;
-  //       } // Success
-  //     );
-  // }
   onSubmit(e) {
     e.preventDefault();
-    addGameStore.submitForm();
+    let data = {
+      name: addGameStore.Name,
+      image: addGameStore.Image[0],
+      genre: addGameStore.Genres.map((elem) => elem.value),
+      platform: addGameStore.Platforms.map((elem) => elem.value),
+      price: addGameStore.Price,
+      released: addGameStore.Release,
+      controller: addGameStore.Controller,
+      description: addGameStore.Description,
+  }
+    const { errors, isValid } = gameValidator(data);
+    if (!isValid && false) {
+      addGameStore.Errors = {
+        ...addGameStore.Errors,
+        ...errors
+      };
+    } else
+      addGameStore.submitForm().then(
+        data => {
+          addGameStore.Loading = false;
+          addGameStore.Errors = data;
+        }, //Fail
+        data => {
+          addGameStore.Loading = false;
+          addGameStore.MessageTitle =
+            "Success!";
+          addGameStore.MessageType = "success";
+          addGameStore.Message = "Game added successfully";
+          addGameStore.HasMessage = true;
+        } // Success
+      );
   }
   render() {
     return (
     <div >
       <div className="">
-        <form className="center80 pad-top" onSubmit={this.onSubmit} enctype="multipart/form-data">
+        <form className="center80 pad-top" onSubmit={this.onSubmit} encType="multipart/form-data">
           <h4 className="mtext-105 cl2 txt-center p-b-10">{this.props.title}</h4>
           <Alert color={addGameStore.MessageType} isOpen={addGameStore.HasMessage} toggle={this.onMessageDismiss}>
                   <h4 className="alert-heading">{addGameStore.MessageTitle}</h4>
@@ -173,6 +177,7 @@ class AddGame extends React.Component {
                 type="number"
                 name="price"
                 min="0"
+                step="0.01"
                 placeholder="Enter Price..."
                 value={addGameStore.price}
                 onChange={this.priceChanged}
@@ -192,10 +197,15 @@ class AddGame extends React.Component {
                  options={genres}
                  value={addGameStore.Genres}
                  onChange={this.genreChanged}
-                 className="basic-multi-select bor8 m-b-20 how-pos4-parent"
+                 className={"basic-multi-select  m-b-20 how-pos4-parent " + (addGameStore.Errors.genre? "bor8-invalid" : "bor8")} 
                  classNamePrefix="select"
                  placeholder="Select Game's Genres..."
             />
+            {addGameStore.Errors.genre && (
+              <small className="form-text small-helper text-danger">
+                {addGameStore.Errors.genre}
+              </small>
+            )}
             </div>   
           <div className="form-group">
            <label>Supported Platforms</label>
@@ -204,10 +214,15 @@ class AddGame extends React.Component {
                  options={platforms}
                  value={addGameStore.Platforms}
                  onChange={this.platformChanged}
-                 className="basic-multi-select bor8 m-b-20 how-pos4-parent"
+                 className={"basic-multi-select  m-b-20 how-pos4-parent " + (addGameStore.Errors.genre? "bor8-invalid" : "bor8")} 
                  classNamePrefix="select"
                  placeholder="Select Supported Platforms..."
           />  
+          {addGameStore.Errors.platform && (
+              <small className="form-text small-helper text-danger">
+                {addGameStore.Errors.platform}
+              </small>
+            )}
           </div>
            <div className="form-group">
            <label>Release Date</label>
@@ -237,6 +252,26 @@ class AddGame extends React.Component {
                 checked={addGameStore.Controller}
                 onChange={this.controllerChanged} />
             </label>
+          </div>
+          <div className="form-group">
+            <label>Game's Description</label>
+            <div className="bor8 m-b-20 how-pos4-parent">
+              <textarea
+                className={classnames(
+                  "stext-111 cl2 plh3 size-116 p-r-30 form-control",
+                  { "is-invalid": addGameStore.Errors.description }
+                )}
+                name="description"
+                placeholder="Enter Game's Description..."
+                value={addGameStore.description}
+                onChange={this.descriptionChanged}
+              />
+            </div>
+            {addGameStore.Errors.description && (
+              <small className="form-text small-helper text-danger">
+                {addGameStore.Errors.description}
+              </small>
+            )}
           </div>
           {addGameStore.Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
           <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={addGameStore.Loading}>

@@ -23,7 +23,7 @@ export default class GamesTable extends React.Component {
     constructor(props) {
         super(props);
         this.reload = this.reload.bind(this);
-        this.deleteUser = this.deleteUser.bind(this);
+        this.deleteGame = this.deleteGame.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
     }
     onSearchChange(e){
@@ -32,10 +32,10 @@ export default class GamesTable extends React.Component {
     reload(){
         this.props.gameStore.getGames();
     }
-    deleteUser(){
-        this.props.gameStore.deleteUser();
+    deleteGame(){
+        this.props.gameStore.deleteGame();
         this.props.gameStore.getGames();
-        this.deleteUserDialog.hide();
+        this.deleteGameDialog.hide();
     }
     render() {
         const pageGames = toJS(this.props.gameStore.pageGames);
@@ -48,12 +48,12 @@ export default class GamesTable extends React.Component {
                         <AddGame title="Add Game"/>
                     </CustomScroll>
                 </SkyLight>
-                <SkyLight hideOnOverlayClicked ref={ref => this.deleteUserDialog = ref} >
-                    <h4 className="mtext-105 cl2 txt-center p-b-10">Delete User</h4>
+                <SkyLight hideOnOverlayClicked ref={ref => this.deleteGameDialog = ref} >
+                    <h4 className="mtext-105 cl2 txt-center p-b-10">Delete Game</h4>
                     <div className="m-t-100">
-                    <p className="mtext-106 cl2 txt-center p-b-10 ">Are you sure you want to delete user?</p>
-                    <button onClick={this.deleteUser} className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn4 p-lr-15 trans-04 pointer">
-                        Delete User
+                    <p className="mtext-106 cl2 txt-center p-b-10 ">Are you sure you want to delete game?</p>
+                    <button onClick={this.deleteGame} className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn4 p-lr-15 trans-04 pointer">
+                        Delete Game
                     </button> 
                     </div>
                 </SkyLight>
@@ -90,7 +90,7 @@ export default class GamesTable extends React.Component {
                     </thead>
                  <tbody>
                  {pageGames.map((game, index) => {
-                     return <GameRow game={game} index={index+(currentpage-1)*5 + 1} key={game._id} showDeleteDialog={() => this.deleteUserDialog.show()} gameStore={this.props.gameStore}/>
+                     return <GameRow game={game} index={index+(currentpage-1)*5 + 1} key={game._id} showDeleteDialog={() => this.deleteGameDialog.show()} gameStore={this.props.gameStore}/>
                     })}
                 </tbody>
                 </table>

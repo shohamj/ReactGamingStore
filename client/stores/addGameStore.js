@@ -11,6 +11,7 @@ class addGameStore {
     @observable Release = (new Date()).toISOString().split('T')[0];
     @observable Controller = false;
     @observable Loading = false;
+    @observable Description = "";
     @observable Errors = {};
     @observable Message = "";
     @observable MessageTitle = "";
@@ -25,11 +26,12 @@ class addGameStore {
         let data = {
             name: this.Name,
             image: this.Image[0],
-            genres: this.Genres,
-            platforms: this.Platforms,
+            genre: JSON.stringify(this.Genres.map((elem) => elem.value)),
+            platform: JSON.stringify(this.Platforms.map((elem) => elem.value)),
             price: this.Price,
-            release: this.Release,
+            released: this.Release,
             controller: this.Controller,
+            description: this.Description,
         }
         var form_data = new FormData();
 

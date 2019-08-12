@@ -12,14 +12,21 @@ export default class NavBar extends React.Component {
 
     // This binding is necessary to make `this` work in the callback
     this.openSidebar = this.openSidebar.bind(this);
+    this.openCartBar = this.openCartBar.bind(this);
     this.onTabClick = this.onTabClick.bind(this);
   }
 
   openSidebar()
   {
-    this.props.navbarStore.setShowSidebar(true);
+    this.props.navbarStore.showSidebar = true;
+    this.props.navbarStore.showCartBar = false;
   }
 
+  openCartBar()
+  {
+    this.props.navbarStore.showSidebar = false;
+    this.props.navbarStore.showCartBar = true;
+  }
   onTabClick(tab)
   {
     return () => {this.props.navbarStore.setSelectedTab(tab)}
@@ -30,7 +37,7 @@ export default class NavBar extends React.Component {
         <header className="header-v2">
           <div className="container-menu-desktop trans-03">
             <div className="wrap-menu-desktop">
-              <nav className="limiter-menu-desktop p-l-45">
+              <nav className="limiter-menu-desktop p-l-45  bot-border">
                 <a href="#" className="logo">
                   <img src="/images/icons/react2019logosmall.png" alt="IMG-LOGO" />
                 </a>
@@ -67,7 +74,7 @@ export default class NavBar extends React.Component {
                   </div>
                   { (this.props.authStore.currentUser && this.props.authStore.role == "customer") &&      
                   <div className="flex-c-m h-full p-l-18 p-r-25 bor5">
-                    <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify={2}>
+                    <div className={"icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-cart " + ((this.props.cartStore.overAllAmount>0)?"icon-header-noti":"")}  onClick={this.openCartBar} data-notify={this.props.cartStore.overAllAmount}>
                       <Icon icon={shoppingCart} />
                     </div>
                   </div>
