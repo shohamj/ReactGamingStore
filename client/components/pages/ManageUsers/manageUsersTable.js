@@ -5,7 +5,8 @@ import ManageUserBottom from "./ManagmentUserBottom"
 import UserDetails from "./userDetails.js"
 import { Icon, InlineIcon } from '@iconify/react';
 import userPlus from '@iconify/icons-fa-solid/user-plus';
-import arrowReload from '@iconify/icons-si-glyph/arrow-reload';
+import searchIcon from '@iconify/icons-fa-solid/search';
+import redoIcon from '@iconify/icons-fa-solid/redo';
 import {toJS} from "mobx"
 import ReactLoading from "react-loading";
 import SkyLight from 'react-skylight';
@@ -23,6 +24,10 @@ export default class ManageUsersTable extends React.Component {
         super(props);
         this.reload = this.reload.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
+        this.onSearchChange = this.onSearchChange.bind(this);
+    }
+    onSearchChange(e){
+        this.props.userStore.search = e.target.value;
     }
     reload(){
         this.props.userStore.getUsers();
@@ -60,8 +65,9 @@ export default class ManageUsersTable extends React.Component {
                             <h2>User <b>Management</b></h2>
                         </div>
                         <div className="col-sm-7">
-                            <button className="btn btn-primary" onClick={() => this.addUserDialog.show()}><i className="material-icons"><Icon className="material-icons" icon={userPlus} height="20" width="20" /></i> <span>Add New User</span></button>
-                            <button className="btn btn-primary" onClick={this.reload}><i className="material-icons"><Icon className="material-icons" icon={arrowReload} height="20" width="20" /></i> <span>Reload Users</span></button>
+                            <button className="btn btn-primary" style={{height:"35px", width:"132px"}} onClick={() => this.addUserDialog.show()}><i className="material-icons"><Icon className="material-icons" icon={userPlus} height="20" width="20" /></i> <span>Add New User</span></button>
+                            <button className="btn btn-primary" style={{height:"35px", width:"132px"}} onClick={this.reload}><i className="material-icons"><Icon className="material-icons" icon={redoIcon} height="20" width="20" /></i> <span>Reload Users</span></button>
+                            <div    className="btn btn-primary" style={{height:"35px"}}><i className="material-icons"><Icon className="material-icons" icon={searchIcon} height="20" width="20" /></i> <input type="text" placeholder="Search..." value={this.props.userStore.search} onChange={this.onSearchChange} style={{background:"transparent"}}></input></div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +77,7 @@ export default class ManageUsersTable extends React.Component {
                 <thead>
                         <tr>
                             <th>#</th>
-                            <th>User Name</th>
+                            <th>Username</th>
                             <th>Email</th>						
                             <th>Joined</th>
                             <th>Games Bought</th>

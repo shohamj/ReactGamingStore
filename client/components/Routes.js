@@ -18,6 +18,7 @@ import SideBar from './SideBar/SideBar';
 import Footer from './Footer/Footer';
 import GameDetails from './pages/Shop/Games/gameDetails.js'
 import ManageUsers from './pages/ManageUsers/manageUsers.js'
+import ManageGames from './pages/ManageGames/manageGames.js'
 // Stores
 import navbarStore from "../stores/navbarStore.js"
 import signupStore from "../stores/signupStore.js"
@@ -41,7 +42,7 @@ export default class Routes extends React.Component {
       return (
           <BrowserRouter>
               <div>
-                  <Favicon url={require("../images/icons/controller.png")} />
+                  <Favicon url="/images/icons/controller.png" />
                   <NavBar navbarStore={navbarStore} authStore={authStore}/> 
                   <SideBar navbarStore={navbarStore} authStore={authStore}/>
                   <Switch>
@@ -54,6 +55,17 @@ export default class Routes extends React.Component {
                       render={() => (
                         (authStore.currentUser != undefined && authStore.role == "manager")? 
                           <ManageUsers userStore={userStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
+                      path="/manage_games"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined && authStore.role == "manager")? 
+                          <ManageGames gameStore={shopStore}/>
                           :
                           <Redirect to="/sign-in"/> 
                       )

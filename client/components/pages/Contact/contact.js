@@ -15,7 +15,7 @@ export default class About extends React.Component {
                   </h4>
                   <div className="bor8 m-b-20 how-pos4-parent">
                     <input className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address" />
-                    <img className="how-pos4 pointer-none" src={require("../../../images/icons/icon-email.png")} alt="ICON" />
+                    <img className="how-pos4 pointer-none" src="/images/icons/icon-email.png" alt="ICON" />
                   </div>
                   <div className="bor8 m-b-30">
                     <textarea className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?" defaultValue={""} />

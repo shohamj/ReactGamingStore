@@ -32,7 +32,7 @@ export default class NavBar extends React.Component {
             <div className="wrap-menu-desktop">
               <nav className="limiter-menu-desktop p-l-45">
                 <a href="#" className="logo">
-                  <img src={require("../../images/icons/react2019logosmall.png")} alt="IMG-LOGO" />
+                  <img src="/images/icons/react2019logosmall.png" alt="IMG-LOGO" />
                 </a>
                 <div className="menu-desktop">
                   <ul className="main-menu">

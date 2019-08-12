@@ -12,17 +12,28 @@ class userStore {
 
     //***********Observables***********//
     @observable users = [];
+    @observable search = "";
     @observable currentpage = 1;
     @observable loading = false;
     @observable userForDelete = undefined;
     
 
     //***********Computed***********//
+    @computed get filteredUsers(){
+        var self = this;
+        let filtered = this.users.filter(function (user) {
+            return user.username.includes(self.search) ||
+            user.email.includes(self.search) ||
+            user.role.includes(self.search); 
+        })
+        return filtered;
+    }
+
     @computed get pageUsers(){
-        return this.users.slice((this.currentpage-1)*5, this.currentpage*5 )
+        return this.filteredUsers.slice((this.currentpage-1)*5, this.currentpage*5 )
     }
     @computed get maxPage(){
-        return Math.ceil(this.users.length / 5);
+        return Math.ceil(this.filteredUsers.length / 5);
     }
     @computed get pageRange(){
         if (this.currentpage < 5)

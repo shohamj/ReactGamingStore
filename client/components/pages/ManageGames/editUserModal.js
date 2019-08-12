@@ -8,7 +8,7 @@ const [exampleModal, toggleExampleModal] = useModali();
 export default class EditUserModal extends React.Component {
     
     componentDidMount(){
-        this.props.userStore.getGames();
+        this.props.gameStore.getGames();
     }
     render() {
         return (

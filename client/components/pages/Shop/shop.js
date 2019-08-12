@@ -28,7 +28,7 @@ export default class Shop extends React.Component {
                 </div>
                 {(this.props.shopStore.filteredGames.length < 1) &&  
                 <div className="flex-c-m">
-                  <img src={require('../../../images/games/wherethemgamesat.gif') } width="200px"></img>
+                  <img src="/images/games/wherethemgamesat.gif"width="200px"></img>
                 </div>
                 }
                 {(this.props.shopStore.filteredGames.length < 1) &&  

@@ -1,4 +1,11 @@
 
+    tbody {
+        width: 100px;
+        overflow-x: scroll;  /* Hide the horizontal scroll */
+    }
+    thead {
+        overflow-x: scroll;  /* Hide the horizontal scroll */
+    }
     body {
         color: #566787;
 		background: #f5f5f5;
@@ -165,3 +172,8 @@
 
     .edit{
     }
+    .btn input  {
+        float: left;
+        margin-top: 2px;
+        font-size:13px
+    }	

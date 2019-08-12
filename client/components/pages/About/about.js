@@ -28,7 +28,7 @@ export default class About extends React.Component {
               <div className="col-11 col-md-5 col-lg-4 m-lr-auto">
                 <div className="how-bor1 ">
                   <div className="hov-img0">
-                    <img src={require("../../../images/about/Game-PUBG-player-redy-for-match-with-pan-and-AKM.jpg")} alt="IMG" />
+                    <img src="/images/about/Game-PUBG-player-redy-for-match-with-pan-and-AKM.jpg" alt="IMG" />
                   </div>
                 </div>
               </div>
@@ -55,7 +55,7 @@ export default class About extends React.Component {
               <div className="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
                 <div className="how-bor2">
                   <div className="hov-img0">
-                    <img src={require("../../../images/about/god_king_garen_lol_splash_art_league_of_legends-wallpaper-1280x1280.jpg")} alt="IMG" />
+                    <img src="/images/about/god_king_garen_lol_splash_art_league_of_legends-wallpaper-1280x1280.jpg" alt="IMG" />
                   </div>
                 </div>
               </div>

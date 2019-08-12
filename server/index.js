@@ -28,6 +28,7 @@ mongoose.connect(sessConnStr,{ useNewUrlParser: true });
 let app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //Using webpack as middleware to bundle all js

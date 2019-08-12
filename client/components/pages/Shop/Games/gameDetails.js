@@ -24,9 +24,9 @@ export default class GameDetails extends React.Component {
                 <div className="row">
                   <div className="col-md-6 col-lg-7 p-b-30">
                     <Carousel showArrows={true} interval={4000} transitionTime={1000} autoPlay={true} showThumbs={true} showStatus={false} infiniteLoop={true}>
-                        <img src={require('../../../../images/games/' + this.state.mainImage)}/>
+                        <img src={"/images/games/" + this.state.mainImage}/>
                         {this.state.extraImages.map( (img, index) => (
-                            <img src={require('../../../../images/games/' + img)} key={index}/>
+                            <img src={"/images/games/" + img} key={index}/>
                         ))}
                     </Carousel>
                   </div>

@@ -12,7 +12,7 @@ export default {
         rules: [
             {
               test: /\.m?js$/,
-              exclude: /(node_modules|bower_components)/,
+              exclude: /(node_modules|bower_components|client\\images)/,
               use: {
                 loader: 'babel-loader',
                 options: {

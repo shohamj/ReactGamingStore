@@ -1,5 +1,13 @@
 import {autorun, observable, action, computed} from "mobx"
  
+function range(start, end) {
+    //console.log(start, end);
+    let size = end - start + 1;
+    if (size < 1)
+        return [];
+    return [...Array(size).keys()].map(i => i + start);
+}
+
 class shopStore {
 
     //***********Observables***********//
@@ -11,7 +19,11 @@ class shopStore {
     @observable genre = "";
     @observable platform = "";
     @observable price = [0];
-    @observable games = []
+    @observable games = [];
+    @observable currentpage = 1;
+    @observable loading = false;
+
+
     // @observable games = [
     // {id:"507f191e810c19729de860ea", name:"Enslaved", price:13.99, image:"enslaved/main.png", genre:["Action", "Indie"], platform:["PC"], sold:15, released: new Date(), added: new Date(), controller: false},
     // {id:"507f191e810c19729de860eb", name:"Another Game", price:39.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:5, released: new Date(), added: new Date(), controller: false},
@@ -31,6 +43,31 @@ class shopStore {
     // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:2, released: new Date(), added: new Date(), controller: false},
     // {id:"507f191e810c19729de860ei", name:"End It All", price:16.99, image:"enslaved/main.png", genre:["Action"], platform:["PC"], sold:0, released: new Date(), added: new Date(), controller: false},
     // ];
+
+    @computed get pageGames(){
+        return this.filteredGames.slice((this.currentpage-1)*5, this.currentpage*5 )
+    }
+    @computed get maxPage(){
+        return Math.ceil(this.filteredGames.length / 5);
+    }
+
+    @computed get pageRange(){
+        if (this.currentpage < 5)
+            if (this.maxPage > 5)
+                return range(1,5);
+            else
+            {
+                console.log("max", this.maxPage);
+                return range(1,this.maxPage);
+            }
+        else
+        {
+            if (this.currentpage == this.maxPage)
+                return range(this.currentpage - 4,this.currentpage);
+            else
+                return range(this.currentpage - 3,this.currentpage + 1);
+        }
+    }
 
     @computed get filteredGames(){
         var self = this;
@@ -95,10 +132,12 @@ class shopStore {
     @action 
     getGames(){
         var self = this;
+        this.loading = true;
         fetch('/api/games/gamesList')
         .then(res => res.json())
         .then(res => self.games = res)
         .catch(err => console.log(err))
+        .finally(() => this.loading=false)
     }
     @action 
     toggleSearchPanel(){

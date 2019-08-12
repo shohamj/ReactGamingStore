@@ -1,6 +1,19 @@
 import express from 'express';
-import Game from '../models/game.js'
+import Game from '../models/game.js';
+import multer from 'multer';
+import path from 'path';
+
 let router = express.Router();  
+
+const storage = multer.diskStorage({
+    destination: './public/images',
+    filename: function(req,file,cb){
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
+const upload = multer({
+    storage: storage
+}).single('image');
 
 router.get('/game/:id', (req,res) => {
     // setTimeout(() =>  
@@ -16,8 +29,20 @@ router.get('/game/:id', (req,res) => {
 
 })
 
-router.get('/addGame', (req,res) => {
-    var game = new Game({name:"Enslaved", price:"13.99", platform: ["PC", "Linux"],released:new Date(),controller:true,mainImage:"enslaved/main.png", extraImages:["enslaved/1.png"], description:"Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat."});
+router.post('/addGame', (req,res) => {
+    console.log("/addGame");
+    console.log(req.body);
+    upload(req,res,(err) =>{
+        if (err){
+            console.log(err);
+        }
+        else{
+            console.log(req.file);  
+            console.log(req.body);  
+
+        }
+    })
+    var game = new Game({name:"Enslaved", price:"13.99", genre: ["Action", "Indie"] , platform: ["PC", "Linux"],released:new Date(),controller:true,mainImage:"enslaved/main.png", extraImages:["enslaved/1.png"], description:"Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat."});
     game.save(function (err) {
         if (err) console.log(err);
         res.send("Hurray")

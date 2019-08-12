@@ -9,13 +9,13 @@ export default class HomeCarousel extends React.Component {
             <Carousel showArrows={true} interval={4000} transitionTime={1000} autoPlay={true}
                       showThumbs={false} showStatus={false} infiniteLoop={true} >
                 <div>
-                    <img src={require('../../../images/HomeCarousel/lawbreakers_video_game_2017-wallpaper-1920x600.jpg')} />
+                    <img src="/images/HomeCarousel/lawbreakers_video_game_2017-wallpaper-1920x600.jpg" />
                 </div>
                 <div>
-                    <img src={require('../../../images/HomeCarousel/games_6-wallpaper-1920x600.jpg')}/>
+                    <img src="/images/HomeCarousel/games_6-wallpaper-1920x600.jpg"/>
                 </div>
                 <div>
-                    <img src={require('../../../images/HomeCarousel/destiny.jpg')}/>
+                    <img src="/images/HomeCarousel/destiny.jpg"/>
                 </div>
             </Carousel>
         );

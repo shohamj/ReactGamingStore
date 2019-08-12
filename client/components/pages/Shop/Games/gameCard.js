@@ -14,7 +14,7 @@ export default class GameCard extends React.Component {
           <div>
             <div className="block2">
               <div className="block2-pic hov-img0" style={{"borderRadius": "8px"}}>
-                <img src={require("../../../../images/games/" + image)}/>
+                <img src={"/images/games/" + image}/>
                 <Link to={"/shop/games/" + id} className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                   Details
                 </Link>
