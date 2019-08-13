@@ -66,6 +66,7 @@ passport.deserializeUser(User.deserializeUser());
 // Routes
 app.use('/api/users', users);
 app.use('/api/games', games);
+app.use('/api/orders', orders);
 
 //Express server
 app.get("/*",  (req,res) =>{

@@ -121,7 +121,10 @@ router.get('/getCart', function(req, res) {
     res.send(req.session.cart);
 });
 
-  
+router.get('/clearCart', function(req, res) {
+    req.session.cart = []
+    res.send(req.session.cart);
+});
   
 router.get('/gamesList', function(req, res) {
     Game.find({}, function(err, games) {

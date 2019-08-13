@@ -21,6 +21,7 @@ import Footer from './Footer/Footer';
 import GameDetails from './pages/Shop/Games/gameDetails.js'
 import ManageUsers from './pages/ManageUsers/manageUsers.js'
 import ManageGames from './pages/ManageGames/manageGames.js'
+import OrdersHistory from './pages/OrdersHistory/ordersHistory.js'
 
 
 // Stores
@@ -31,6 +32,7 @@ import signinStore from "../stores/signinStore.js"
 import authStore from "../stores/authStore.js"
 import shopStore from "../stores/shopStore.js"
 import userStore from "../stores/userStore.js"
+import orderStore from "../stores/orderStore.js"
 
 import ReactLoading from "react-loading";
 
@@ -55,6 +57,17 @@ export default class Routes extends React.Component {
                     <Route path="/" exact component={Home} />
                     <Route path="/about" exact component={About} />
                     <Route path="/contact" exact component={Contact} />
+                    <Route
+                      path="/orders"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <OrdersHistory orderStore={orderStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
                     <Route
                       path="/manage_users"
                       exact

@@ -68,6 +68,7 @@
     "pbkdf2": "^3.0.17",
     "react": "^16.8.6",
     "react-collapse": "^4.0.3",
+    "react-confirm-alert": "^2.4.1",
     "react-custom-scroll": "^4.1.0",
     "react-date-picker": "^7.8.1",
     "react-datepicker": "^2.8.0",
