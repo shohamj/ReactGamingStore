@@ -29,7 +29,7 @@ export default class OrdersTable extends React.Component {
         this.props.orderStore.search = e.target.value;
     }
     reload(){
-        this.props.orderStore.getGames();
+        this.props.orderStore.getOrders();
     }
     deleteGame(){
         this.props.orderStore.deleteGame();
@@ -39,6 +39,7 @@ export default class OrdersTable extends React.Component {
     render() {
         const pageOrders = toJS(this.props.orderStore.pageOrders);
         const currentpage = toJS(this.props.orderStore.currentpage);
+        const role = this.props.authStore.role;
         return (
             <div className="container">
             <div className="table-wrapper">
@@ -48,7 +49,7 @@ export default class OrdersTable extends React.Component {
                             <h2>Orders <b>History</b></h2>
                         </div>
                         <div className="col-sm-7">
-                            <button className="btn btn-primary" style={{height:"35px"}} onClick={this.reload}><i className="material-icons"><Icon className="material-icons" icon={redoIcon} height="20" width="20" /></i> <span>Reload Games</span></button>
+                            <button className="btn btn-primary" style={{height:"35px"}} onClick={this.reload}><i className="material-icons"><Icon className="material-icons" icon={redoIcon} height="20" width="20" /></i> <span>Reload Orders</span></button>
                             <div    className="btn btn-primary" style={{height:"35px"}}><i className="material-icons"><Icon className="material-icons" icon={searchIcon} height="20" width="20" /></i> <input type="text" placeholder="Search..." value={this.props.orderStore.search} onChange={this.onSearchChange} style={{background:"transparent"}}></input></div>
                         </div>
                     </div>
@@ -59,18 +60,19 @@ export default class OrdersTable extends React.Component {
                 <thead>
                         <tr>
                             <th>#</th>
-                            <th>User</th>
+                            {(role == "manager" || role == "employee") && <th>User</th> }
                             <th>Game</th>						
                             <th>Price</th>						
                             <th>Amount</th>
                             <th>Ordered at</th>
                             <th>Total</th>
                             <th>Status</th>        
+                            {(role == "manager" || role == "employee") && <th>Actions</th>}  
                         </tr>
                     </thead>
                  <tbody>
                  {pageOrders.map((order, index) => {
-                     return <OrderRow order={order} index={index+(currentpage-1)*5 + 1} key={order._id} showDeleteDialog={() => this.deleteGameDialog.show()} orderStore={this.props.orderStore}/>
+                     return <OrderRow order={order} index={index+(currentpage-1)*5 + 1} key={order._id} showDeleteDialog={() => this.deleteGameDialog.show()} orderStore={this.props.orderStore} authStore={this.props.authStore}/>
                     })}
                 </tbody>
                 </table>

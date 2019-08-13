@@ -1,5 +1,7 @@
 import express from 'express';
 import Order from '../models/order.js';
+import Game from '../models/game.js';
+import User from '../models/user.js';
 
 let router = express.Router();  
 
@@ -28,10 +30,36 @@ router.get('/addOrder', (req,res) => {
     }
 })  
 
-router.get('/ordersList', function(req, res) {
-    Order.find({}, function(err, users) {
-      res.send(users);  
+router.post('/cancelOrder', (req,res) => {
+    Order.findOneAndUpdate({_id: req.body.id}, {status:"Canceled"}, function(err) {
+        res.send("Canceled");  
     });
+})  
+
+router.post('/acceptOrder', (req,res) => {
+    Order.findOneAndUpdate({_id: req.body.id}, {status:"Accepted"}, function(err, order) {
+        Game.findOneAndUpdate({_id: order.gameID}, {$inc: {sold: order.amount}}, function(err) {
+            User.findOneAndUpdate({_id: order.userID}, {$inc: {games_bought: order.amount, money_spent: order.total}}, function(err) {
+                res.send("Accepted");  
+            }); 
+        }); 
+    });
+}) 
+
+router.get('/ordersList', function(req, res) {
+    if (req.user.role == "customer"){
+        Order.find({userID: req.user._id}, function(err, users) {
+            res.send(users);  
+        });
+    }
+    else
+        if (req.user.role == "manager" || req.user.role == "employee"){
+            Order.find({}, function(err, users) {
+                res.send(users);  
+            });
+        }
+        else
+            res.send([]);  
   });
 
 

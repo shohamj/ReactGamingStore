@@ -2453,6 +2453,12 @@ input.num-product::-webkit-inner-spin-button {
 
 /*//////////////////////////////////////////////////////////////////
 [ Size ]*/
+.customSize{
+  margin-top: 50px;
+  width: 40%;
+  height: 46px;
+}
+
 .size-101 {
   min-width: 161px;
   height: 46px;

@@ -87,7 +87,7 @@ class shopStore {
             (self.category != "recent" || (new Date() - Date.parse(game.added)) < 60 * 60 * 24 * 1 * 1000) &&
             (self.category != "controller" || game.controller)
         });
-        filtered.slice().sort(function (a,b){
+        filtered = filtered.slice().sort(function (a,b){
             if(self.sort == "Popularity"){
                 if( a.sold < b.sold )
                     return 1;
@@ -138,7 +138,7 @@ class shopStore {
         .then(res => res.json())
         .then(res => self.games = res)
         .catch(err => console.log(err))
-        .finally(() => this.loading=false)
+        .finally(() => self.loading=false)
     }
     @action 
     deleteGame(){

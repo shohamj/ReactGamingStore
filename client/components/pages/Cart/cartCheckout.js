@@ -19,7 +19,7 @@ export default class Cart extends React.Component {
       message: 'Your order will now await for manual confirmation by an employee or administrator.',
       buttons: [
         {
-          label: 'Understood',
+          label: 'Ok',
           onClick: undefined
         },
       ]

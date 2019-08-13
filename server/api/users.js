@@ -1,6 +1,7 @@
 import express from 'express';
 import signupValidator from '../../shared/validation/signupValidation.js';
 import signinValidator from '../../shared/validation/signinValidation.js';
+import updatePasswordValidator from '../../shared/validation/updatePasswordValidation.js';
 import User from '../models/user';
 import isEmpty from 'lodash/isEmpty';
 import {getKey, getPublicKey} from '../../shared/encryption/RSAKey.js';
@@ -23,6 +24,7 @@ function extendedSignupValidator(data, validator){
         return { errors, isValid: isEmpty(errors) }
     })
 }
+
 
 function extendedSigninValidator(data, challenge, validator){
     let {errors} = validator(data);
@@ -124,6 +126,20 @@ router.post('/updateUser', (req,res) => {
     });
 })
 
+router.post('/updatePassword', (req,res) => {
+    let key = getKey();
+    let currentPassword = Decrypt(req.body.currentPassword, key);
+    let newPassword = Decrypt(req.body.newPassword, key);
+    const { errors, isValid } = updatePasswordValidator({currentPassword, newPassword});
+    if (!isValid)
+        res.status(400).json(errors);
+    else
+        User.findOne({username: req.user.username})
+        .then(user => user.changePassword(currentPassword, newPassword))
+        .then(() => res.send("Password Updated"))
+        .catch(err => res.status(400).json({currentPassword: "Incorrect password"}))
+})
+
 //Async and not promise because we were noobs at lab7
 router.post('/challenge_response', async (req, res) => {
         console.log(req.body);
@@ -152,7 +168,14 @@ router.post('/challenge_response', async (req, res) => {
 
 router.get('/user', (req,res) => {
     if (req.user)
-        res.json({username:req.user.username, role:req.user.role})
+        res.json({
+            username:req.user.username, 
+            role:req.user.role, 
+            email:req.user.email, 
+            joined:req.user.joined,
+            games_bought:req.user.games_bought,
+            money_spent:req.user.money_spent
+        })
     else
         res.json({});  
 })

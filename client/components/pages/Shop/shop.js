@@ -6,6 +6,8 @@ import FiltersPanel from './Filters/Panels/filters_panel.js';
 import SearchPanel from './Filters/Panels/search_panel.js';
 import Categories from './Filters/Categories/categories.js'
 import GameCard from './Games/gameCard.js';
+import ReactLoading from "react-loading";
+
 import { CSSGrid, layout } from 'react-stonecutter';
 @observer
 export default class Shop extends React.Component {
@@ -26,12 +28,13 @@ export default class Shop extends React.Component {
                   <SearchPanel   shopStore={this.props.shopStore}/>  
                   <FiltersPanel  shopStore={this.props.shopStore}/>  
                 </div>
-                {(this.props.shopStore.filteredGames.length < 1) &&  
+                {this.props.shopStore.loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={100} width={100}/>}
+                {(this.props.shopStore.filteredGames.length < 1 && !this.props.shopStore.loading) &&  
                 <div className="flex-c-m">
                   <img src="/images/games/wherethemgamesat.gif"width="200px"></img>
                 </div>
                 }
-                {(this.props.shopStore.filteredGames.length < 1) &&  
+                {(this.props.shopStore.filteredGames.length < 1 && !this.props.shopStore.loading) &&  
                 <div className="flex-c-m p-t-14">
                   <h3>No games found</h3>
                 </div>

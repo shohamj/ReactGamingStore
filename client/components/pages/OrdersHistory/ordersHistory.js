@@ -11,7 +11,7 @@ export default class OrdersHistory extends React.Component {
     }
     render() {
         return (
-          <OrdersTable orderStore={this.props.orderStore}/>
+          <OrdersTable orderStore={this.props.orderStore} authStore={this.props.authStore}/>
       );
     }
 }

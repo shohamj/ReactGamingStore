@@ -18,10 +18,11 @@ import NavBar from "./NavBar/NavBar";
 import CartBar from "./CartBar/cartBar";
 import SideBar from './SideBar/SideBar';
 import Footer from './Footer/Footer';
-import GameDetails from './pages/Shop/Games/gameDetails.js'
-import ManageUsers from './pages/ManageUsers/manageUsers.js'
-import ManageGames from './pages/ManageGames/manageGames.js'
-import OrdersHistory from './pages/OrdersHistory/ordersHistory.js'
+import GameDetails from './pages/Shop/Games/gameDetails.js';
+import ManageUsers from './pages/ManageUsers/manageUsers.js';
+import ManageGames from './pages/ManageGames/manageGames.js';
+import OrdersHistory from './pages/OrdersHistory/ordersHistory.js';
+import Account from './pages/Account/account.js';
 
 
 // Stores
@@ -62,7 +63,18 @@ export default class Routes extends React.Component {
                       exact
                       render={() => (
                         (authStore.currentUser != undefined)? 
-                          <OrdersHistory orderStore={orderStore}/>
+                          <OrdersHistory orderStore={orderStore} authStore={authStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
+                      path="/account"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <Account authStore={authStore}/>
                           :
                           <Redirect to="/sign-in"/> 
                       )

@@ -112,7 +112,7 @@ class SignIn extends React.Component {
                 </div>
                 {Errors.password && ( <small className="form-text small-helper text-danger">{Errors.password}</small>)}               
                 {Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
-                <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={Loading}>
+                <button className="flex-c-m stext-101 cl0 size-121 center bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={Loading}>
                   {Loading ? "Submiting..." : "Submit"}
                 </button> 
             </form>

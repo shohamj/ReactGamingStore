@@ -14,27 +14,44 @@ import Select from 'react-select';
 export default class GameRow extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {isEditing: false},
-      this.deleteGame = this.deleteGame.bind(this);
+      this.cancel = this.cancel.bind(this);
+      this.accept = this.accept.bind(this);
     } 
 
     edit(){
       this.setState({isEditing: true, lastRole: this.state.role});
     }
     cancel(){
-      this.setState({isEditing: false});
-      this.setState({role: this.state.lastRole});
+      var self = this;
+      fetch('/api/orders/cancelOrder', {
+        method: 'POST', 
+        body: JSON.stringify({id: this.props.order._id}), 
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(self.props.orderStore.getOrders())
     }
-    deleteGame(id){
-      this.props.gameStore.gameForDelete = id;
-      this.props.showDeleteDialog();
+    accept(){
+      var self = this;
+      fetch('/api/orders/acceptOrder', {
+        method: 'POST', 
+        body: JSON.stringify({id: this.props.order._id}), 
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(self.props.orderStore.getOrders())
     }
+
     render() {
         const {user, game, price, amount, total, ordered, status} = this.props.order;
+        const role = this.props.authStore.role;
+        console.log("role: " + role);
         return (
           <tr>
           <td>{this.props.index}</td>
-          <td >{user}</td>
+          {(role == "manager" || role == "employee") && <td >{user}</td> }
           <td >{game}</td>
           <td >${price}</td>
           <td >{amount}</td>
@@ -42,18 +59,13 @@ export default class GameRow extends React.Component {
           <td >${total}</td>
           <td >{status}</td>
 
-          {!this.state.isEditing &&   
-		<td>
-          <button className="edit" title="Edit" onClick={this.edit}><Icon icon={editIcon} color="#428bca" height="20" width="20" className="edit"/></button>
-          <button  title="Delete" onClick={() => this.deleteGame(_id)}><Icon icon={deleteIcon} color="#d9534f" height="20" width="20" className="delete"/></button>
-		</td>
-          }
-          {this.state.isEditing &&   
+          {((role == "manager" || role == "employee") && status == "Pending") && 
 					<td>
-          <button className="edit" title="Update" onClick={this.updateUser}><Icon icon={checkCircle} color="#5cb85c" height="22" width="22" className="edit"/></button>
-          <button  title="Cancel" onClick={this.cancel}><Icon icon={closeCircle} color="#d9534f" height="22" width="22" className="delete"/></button>
+          <button className="edit" title="Accept Order" onClick={this.accept}><Icon icon={checkCircle} color="#5cb85c" height="22" width="22" className="edit"/></button>
+          <button  title="Cancel Order" onClick={this.cancel}><Icon icon={closeCircle} color="#d9534f" height="22" width="22" className="delete"/></button>
 					</td>
           }
+          {status != "Pending" && <td></td>}
           </tr>
           
       );

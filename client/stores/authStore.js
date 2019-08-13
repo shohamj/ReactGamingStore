@@ -4,7 +4,11 @@ class authStore {
 
     //***********Observables***********//
     @observable currentUser = undefined;
-    @observable role = undefined;
+    @observable role = "";
+    @observable email = "";
+    @observable joined = "";
+    @observable games_bought = "";
+    @observable money_spent = "";
     @observable loading = false;
 
     //***********Actions***********//
@@ -14,6 +18,10 @@ class authStore {
         user = JSON.parse(user);
         this.currentUser = user.username;
         this.role = user.role;
+        this.email = user.email;
+        this.joined = user.joined;
+        this.games_bought = user.games_bought;
+        this.money_spent = user.money_spent;
         this.loading = false;
         console.log(this.currentUser);
     }

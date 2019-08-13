@@ -22,7 +22,7 @@ class orderStore {
         let filtered = this.orders.filter(function (order) {
             return order.user.includes(self.search) ||
             order.game.includes(self.search) ||
-            order.Status.includes(self.search)
+            order.status.includes(self.search)
         })
         return filtered;
     }
