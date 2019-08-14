@@ -2,20 +2,23 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {observer} from "mobx-react";
 import {NavLink} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 @observer
-export default class SingleCategoryCard extends React.Component {
+class SingleCategoryCard extends React.Component {
 
   constructor(props) {
     super(props);
 
     // This binding is necessary to make `this` work in the callback
-    this.onTabClick = this.onTabClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
-  onTabClick(tab)
-  {
-    return () => {this.props.navbarStore.setSelectedTab(tab)}
-  }
+
+  onSubmit() {
+    console.log(this.props.HomeCategoriesStore);
+    this.props.HomeCategoriesStore.genre = this.props.name;
+    this.props.history.push("shop");
+  } 
 
     render(){
         var {name, src} = this.props;
@@ -24,7 +27,7 @@ export default class SingleCategoryCard extends React.Component {
           <div className="size-202 m-lr-auto respon4">
             <div className="block1 wrap-pic-w"  >
               <img className="card-img-top" src={src} alt="Card image" style={{width: '100%'}} />
-              <NavLink to="./../shop" className="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+              <a onClick={this.onSubmit} className="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                 <div className="block1-txt-child1 flex-col-l">
                   <span className="block1-name ltext-102 trans-04 p-b-8">
                     {name}
@@ -38,9 +41,11 @@ export default class SingleCategoryCard extends React.Component {
                     Shop Now
                   </div>
                 </div>
-              </NavLink>
+              </a>
             </div>
           </div>
        );
     }
 }
+
+export default withRouter(SingleCategoryCard);

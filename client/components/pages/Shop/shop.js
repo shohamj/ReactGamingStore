@@ -13,10 +13,14 @@ import { CSSGrid, layout } from 'react-stonecutter';
 export default class Shop extends React.Component {
     constructor(props) {
       super(props);
+      
       //this.changeCategory = this.changeCategory.bind(this);
     }
     componentDidMount(){
       this.props.shopStore.getGames();
+      var genre = this.props.HomeCategoriesStore.genre;
+      this.props.shopStore.genre = genre;
+      this.props.HomeCategoriesStore.genre = "";
     }
     render(){
         return (

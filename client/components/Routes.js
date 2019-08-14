@@ -34,7 +34,7 @@ import authStore from "../stores/authStore.js"
 import shopStore from "../stores/shopStore.js"
 import userStore from "../stores/userStore.js"
 import orderStore from "../stores/orderStore.js"
-
+import HomeCategoriesStore from "../stores/HomeCategoriesStore.js"
 import ReactLoading from "react-loading";
 
 @observer
@@ -55,7 +55,14 @@ export default class Routes extends React.Component {
                   <CartBar navbarStore={navbarStore} cartStore={cartStore}/> 
                   <SideBar navbarStore={navbarStore} authStore={authStore}/>
                   <Switch>
-                    <Route path="/" exact component={Home} />
+                  <Route
+                      path="/"
+                      exact
+                      render={() => (
+                          <Home HomeCategoriesStore={HomeCategoriesStore}/>
+                      )
+                    }
+                    />
                     <Route path="/about" exact component={About} />
                     <Route path="/contact" exact component={Contact} />
                     <Route
@@ -107,7 +114,7 @@ export default class Routes extends React.Component {
                       exact
                       render={() => (
                         authStore.currentUser != undefined ? 
-                          <Shop shopStore={shopStore}/>
+                          <Shop HomeCategoriesStore={HomeCategoriesStore} shopStore={shopStore}/>
                           :
                           <Redirect to="/sign-in"/> 
                       )

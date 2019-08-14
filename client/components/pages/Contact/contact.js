@@ -2,33 +2,64 @@ import React from 'react';
 import PageBanner from "../Partials/pageBanner.js";
 
 export default class About extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.emailChanged = this.emailChanged.bind(this);
+    this.emailMessageChanged = this.emailMessageChanged.bind(this);
+    this.sendEmail = this.sendEmail.bind(this);
+  }
+
+  
+  emailChanged(e) {
+    this.Email = e.target.value;
+    //this.props.signupStore.Errors.email = undefined;
+  }
+
+  emailMessageChanged(e) {
+    this.EmailMessage = e.target.value;
+    //this.props.signupStore.Errors.email = undefined;
+  }
+  
+  sendEmail(e) {
+    e.preventDefault();
+    let data = {
+      email: this.Email,
+      emailMessage: this.EmailMessage
+    };
+    console.log(data);
+    // const { errors, isValid } = signupValidator(data);
+    // if (!isValid) {
+    //   this.props.signupStore.Errors = {
+    //     ...this.props.signupStore.Errors,
+    //     ...errors
+    //   };
+    //   console.log(this.props.signupStore.Errors);
+    // } else
+    // {
+
+
+    fetch('/api/contact/sendEmail', {
+      method: 'POST', 
+      body: JSON.stringify(data), 
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(() => console.log('good'));
+  }
+
+
+
+
+
+ 
+
+ 
+
     render() {
-      // function sendEmail()
-      // {
-      //   import nodemailer from 'nodemailer';
-      //   var transporter = nodemailer.createTransport({
-      //     service: 'gmail',
-      //     auth: {
-      //       user: 'davidyoels@gmail.com',
-      //       pass: '0548482348'
-      //     }
-      //   });
-      //   var mailOptions = {
-      //     from: 'davidyoels@gmail.com',
-      //     to: 'davidyoels@gmail.com',
-      //     subject: 'Sending E',
-      //     text: ' qweiuqwieuqweqwueiqwe'
-      //   };
-      //   transporter.sendMail(mailOptions, function(err,info)
-      //   {
-      //     if(error)
-      //     {
-      //       console.log(err);
-      //     }else{
-      //       console.log('Email sent' + info.response);
-      //     }
-      //   })
-      // }
+      const Email = "";
+      const EmailMessage = "";
       return (
         <div>
         <PageBanner title="Contact"/>
@@ -36,18 +67,29 @@ export default class About extends React.Component {
           <div className="container">
             <div className="flex-w flex-tr">
               <div className="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-                <form>
+                <form onSubmit={this.sendEmail}>
                   <h4 className="mtext-105 cl2 txt-center p-b-30">
                     Send Us A Message
                   </h4>
+                  {/* <Alert
+                    color={"danger"}
+                    isOpen={Errors.general !== undefined}
+                    toggle={this.onMessageDismiss}>
+                    <h4 className="alert-heading">Error!</h4>
+                    <p>{Errors.general}</p>
+                  </Alert> */}
                   <div className="bor8 m-b-20 how-pos4-parent">
-                    <input id="emailSource" className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address" />
+                    <input id="emailSource"
+                     className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" 
+                     name="email" 
+                     onChange={this.emailChanged}
+                     placeholder="Your Email Address" />
                     <img className="how-pos4 pointer-none" src="/images/icons/icon-email.png" alt="ICON" />
                   </div>
                   <div className="bor8 m-b-30">
-                    <textarea id="emailMessage" className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?" defaultValue={""} />
+                    <textarea id="emailMessage" onChange={this.emailMessageChanged} className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?" defaultValue={""} />
                   </div>
-                  <button onClick='sendEmail()' className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                  <button onClick={this.sendEmail} className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                     Submit
                   </button>
                 </form>

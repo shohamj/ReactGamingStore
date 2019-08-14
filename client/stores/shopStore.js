@@ -140,6 +140,7 @@ class shopStore {
         .catch(err => console.log(err))
         .finally(() => self.loading=false)
     }
+    
     @action 
     deleteGame(){
         const gameForDelete = this.gameForDelete;
