@@ -23,6 +23,7 @@ import ManageUsers from './pages/ManageUsers/manageUsers.js';
 import ManageGames from './pages/ManageGames/manageGames.js';
 import OrdersHistory from './pages/OrdersHistory/ordersHistory.js';
 import Account from './pages/Account/account.js';
+import Chat from './pages/Chat/chat.js';
 
 
 // Stores
@@ -34,7 +35,7 @@ import authStore from "../stores/authStore.js"
 import shopStore from "../stores/shopStore.js"
 import userStore from "../stores/userStore.js"
 import orderStore from "../stores/orderStore.js"
-
+import chatStore from "../stores/chatStore.js"
 import ReactLoading from "react-loading";
 
 @observer
@@ -77,6 +78,17 @@ export default class Routes extends React.Component {
                           <Account authStore={authStore}/>
                           :
                           <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
+                      path="/chat"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <Chat chatStore={chatStore}/>
+                          :
+                          <Redirect to="/sign-in"/>
                       )
                     }
                     />

@@ -50,7 +50,7 @@ export default class NavBar extends React.Component {
                       <NavLink to="/shop" activeStyle={{color: "#717fe0"}}>Shop</NavLink>
                     </li>
                     <li>
-                      <NavLink to="/blog" activeStyle={{color: "#717fe0"}}>Blog</NavLink>
+                      <NavLink to="/chat" activeStyle={{color: "#717fe0"}}>Chat</NavLink>
                     </li>
                     <li>
                         <NavLink to="/about" activeStyle={{color: "#717fe0"}}>About</NavLink>     
