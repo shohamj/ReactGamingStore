@@ -1,7 +1,34 @@
 import React from 'react';
-import PageBanner from "../Partials/pageBanner.js"
+import PageBanner from "../Partials/pageBanner.js";
+
 export default class About extends React.Component {
     render() {
+      // function sendEmail()
+      // {
+      //   import nodemailer from 'nodemailer';
+      //   var transporter = nodemailer.createTransport({
+      //     service: 'gmail',
+      //     auth: {
+      //       user: 'davidyoels@gmail.com',
+      //       pass: '0548482348'
+      //     }
+      //   });
+      //   var mailOptions = {
+      //     from: 'davidyoels@gmail.com',
+      //     to: 'davidyoels@gmail.com',
+      //     subject: 'Sending E',
+      //     text: ' qweiuqwieuqweqwueiqwe'
+      //   };
+      //   transporter.sendMail(mailOptions, function(err,info)
+      //   {
+      //     if(error)
+      //     {
+      //       console.log(err);
+      //     }else{
+      //       console.log('Email sent' + info.response);
+      //     }
+      //   })
+      // }
       return (
         <div>
         <PageBanner title="Contact"/>
@@ -14,13 +41,13 @@ export default class About extends React.Component {
                     Send Us A Message
                   </h4>
                   <div className="bor8 m-b-20 how-pos4-parent">
-                    <input className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address" />
+                    <input id="emailSource" className="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address" />
                     <img className="how-pos4 pointer-none" src="/images/icons/icon-email.png" alt="ICON" />
                   </div>
                   <div className="bor8 m-b-30">
-                    <textarea className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?" defaultValue={""} />
+                    <textarea id="emailMessage" className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?" defaultValue={""} />
                   </div>
-                  <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                  <button onClick='sendEmail()' className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                     Submit
                   </button>
                 </form>
