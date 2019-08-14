@@ -11,7 +11,7 @@ export default class SingleHomeBlog extends React.Component {
                 <div className="blog-item">
                 <div className="hov-img0">
                     <a href="blog-detail.html">
-                    <img src={require('./../../../../images/games/enslaved/2.png')} alt="IMG-BLOG" />
+                    <img src={"./../../../../images/games/enslaved/2.png"} alt="IMG-BLOG" />
                     </a>
                 </div>
                 <div className="p-t-15">

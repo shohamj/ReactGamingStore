@@ -20,6 +20,7 @@ import User from './models/user';
 import users from './api/users';
 import games from './api/games';
 import orders from './api/orders';
+import contact from './api/contact';
 
 //Mongoose 
 let sessConnStr = 'mongodb+srv://admin:q1w2e3r4@internetcourse-bu1ca.mongodb.net/ReactGamingStore?retryWrites=true';
@@ -67,6 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/api/users', users);
 app.use('/api/games', games);
 app.use('/api/orders', orders);
+app.use('/api/contact', contact)
 
 //Express server
 app.get("/*",  (req,res) =>{

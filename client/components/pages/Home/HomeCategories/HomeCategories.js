@@ -18,7 +18,7 @@ export default class HomeCategories extends React.Component {
           
         <div className="flex-w flex-c-m">
           {games.map((game, index) => (
-              <SingleCategoryCard name={game.name} direct={game.direct} src={"images/games/HomeCategories/" + game.name + ".jpg"} key={index} />
+              <SingleCategoryCard HomeCategoriesStore={this.props.HomeCategoriesStore} name={game.name} direct={game.direct} src={"/images/HomeCategories/" + game.name + ".jpg"} key={index} />
           ))}
         </div>
         
