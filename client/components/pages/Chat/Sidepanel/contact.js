@@ -10,6 +10,7 @@ export default class Contact extends React.Component {
     
     onClick(){
         this.props.chatStore.active = {type: this.props.type, _id: this.props.id};
+        this.props.chatStore.shouldScroll = true;
     }
 
     render() {

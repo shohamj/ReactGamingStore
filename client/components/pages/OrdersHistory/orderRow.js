@@ -30,7 +30,7 @@ export default class GameRow extends React.Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(self.props.orderStore.getOrders())
+      .then(() => self.props.orderStore.getOrders())
     }
     accept(){
       var self = this;
@@ -41,7 +41,7 @@ export default class GameRow extends React.Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(self.props.orderStore.getOrders())
+      .then(() => self.props.orderStore.getOrders())
     }
 
     render() {

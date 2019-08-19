@@ -68,6 +68,7 @@ class SignIn extends React.Component {
           user => {
             this.props.signinStore.Loading = false;
             this.props.authStore.pullUser()
+            this.props.chatStore.reconnect();
             this.props.history.push("/");
           } // Success
         );

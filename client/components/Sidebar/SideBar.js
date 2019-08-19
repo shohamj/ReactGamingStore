@@ -32,6 +32,7 @@ export default class SideBar extends React.Component {
     this.props.authStore.signOut();
     this.closeSidebar()
     this.props.history.push("/");
+    this.props.chatStore.disconnect();
   }
   onOutsideClick(e){
     if (e.target.classList.contains("js-hide-sidebar")){

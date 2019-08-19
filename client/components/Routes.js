@@ -24,6 +24,8 @@ import ManageGames from './pages/ManageGames/manageGames.js';
 import OrdersHistory from './pages/OrdersHistory/ordersHistory.js';
 import Account from './pages/Account/account.js';
 import Chat from './pages/Chat/chat.js';
+import CreateGroup from './pages/Chat/Groups/createGroup.js';
+import ManageRequests from './pages/Chat/Groups/manageRequests/manageRequests';
 
 
 // Stores
@@ -35,11 +37,8 @@ import authStore from "../stores/authStore.js"
 import shopStore from "../stores/shopStore.js"
 import userStore from "../stores/userStore.js"
 import orderStore from "../stores/orderStore.js"
-<<<<<<< HEAD
 import chatStore from "../stores/chatStore.js"
-=======
 import HomeCategoriesStore from "../stores/HomeCategoriesStore.js"
->>>>>>> 72260f33acb273f984f4380f2c3d53638df03e3d
 import ReactLoading from "react-loading";
 
 @observer
@@ -58,7 +57,7 @@ export default class Routes extends React.Component {
                   <Favicon url="/images/icons/controller.png" />
                   <NavBar navbarStore={navbarStore} authStore={authStore} cartStore={cartStore}/>
                   <CartBar navbarStore={navbarStore} cartStore={cartStore}/> 
-                  <SideBar navbarStore={navbarStore} authStore={authStore}/>
+                  <SideBar navbarStore={navbarStore} authStore={authStore} chatStore={chatStore}/>
                   <Switch>
                   <Route
                       path="/"
@@ -98,6 +97,28 @@ export default class Routes extends React.Component {
                       render={() => (
                         (authStore.currentUser != undefined)? 
                           <Chat chatStore={chatStore}/>
+                          :
+                          <Redirect to="/sign-in"/>
+                      )
+                    }
+                    />
+                    <Route
+                      path="/chat/create_group"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <CreateGroup chatStore={chatStore}/>
+                          :
+                          <Redirect to="/sign-in"/>
+                      )
+                    }
+                    />
+                     <Route
+                      path="/chat/groups_management"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <ManageRequests chatStore={chatStore} authStore={authStore}/>
                           :
                           <Redirect to="/sign-in"/>
                       )
@@ -172,7 +193,7 @@ export default class Routes extends React.Component {
                       exact
                       render={() => (
                         authStore.currentUser == undefined ? 
-                          <SignIn signinStore={signinStore} authStore={authStore}/>
+                          <SignIn signinStore={signinStore} authStore={authStore} chatStore={chatStore}/>
                           :
                           <Redirect to="/"/> 
                       )}

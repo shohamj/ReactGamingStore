@@ -92,7 +92,7 @@ class AddGame extends React.Component {
       description: addGameStore.Description,
   }
     const { errors, isValid } = gameValidator(data);
-    if (!isValid && false) {
+    if (!isValid) {
       addGameStore.Errors = {
         ...addGameStore.Errors,
         ...errors

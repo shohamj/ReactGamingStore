@@ -15,6 +15,8 @@ export default class SidePanel extends React.Component {
     }
 
     render() {
+      console.log(this.props.chatStore.user);
+      console.log(this.props.chatStore.user.image);
       return (
         <div id="sidepanel">
           <div id="profile">
@@ -29,6 +31,26 @@ export default class SidePanel extends React.Component {
           </div>
           <div id="contacts">
             <ul>
+              <Contact 
+                name="All Messages"
+                isOnline={true}
+                isActive={this.props.chatStore.active.type == "all" && this.props.chatStore.active._id == "all messages"}
+                image='/images/chat/avatars/system/all.png'
+                lastMsg={this.props.chatStore.messages[this.props.chatStore.messages.length-1].data}
+                type="all"
+                id="all messages"
+                chatStore={this.props.chatStore}
+              />  
+              <Contact 
+                name="Everyone"
+                isOnline={true}
+                isActive={this.props.chatStore.active.type == "all" && this.props.chatStore.active._id == "everyone"}
+                image='/images/chat/avatars/system/everyone.png'
+                lastMsg={this.props.chatStore.getLastMessage("all", "everyone")}
+                type="all"
+                id="everyone"
+                chatStore={this.props.chatStore}
+              />  
               {this.props.chatStore.filteredUsers.map((user, index) => {
                   return  <Contact key={index}
                   name={user.name} 
@@ -43,7 +65,7 @@ export default class SidePanel extends React.Component {
               })}
               {this.props.chatStore.filteredGroups.map((group, index) => {
                   return  <Contact key={index}
-                  name={group.name} 
+                  name={"Group: " + group.name} 
                   isOnline={true}
                   isActive={this.props.chatStore.active.type == "group" && this.props.chatStore.active._id == group._id}
                   image={group.image}

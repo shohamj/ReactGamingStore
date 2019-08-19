@@ -51,6 +51,11 @@ export default class NavBar extends React.Component {
                     </li>
                     <li>
                       <NavLink to="/chat" activeStyle={{color: "#717fe0"}}>Chat</NavLink>
+                      <ul className="sub-menu">
+								      	<li><NavLink to="/chat">Chat Window</NavLink></li>
+								      	<li><NavLink to="/chat/create_group">Create Group</NavLink></li>
+								      	<li><NavLink to="/chat/groups_management">Management</NavLink></li>
+								      </ul>
                     </li>
                     <li>
                         <NavLink to="/about" activeStyle={{color: "#717fe0"}}>About</NavLink>     
