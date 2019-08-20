@@ -12,12 +12,14 @@ class signinStore {
     @observable HasMessage = false;
     @observable Loading = false;    
     @observable Errors = {};
+    @observable captcha = '';
 
     //***********Actions***********//
     @action
     submitForm(){
         this.Errors = {};
-        var data = {username: this.Username, password:this.Password};
+        var self = this;
+        var data = {username: this.Username, password:this.Password, captcha: this.captcha};
         var challenge = "";
         var Loading = this.Loading = true;
         return fetch('/api/users/challenge_response', {
@@ -33,7 +35,7 @@ class signinStore {
         .then(hash => pbkdf2_sha256_promise(hash, challenge))
         .then(res => fetch('/api/users/signin', {
             method: 'POST', 
-            body: JSON.stringify({"username": data.username,"password": res}), 
+            body: JSON.stringify({"username": data.username,"password": res, "captcha": data.captcha}), 
             headers:{
               'Content-Type': 'application/json'
             }
@@ -41,8 +43,12 @@ class signinStore {
         .catch(err => {Loading = false; return {general:"Server error: " + err}}) 
         .then(function(response) {
             Loading = false;
-              if (response.status == 200)
+              if (response.status == 200){
+                self.Username = '';
+                self.Password = '';
+                self.captcha = '';
                 throw data.username;
+              }
             return response.json();
         })
            

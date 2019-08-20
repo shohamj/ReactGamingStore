@@ -299,8 +299,10 @@ class chatStore {
     }
     @action
     reconnect(){
-        socket = io(window.location.origin);
-        initializeEvents()
+        if (!socket.connected){
+            socket = io(window.location.origin);
+            initializeEvents()
+        }
     }
 
     @action

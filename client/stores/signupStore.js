@@ -17,10 +17,12 @@ class signupStore {
     @observable MessageTitle = "";
     @observable MessageType = "";
     @observable HasMessage = false;
+    @observable captcha= "";
     //***********Actions***********//
   
     @action
     submitForm(){
+        var self = this;
         this.Loading = true;
         this.Errors = {};
         console.log(this.Password === this.ConfirmPassword)
@@ -32,7 +34,9 @@ class signupStore {
                "email": this.Email,
                "role": this.RoleValue,
                "password": Encrypt(this.Password, key),
-               "confirmPassword": Encrypt(this.ConfirmPassword, key)}})
+               "confirmPassword": Encrypt(this.ConfirmPassword, key),
+               "captcha": this.captcha
+              }})
         .then(data => {this.LoadingMessage = "Sending sign-up info to server"; return data})
         .then(data => fetch('/api/users/signup', {
             method: 'POST', 
@@ -43,8 +47,12 @@ class signupStore {
         }))
         .catch(err => {return {general:"Server error: " + err}}) 
         .then(function(response) {
-          if (response.status == 200)
+          if (response.status == 200){
+            self.captcha= "";
             throw "Status is 200";
+          }
+
+
           return response.json();
         })
 
