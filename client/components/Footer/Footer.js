@@ -15,22 +15,22 @@ export default class Footer extends React.Component {
                 <ul>
                   <li className="p-b-10">
                     <a href="#" className="stext-107 cl7 hov-cl1 trans-04"> 
-                      Women
+                      Racing
                     </a>
                   </li>
                   <li className="p-b-10">
                     <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Men
+                      Shooting
                     </a>
                   </li>
                   <li className="p-b-10">
                     <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Shoes
+                      Arcade
                     </a>
                   </li>
                   <li className="p-b-10">
                     <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Watches
+                      Sports
                     </a>
                   </li>
                 </ul>
@@ -99,23 +99,6 @@ export default class Footer extends React.Component {
               </div>
             </div>
             <div className="p-t-40">
-              <div className="flex-c-m flex-w p-b-18">
-                <a href="#" className="m-all-1">
-                  <img src="/images/icons/icon-pay-01.png" alt="ICON-PAY" />
-                </a>
-                <a href="#" className="m-all-1">
-                <img src="/images/icons/icon-pay-02.png" alt="ICON-PAY" />
-                </a>
-                <a href="#" className="m-all-1">
-                <img src="/images/icons/icon-pay-03.png" alt="ICON-PAY" />
-                </a>
-                <a href="#" className="m-all-1">
-                <img src="/images/icons/icon-pay-04.png" alt="ICON-PAY" />
-                </a>
-                <a href="#" className="m-all-1">
-                <img src="/images/icons/icon-pay-05.png" alt="ICON-PAY" />
-                </a>
-              </div>
               <p className="stext-107 cl6 txt-center">
                 {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
                 Copyright © All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true" /> by <a href="https://colorlib.com" target="_blank">Colorlib</a>

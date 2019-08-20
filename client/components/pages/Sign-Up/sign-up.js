@@ -102,8 +102,7 @@ class SignUp extends React.Component {
           <Alert
             color={"danger"}
             isOpen={Errors.general !== undefined}
-            toggle={this.onMessageDismiss}
-          >
+            toggle={this.onMessageDismiss}>
             <h4 className="alert-heading">Error!</h4>
             <p>{Errors.general}</p>
           </Alert>
