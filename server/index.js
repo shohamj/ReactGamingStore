@@ -72,7 +72,6 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/api/users', users);
 app.use('/api/games', games);
 app.use('/api/orders', orders);
-app.use('/api/contact', contact);
 app.use('/api/forgot', forgot);
 app.use('/api/contact', contact)
 app.use('/api/chat', chat)
