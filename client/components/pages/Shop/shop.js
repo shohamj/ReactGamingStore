@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink, Link} from 'react-router-dom';
 import {observer} from "mobx-react";
 import FilterButtons from './Filters/filter_buttons.js';
 import FiltersPanel from './Filters/Panels/filters_panel.js';

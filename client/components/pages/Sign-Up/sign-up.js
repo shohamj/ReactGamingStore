@@ -8,6 +8,7 @@ import { Alert} from "reactstrap";
 import Modal from 'react-responsive-modal';
 
 import ReactLoading from "react-loading";
+import ReCAPTCHA from "react-google-recaptcha";
 
 // Icons
 import { Icon, InlineIcon } from "@iconify/react";
@@ -29,8 +30,11 @@ class SignUp extends React.Component {
     this.confirmPasswordChanged = this.confirmPasswordChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onMessageDismiss = this.onMessageDismiss.bind(this);
+    this.onReCAPTCHAChange = this.onReCAPTCHAChange.bind(this);
   }
-
+  onReCAPTCHAChange(value){
+    this.props.signupStore.captcha= value;
+  }
   usernameChanged(e) {
     this.props.signupStore.Username = e.target.value;
     this.props.signupStore.Errors.username = undefined;
@@ -92,7 +96,8 @@ class SignUp extends React.Component {
       ConfirmPassword,
       Loading,
       LoadingMessage,
-      Errors
+      Errors,
+      captcha
     } = this.props.signupStore;
     return (
     <div>
@@ -213,8 +218,14 @@ class SignUp extends React.Component {
               </small>
             )}
           </div>
+          <div className="form-group center_recaptcha">
+               <ReCAPTCHA
+              sitekey="6LeC3LMUAAAAAE-pqjN_VBR1BhxNuLdTThiLvoUi"
+              onChange={this.onReCAPTCHAChange}
+            />
+          </div>
           {Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
-          <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={Loading}>
+          <button className="flex-c-m stext-101 cl0 size-121 center bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={Loading || !captcha}>
             {Loading ? "Submiting..." : "Submit"}
           </button> 
         </form>

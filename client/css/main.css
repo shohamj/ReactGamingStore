@@ -33,7 +33,13 @@ Title           : 18px/1.6 '', Arial, sans-serif;
 Paragrap        : 18px/1.6 '', Arial, sans-serif;
 Input, textarea : 14px/1.6 '', Arial, sans-serif;
 -------------------------------------------------------------------*/
-
+.flex-c-m.stext-101.cl0.size-121.center.bg3.bor1.hov-btn3.p-lr-15.trans-04.pointer:disabled {
+  background: #dddddd;
+  cursor: not-allowed;
+}
+.center_recaptcha{
+  margin-left: calc((100% - 300px)/2)
+}
 
 .centered-label {
   display: flex;
@@ -3378,6 +3384,5 @@ input.num-product::-webkit-inner-spin-button {
     padding: 20px;
   }
 
- 
 
 }

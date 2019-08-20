@@ -1,5 +1,5 @@
 import {observable, action, autorun} from "mobx"
- 
+
 class authStore {
 
     //***********Observables***********//

@@ -6,6 +6,8 @@ import passport from 'passport'
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import http from 'http';
+import listenSocket from './socketio.js';
 
 //Packages needed for webpack
 import webpack from 'webpack';
@@ -21,7 +23,11 @@ import users from './api/users';
 import games from './api/games';
 import orders from './api/orders';
 import contact from './api/contact';
+<<<<<<< HEAD
 import forgot from './api/forgot';
+=======
+import chat from './api/chat';
+>>>>>>> d19ca620a6a02de25e23d3ea112fc14b5cc797e3
 
 //Mongoose 
 let sessConnStr = 'mongodb+srv://admin:q1w2e3r4@internetcourse-bu1ca.mongodb.net/ReactGamingStore?retryWrites=true';
@@ -69,12 +75,21 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/api/users', users);
 app.use('/api/games', games);
 app.use('/api/orders', orders);
+<<<<<<< HEAD
 app.use('/api/contact', contact);
 app.use('/api/forgot', forgot);
+=======
+app.use('/api/contact', contact)
+app.use('/api/chat', chat)
+
+//socket.io
+const server = http.Server(app)
+listenSocket(server);
+>>>>>>> d19ca620a6a02de25e23d3ea112fc14b5cc797e3
 
 //Express server
 app.get("/*",  (req,res) =>{
     res.sendFile(path.join(__dirname,'./index.html'));
 })
 
-app.listen("3000", () => {console.log("Running on port localhost:3000")})
+server.listen("3000", () => {console.log("Running on port localhost:3000")})

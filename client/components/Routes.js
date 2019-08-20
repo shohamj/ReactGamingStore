@@ -3,7 +3,7 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router'
 import Favicon from 'react-favicon';
 import {observer} from "mobx-react";
-
+ 
 // Components
 import NotFound from './pages/404/NotFound';
 import Home from "./pages/Home/home.js"
@@ -23,8 +23,17 @@ import ManageUsers from './pages/ManageUsers/manageUsers.js';
 import ManageGames from './pages/ManageGames/manageGames.js';
 import OrdersHistory from './pages/OrdersHistory/ordersHistory.js';
 import Account from './pages/Account/account.js';
+
 import PasswordRecovery from './pages/Sign-In/passwordRecovery.js';
 import ResetPass from './pages/Sign-In/forgotPass/reset.js';
+
+import Chat from './pages/Chat/chat.js';
+import CreateGroup from './pages/Chat/Groups/createGroup.js';
+import ManageRequests from './pages/Chat/Groups/manageRequests/manageRequests';
+
+import Blog from './pages/Blog/blog.js';
+ 
+ 
 // Stores
 import navbarStore from "../stores/navbarStore.js"
 import cartStore from "../stores/cartStore.js"
@@ -34,14 +43,17 @@ import authStore from "../stores/authStore.js"
 import shopStore from "../stores/shopStore.js"
 import userStore from "../stores/userStore.js"
 import orderStore from "../stores/orderStore.js"
+import chatStore from "../stores/chatStore.js"
 import HomeCategoriesStore from "../stores/HomeCategoriesStore.js"
+
 import passwordRecoveryStore from "../stores/passwordRecoveryStore.js"
 import resetStore from '../stores/resetStore.js';
+
 import ReactLoading from "react-loading";
 
 @observer
 export default class Routes extends React.Component {
-
+ 
   componentWillMount() {
     authStore.pullUser(); 
     cartStore.pullCart(); 
@@ -55,7 +67,7 @@ export default class Routes extends React.Component {
                   <Favicon url="/images/icons/controller.png" />
                   <NavBar navbarStore={navbarStore} authStore={authStore} cartStore={cartStore}/>
                   <CartBar navbarStore={navbarStore} cartStore={cartStore}/> 
-                  <SideBar navbarStore={navbarStore} authStore={authStore}/>
+                  <SideBar navbarStore={navbarStore} authStore={authStore} chatStore={chatStore}/>
                   <Switch>
                   <Route
                       path="/"
@@ -103,6 +115,39 @@ export default class Routes extends React.Component {
                           <Account authStore={authStore}/>
                           :
                           <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
+                      path="/chat"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <Chat chatStore={chatStore}/>
+                          :
+                          <Redirect to="/sign-in"/>
+                      )
+                    }
+                    />
+                    <Route
+                      path="/chat/create_group"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <CreateGroup chatStore={chatStore}/>
+                          :
+                          <Redirect to="/sign-in"/>
+                      )
+                    }
+                    />
+                     <Route
+                      path="/chat/groups_management"
+                      exact
+                      render={() => (
+                        (authStore.currentUser != undefined)? 
+                          <ManageRequests chatStore={chatStore} authStore={authStore}/>
+                          :
+                          <Redirect to="/sign-in"/>
                       )
                     }
                     />
@@ -161,6 +206,17 @@ export default class Routes extends React.Component {
                     }
                     />
                     <Route
+                      path="/blog"
+                      exact
+                      render={() => (
+                        authStore.currentUser != undefined ? 
+                          <Blog cartStore={cartStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
                       path="/sign-up"
                       exact
                       render={() => (
@@ -175,7 +231,7 @@ export default class Routes extends React.Component {
                       exact
                       render={() => (
                         authStore.currentUser == undefined ? 
-                          <SignIn signinStore={signinStore} authStore={authStore}/>
+                          <SignIn signinStore={signinStore} authStore={authStore} chatStore={chatStore}/>
                           :
                           <Redirect to="/"/> 
                       )}

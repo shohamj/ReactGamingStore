@@ -8,6 +8,7 @@ import {getKey, getPublicKey} from '../../shared/encryption/RSAKey.js';
 import pbkdf2_sha256_promise from '../../shared/encryption/pbkdf2.js';
 import {Decrypt, CreateKeyFromPublic, Encrypt} from '../../shared/encryption/RSAUtills.js';
 import crypto from 'crypto';
+import request from 'request';
 
 let router = express.Router();  
 
@@ -49,6 +50,12 @@ function extendedSigninValidator(data, challenge, validator){
     .then( () => {return { errors, isValid: isEmpty(errors)}})
 }
 router.post('/signup', (req,res) => {
+    if (req.body.captcha === undefined ||req.body.captcha === '' ||req.body.captcha === null )
+        return res.status(400).json({general: 'Missing human verification'});
+
+    const secretKey = "6LeC3LMUAAAAAKoCaeLAaiOju8BG5K6vZEblrwhH";
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
+
     let key = getKey();
     let pub = getPublicKey();
     console.log(pub);
@@ -60,23 +67,31 @@ router.post('/signup', (req,res) => {
             //setTimeout(() => res.status(400).json(errors), 5000);
             res.status(400).json(errors);
         }
-        else{
-            let data = {...req.body};
-            if (data.role == undefined)
-                data.role="customer";
-            let password = data.password;
-            delete data.confirmPassword;
-            delete data.password;
-            User.register(new User(data),password)
-            .then(user => res.send("Success"))
-            .catch(err => res.status(500).json(err))
-            }
-        }
-    ).catch(err=>{console.log(err);res.status(500).json(err);})
+        else
+            request(verifyUrl, function (error, response, body) {
+                body = JSON.parse(body);
+                if (!body.success)
+                    return res.status(400).json({general: 'Human verification failed'});
+                let data = {...req.body};
+                if (data.role == undefined)
+                    data.role="customer";
+                let password = data.password;
+                delete data.confirmPassword;
+                delete data.password;
+                User.register(new User(data),password)
+                .then(user => res.send("Success"))
+                .catch(err => res.status(500).json(err))
+            });
+    }).catch(err=>{console.log(err);res.status(500).json(err);})
 })
 
 router.post('/signin', (req,res) => {
-    console.log(req.session);
+    if (req.body.captcha === undefined || req.body.captcha === '' || req.body.captcha === null )
+        return res.status(400).json({general: 'Missing human verification'});
+
+    const secretKey = "6LeC3LMUAAAAAKoCaeLAaiOju8BG5K6vZEblrwhH";
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
+
     extendedSigninValidator(req.body, req.session.challenge, signinValidator)
     .then(({errors, isValid}) => {
         if (!isValid){
@@ -84,14 +99,20 @@ router.post('/signin', (req,res) => {
             res.status(400).json(errors);
         }
         else
-        {
-            User.findOne({username:req.body.username})
-            .then(user => req.logIn(user, function(){
-                res.send({username:req.body.username, role:req.body.role})
-            }))    
-        }
+            request(verifyUrl, function (error, response, body) {
+                body = JSON.parse(body);
+                console.log(body);
+                if (!body.success)
+                    return res.status(400).json({general: 'Human verification error'});
+                User.findOne({username:req.body.username})
+                .then(user => req.logIn(user, function(){
+                    res.send({username:req.body.username, role:req.body.role})
+                })) 
+            })   
+
     }
     ).catch(err=>{console.log(err);res.status(500).json(err);})
+    
 })
 
 router.get('/signout', (req,res) => {
