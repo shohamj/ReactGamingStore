@@ -1,7 +1,7 @@
 import React from 'react';
 import PageBanner from "../Partials/pageBanner.js";
 
-export default class About extends React.Component {
+export default class Contact extends React.Component {
 
   constructor(props) {
     super(props);

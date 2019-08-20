@@ -38,7 +38,7 @@ export default class TopGame extends React.Component {
                 <tr>
                     {this.state.games.map((game, index) => (
                         <td style={{"padding":"10px"}} key={index}>
-                            <SingleTopGames  name={game.name} image={'./../../../../../public/images/games/' + game.mainImage} price={game.price} id={game.id} key={index} /> 
+                            <SingleTopGames  name={game.name} image={'/images/games/' + game.mainImage} price={game.price} id={game.id} key={index} /> 
                         </td>
                     ))}
                 </tr>

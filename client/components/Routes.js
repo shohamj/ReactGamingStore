@@ -39,9 +39,12 @@ import shopStore from "../stores/shopStore.js"
 import userStore from "../stores/userStore.js"
 import orderStore from "../stores/orderStore.js"
 import chatStore from "../stores/chatStore.js"
+import PasswordRecovery from './pages/Sign-In/passwordRecovery.js';
+import ResetPass from './pages/Sign-In/forgotPass/reset.js';
 import HomeCategoriesStore from "../stores/HomeCategoriesStore.js"
 import blogStore from "../stores/blogStore.js"
-
+import passwordRecoveryStore from "../stores/passwordRecoveryStore.js"
+import resetStore from '../stores/resetStore.js';
 import ReactLoading from "react-loading";
 
 @observer
@@ -67,6 +70,23 @@ export default class Routes extends React.Component {
                       exact
                       render={() => (
                           <Home HomeCategoriesStore={HomeCategoriesStore}/>
+                      )
+                    }
+                    />
+                    <Route
+                      path="/forgotPassword"
+                      exact
+                      render={() => (
+                          <PasswordRecovery passwordRecoveryStore={passwordRecoveryStore}/>
+                      )
+                    }
+                    />
+                    
+                    <Route
+                      path="/forgotPassword/reset/:token"
+                      exact
+                      render={() => (
+                          <ResetPass resetPassStore={resetStore} />
                       )
                     }
                     />
