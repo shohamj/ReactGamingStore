@@ -23,6 +23,7 @@ import users from './api/users';
 import games from './api/games';
 import orders from './api/orders';
 import contact from './api/contact';
+import forgot from './api/forgot';
 import chat from './api/chat';
 
 //Mongoose 
@@ -71,6 +72,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/api/users', users);
 app.use('/api/games', games);
 app.use('/api/orders', orders);
+app.use('/api/contact', contact);
+app.use('/api/forgot', forgot);
 app.use('/api/contact', contact)
 app.use('/api/chat', chat)
 

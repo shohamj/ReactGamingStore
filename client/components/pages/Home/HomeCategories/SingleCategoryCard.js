@@ -22,7 +22,6 @@ class SingleCategoryCard extends React.Component {
 
     render(){
         var {name, src} = this.props;
-        console.log('name + src',name,src);
         return (
           <div className="size-202 m-lr-auto respon4">
             <div className="block1 wrap-pic-w"  >

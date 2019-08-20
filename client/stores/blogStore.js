@@ -2,7 +2,7 @@ import {autorun, observable, action, computed} from "mobx"
  
 
 
-class userStore {
+class blogStore {
 
     //***********Observables***********//
     @observable posts = [

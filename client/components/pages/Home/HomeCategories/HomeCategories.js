@@ -13,7 +13,6 @@ export default class HomeCategories extends React.Component {
 			{name:'Shooting',direct:'Racing'},
 		];
         const length = games.length;
-        console.log('length', length);
         return (
           
         <div className="flex-w flex-c-m">

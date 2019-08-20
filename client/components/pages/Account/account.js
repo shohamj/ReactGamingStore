@@ -23,7 +23,6 @@ class Account extends React.Component {
     this.onCurrentChanged = this.onCurrentChanged.bind(this);
     this.onNewChanged = this.onNewChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
 }
 
 onCurrentChanged(e){

@@ -133,6 +133,9 @@ class SignIn extends React.Component {
             <p className="mtext-107 cl2 txt-center p-b-30 pad-top">
                   Or <Link to="/sign-up" className="mtext-107 cl2 txt-center p-b-30">Sign Up</Link>
             </p>
+            <p className="txt-center">
+                  <a className="txt-center" href="/forgotPassword"><u>Forgot password?</u></a>
+            </p>
         </div>
         )
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import HomeCarousel from './homeCarousel'
 import HomeCategories from './HomeCategories/HomeCategories';
 import HomeBlog from './HomeBlog/HomeBlog';
+import TopGames from './TopGames/TopGames';
 import {observer} from "mobx-react";
 
 @observer
@@ -22,7 +23,7 @@ export default class Home extends React.Component {
               </div>
             </div>
           </section>
-          <HomeCategories/>
+          <TopGames />
           <HomeBlog />
         </div>
        
