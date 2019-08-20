@@ -47,8 +47,14 @@ export default class NavBar extends React.Component {
                       <NavLink exact to="/" activeStyle={{color: "#717fe0"}}>Home</NavLink>     
                     </li>
                     <li>
-                      <NavLink to="/shop" activeStyle={{color: "#717fe0"}}>Shop</NavLink>
+                        <NavLink to="/about" activeStyle={{color: "#717fe0"}}>About</NavLink>     
                     </li>
+                    <li>
+                        <NavLink to="/contact" activeStyle={{color: "#717fe0"}}>Contact</NavLink>     
+                    </li>
+                    <li>
+                      <NavLink to="/shop" activeStyle={{color: "#717fe0"}}>Shop</NavLink>
+                    </li>     
                     <li>
                       <NavLink to="/chat" activeStyle={{color: "#717fe0"}}>Chat</NavLink>
                       <ul className="sub-menu">
@@ -58,10 +64,7 @@ export default class NavBar extends React.Component {
 								      </ul>
                     </li>
                     <li>
-                        <NavLink to="/about" activeStyle={{color: "#717fe0"}}>About</NavLink>     
-                    </li>
-                    <li>
-                        <NavLink to="/contact" activeStyle={{color: "#717fe0"}}>Contact</NavLink>     
+                        <NavLink to="/blog" activeStyle={{color: "#717fe0"}}>Blog</NavLink>     
                     </li>
                   </ul>
                 </div>	

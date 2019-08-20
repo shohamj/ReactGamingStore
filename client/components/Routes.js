@@ -26,6 +26,7 @@ import Account from './pages/Account/account.js';
 import Chat from './pages/Chat/chat.js';
 import CreateGroup from './pages/Chat/Groups/createGroup.js';
 import ManageRequests from './pages/Chat/Groups/manageRequests/manageRequests';
+import Blog from './pages/Blog/blog.js';
 
 
 // Stores
@@ -39,6 +40,8 @@ import userStore from "../stores/userStore.js"
 import orderStore from "../stores/orderStore.js"
 import chatStore from "../stores/chatStore.js"
 import HomeCategoriesStore from "../stores/HomeCategoriesStore.js"
+import blogStore from "../stores/blogStore.js"
+
 import ReactLoading from "react-loading";
 
 @observer
@@ -173,6 +176,17 @@ export default class Routes extends React.Component {
                       render={() => (
                         authStore.currentUser != undefined ? 
                           <Cart cartStore={cartStore}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
+                      path="/blog"
+                      exact
+                      render={() => (
+                        authStore.currentUser != undefined ? 
+                          <Blog blogStore={blogStore}/>
                           :
                           <Redirect to="/sign-in"/> 
                       )
