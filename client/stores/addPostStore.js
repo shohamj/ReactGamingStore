@@ -8,7 +8,6 @@ class addPostStore {
     @observable Title = '';
     @observable Text = '';
     @observable Categories = [];
-    @observable Date = (new Date()).toISOString().split('T')[0];
     @observable Loading = false;
     @observable Errors = {};
     //***********Actions***********//
@@ -18,21 +17,18 @@ class addPostStore {
         this.Loading = true;
         this.Errors = {};
         let data = {
-            name: this.Name,
+            author: this.Author,
             image: this.Image[0],
-            genre: JSON.stringify(this.Genres.map((elem) => elem.value)),
-            platform: JSON.stringify(this.Platforms.map((elem) => elem.value)),
-            price: this.Price,
-            released: this.Release,
-            controller: this.Controller,
-            description: this.Description,
+            categories: JSON.stringify(this.Categories.map((elem) => elem.value)),
+            text: this.Text,
+            title: this.Title,
         }
         var form_data = new FormData();
 
         for ( var key in data ) {
             form_data.append(key, data[key]);
         }
-        return fetch('/api/games/addGame', {
+        return fetch('/api/blog/addPost', {
             method: 'POST', 
             body: form_data, 
         })

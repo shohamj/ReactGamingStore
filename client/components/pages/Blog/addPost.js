@@ -3,19 +3,19 @@ import { observer } from "mobx-react";
 import classnames from "classnames";
 import ReactLoading from "react-loading";
 import Select from 'react-select';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
-import gameValidator from "../../../../shared/validation/gameValidator.js";
+import postValidator from "../../../../shared/validation/postValidator.js";
 import addPostStore from "../../../stores/addPostStore.js";
 
 
 const categories = [
-  { value: 'Action', label: 'Action' },
-  { value: 'Adventure', label: 'Adventure' },
-  { value: 'Casual', label: 'Casual' },
-  { value: 'Indie', label: 'Indie' },
-  { value: 'Multiplayer', label: 'Multiplayer' },
-  { value: 'Racing', label: 'Racing' },
-  { value: 'Sports', label: 'Sports' }
+  { value: 'General News', label: 'General News' },
+  { value: 'Hardware', label: 'Hardware' },
+  { value: 'Software', label: 'Software' },
+  { value: 'Reviews', label: 'Reviews' },
+  { value: 'Consoles', label: 'Consoles' },
+  { value: 'Portables', label: 'Portables' },
 ]
 
 @observer
@@ -28,6 +28,7 @@ export default class AddPost extends React.Component {
     this.textChanged = this.textChanged.bind(this);
     this.categoriesChanged = this.categoriesChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.clear = this.clear.bind(this);
   }
  
   authorChanged(e) {
@@ -50,19 +51,25 @@ export default class AddPost extends React.Component {
     addPostStore.Categories = options;
     addPostStore.Errors.categories = undefined;
   }
+
+  clear(){
+    addPostStore.Author = "";
+    addPostStore.Image = null;
+    this.image.value = "";
+    addPostStore.Categories = [];
+    addPostStore.Text = "";
+    addPostStore.Title = "";
+  }
   onSubmit(e) {
     e.preventDefault();
     let data = {
-      name: addPostStore.Name,
+      author: addPostStore.Author,
       image: addPostStore.Image[0],
-      genre: addPostStore.Genres.map((elem) => elem.value),
-      platform: addPostStore.Platforms.map((elem) => elem.value),
-      price: addPostStore.Price,
-      released: addPostStore.Release,
-      controller: addPostStore.Controller,
-      description: addPostStore.Description,
+      categories: addPostStore.Categories.map((elem) => elem.value),
+      text: addPostStore.Text,
+      title: addPostStore.Title,
   }
-    const { errors, isValid } = gameValidator(data);
+    const { errors, isValid } = postValidator(data, data.image);
     if (!isValid) {
       addPostStore.Errors = {
         ...addPostStore.Errors,
@@ -76,11 +83,18 @@ export default class AddPost extends React.Component {
         }, //Fail
         data => {
           addPostStore.Loading = false;
-          addPostStore.MessageTitle =
-            "Success!";
-          addPostStore.MessageType = "success";
-          addPostStore.Message = "Game added successfully";
-          addPostStore.HasMessage = true;
+          this.props.blogStore.postAdded();
+          this.clear();
+          confirmAlert({
+            title: 'Success',
+            message: 'Your post has been added.',
+            buttons: [
+              {
+                label: 'Ok',
+                onClick: undefined
+              },
+            ]
+          })
         } // Success
       );
   }
@@ -100,6 +114,7 @@ export default class AddPost extends React.Component {
                 )}
                 type="file"
                 name="image"
+                ref={ref => this.image = ref}
                 files={addPostStore.Image}
                 onChange={this.imageChanged}
               />
@@ -120,11 +135,11 @@ export default class AddPost extends React.Component {
                 )}
                 type="text"
                 placeholder="Enter Author's Name..."
-                value={addPostStore.author}
+                value={addPostStore.Author}
                 onChange={this.authorChanged}
               />
             </div>
-            {addPostStore.Errors.name && (
+            {addPostStore.Errors.author && (
               <small className="form-text small-helper text-danger">
                 {addPostStore.Errors.author}
               </small>
@@ -140,8 +155,8 @@ export default class AddPost extends React.Component {
                 )}
                 type="text"
                 placeholder="Enter Post's Title..."
-                value={addPostStore.title}
-                onChange={this.priceChanged}
+                value={addPostStore.Title}
+                onChange={this.titleChanged}
               />
             </div>
             {addPostStore.Errors.title && (

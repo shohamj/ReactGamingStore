@@ -6,23 +6,14 @@ function postValidator(data, image){
 
     if (image == undefined)
         errors.image = "This field is required";
-    if (validator.isEmpty(data.name))
-        errors.name = "This field is required";
-    if (data.genre.length < 1)
-        errors.genre = "You must choose at least one genre";
-    if (data.genre.length < 1)
-        errors.platform = "You must choose at least one platform";
-    if (data.price == undefined)
-        errors.price = "This field is required";
-    if (validator.isEmpty(data.description))
-        errors.description = "This field is required";
-    if (data.price < 0)
-        errors.price = "Price must be a positive number";
-    if (validator.isEmpty(data.released))
-        errors.released = "This field is required";
-    if (!validator.isISO8601(data.released))
-        errors.release = "Date format is YYYY-MM-DD";
-
+    if (validator.isEmpty(data.author))
+        errors.author = "This field is required";
+    if (data.categories.length < 1)
+        errors.categories = "You must choose at least one category";
+    if (validator.isEmpty(data.title))
+        errors.title = "This field is required";
+    if (validator.isEmpty(data.text))
+        errors.text = "This field is required";
     
     return {
         errors,
@@ -31,4 +22,4 @@ function postValidator(data, image){
 
 }
 
-export default gameValidator;
+export default postValidator;

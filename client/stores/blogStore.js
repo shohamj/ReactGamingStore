@@ -1,5 +1,6 @@
 import {autorun, observable, action, computed} from "mobx"
- 
+import io from 'socket.io-client';
+var socket = io(window.location.origin);
 
 
 class blogStore {
@@ -15,56 +16,40 @@ class blogStore {
     
 
     //***********Computed***********//
-    @computed get filteredUsers(){
+    @computed get filteredPosts(){
         var self = this;
-        let filtered = this.users.filter(function (user) {
-            return user.username.includes(self.search) ||
-            user.email.includes(self.search) ||
-            user.role.includes(self.search); 
+        let filtered = this.posts.filter(function (post) {
+            return (post.title.includes(self.search) || post.text.includes(self.search)) &&
+            (self.selectedCategory=='' || post.categories.includes(self.selectedCategory))
         })
         return filtered;
     }
 
-   
 
     // //***********Actions***********//
-    // @action 
-    // getUsers(){
-    //     var self = this;
-    //     this.loading = true;
-    //     this.users = [];
-    //     fetch('/api/users/usersList')
-    //     .then(res => res.json())
-    //     .then(res => self.users = res)
-    //     .then(() => this.reloading = false)        
-    //     .catch(err => console.log(err))
-    //     .then(() => this.loading = false)        
+    @action 
+    getPosts(silent=false){
+        var self = this;
+        this.loading = true && !silent;
+        this.users = [];
+        fetch('/api/blog/postsList')
+        .then(res => res.json())
+        .then(res => self.posts = res)
+        .catch(err => console.log(err))
+        .then(() => this.loading = false)        
+    }
 
-    // }
-    // @action 
-    // deleteUser(){
-    //     const userForDelete = this.userForDelete;
-    //     fetch('/api/users/deleteUser', {
-    //         method: 'POST', 
-    //         body: JSON.stringify({"id": userForDelete}), 
-    //         headers:{
-    //           'Content-Type': 'application/json'
-    //         }
-    //     })
-    // }
+    @action 
+    postAdded(){
+        socket.emit("new post");
+    }
 
-    // @action 
-    // next(){
-    //     if (this.currentpage < this.maxPage)
-    //         this.currentpage += 1;  
-    // }
-    // @action 
-    // previous(){
-    //     if (this.currentpage > 1)
-    //         this.currentpage -= 1;  
-    // }
+   
 }
 
 var store = new blogStore;
+socket.on('reload posts', function(data){
+    store.getPosts(true);
+})
 export default store;
 // autorun(() => {console.log(store.currentpage, store.pageRange)})

@@ -15,7 +15,7 @@ export default class Post extends React.Component {
         return (
                 <div className="p-b-63">
                   <Link to={`/blog/details/${id}`} className="hov-img0 how-pos5-parent">
-                    <img src={image} width="200px" alt="IMG-BLOG" />
+                    <img src={image} width="200px" />
                     <div className="flex-col-c-m size-123 bg9 how-pos5">
                       <span className="ltext-107 cl2 txt-center">
                         {date.getDate()}
@@ -41,7 +41,7 @@ export default class Post extends React.Component {
                           <span className="cl12 m-l-4 m-r-6">|</span>
                         </span>
                         <span>
-                          {categories.toString()}
+                          {categories.join(", ")}
                           <span className="cl12 m-l-4 m-r-6">&nbsp;|</span>
                         </span>
                       </span>
