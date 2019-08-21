@@ -25,15 +25,15 @@ class SingleCategoryCard extends React.Component {
         return (
           <div className="size-202 m-lr-auto respon4">
             <div className="block1 wrap-pic-w"  >
-              <img className="card-img-top" src={src} alt="Card image" style={{width: '100%'}} />
+              <img className="card-img-top" src={src} alt="Card image" style={{"borderRadius": "15px"}} />
               <a onClick={this.onSubmit} className="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                 <div className="block1-txt-child1 flex-col-l">
-                  <span className="block1-name ltext-102 trans-04 p-b-8">
-                    {name}
+                  <span className="block1-name ltext-102 trans-05 p-b-8">
+                     {name}
                   </span>
-                  <span className="block1-info stext-102 trans-04">
-                    Spring 2018
-                  </span>
+                  {/* <span className="block1-info stext-102 trans-05">
+                    Top
+                  </span> */}
                 </div>
                 <div className="block1-txt-child2 p-b-4 trans-05">
                   <div className="block1-link stext-101 cl0 trans-09">

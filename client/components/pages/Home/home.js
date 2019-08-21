@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeCarousel from './homeCarousel'
+import HomeCarousel from './HomeCarousel/homeCarousel'
 import HomeCategories from './HomeCategories/HomeCategories';
 import HomeBlog from './HomeBlog/HomeBlog';
 import TopGames from './TopGames/TopGames';

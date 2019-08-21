@@ -10,7 +10,7 @@ export default class HomeCategories extends React.Component {
         const games = [
 			{name:'Racing',direct:'Racing'},
 			{name:'Sports',direct:'Racing'},
-			{name:'Shooting',direct:'Racing'},
+			{name:'Multiplayer',direct:'Racing'},
 		];
         const length = games.length;
         return (

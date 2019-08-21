@@ -1,7 +1,7 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
 import { extname } from 'path';
-import {outputCustomer, outputCompany, outputCompanyAnswer} from './contactEmailTemplate/emailTemplate.js';
+import {outputCustomer, outputCompany, outputCompanyAnswer} from '../contactEmailTemplate/emailTemplate.js';
 let router = express.Router();  
 
 
