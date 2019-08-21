@@ -25,6 +25,16 @@ export default class GamesTable extends React.Component {
         this.reload = this.reload.bind(this);
         this.deleteGame = this.deleteGame.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.onClose = this.onClose.bind(this);
+        this.state = {modal: false};
+    }
+    showModal(){
+        this.setState({modal: true})
+        this.addGameDialog.show()
+    }
+    onClose(){
+        this.setState({modal: false})
     }
     onSearchChange(e){
         this.props.gameStore.search = e.target.value;
@@ -43,9 +53,9 @@ export default class GamesTable extends React.Component {
         return (
             <div className="container">
             <div>
-                <SkyLight dialogStyles={dialog} hideOnOverlayClicked ref={ref => this.addGameDialog = ref} >
+                <SkyLight dialogStyles={dialog} hideOnOverlayClicked ref={ref => this.addGameDialog = ref} afterClose={this.onClose} >
                     <CustomScroll>
-                        <AddGame title="Add Game"/>
+                        {this.state.modal && <AddGame title="Add Game"/>}
                     </CustomScroll>
                 </SkyLight>
                 <SkyLight hideOnOverlayClicked ref={ref => this.deleteGameDialog = ref} >
@@ -65,7 +75,7 @@ export default class GamesTable extends React.Component {
                             <h2>Game <b>Management</b></h2>
                         </div>
                         <div className="col-sm-7">
-                            <button className="btn btn-primary" style={{height:"35px"}} onClick={() => this.addGameDialog.show()}><i className="material-icons"><Icon className="material-icons" icon={userPlus} height="20" width="20" /></i> <span>Add New Game</span></button>
+                            <button className="btn btn-primary" style={{height:"35px"}} onClick={this.showModal}><i className="material-icons"><Icon className="material-icons" icon={userPlus} height="20" width="20" /></i> <span>Add New Game</span></button>
                             <button className="btn btn-primary" style={{height:"35px"}} onClick={this.reload}><i className="material-icons"><Icon className="material-icons" icon={redoIcon} height="20" width="20" /></i> <span>Reload Games</span></button>
                             <div    className="btn btn-primary" style={{height:"35px"}}><i className="material-icons"><Icon className="material-icons" icon={searchIcon} height="20" width="20" /></i> <input type="text" placeholder="Search..." value={this.props.gameStore.search} onChange={this.onSearchChange} style={{background:"transparent"}}></input></div>
                         </div>

@@ -25,6 +25,7 @@ import orders from './api/orders';
 import contact from './api/contact';
 import forgot from './api/forgot';
 import chat from './api/chat';
+import blog from './api/blog';
 
 //Mongoose 
 let sessConnStr = 'mongodb+srv://admin:q1w2e3r4@internetcourse-bu1ca.mongodb.net/ReactGamingStore?retryWrites=true';
@@ -75,6 +76,7 @@ app.use('/api/orders', orders);
 app.use('/api/forgot', forgot);
 app.use('/api/contact', contact)
 app.use('/api/chat', chat)
+app.use('/api/blogs', blog)
 
 //socket.io
 const server = http.Server(app)

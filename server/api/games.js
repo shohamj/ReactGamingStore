@@ -25,13 +25,9 @@ const upload = multer({
 }).single('image');
 
 router.get('/game/:id', (req,res) => {
-    // setTimeout(() =>  
-    //     res.json({id:req.params.id, name:"Name1", price:"13.99", images:["enslaved/main.png", "enslaved/1.png"], desc:"Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat."}),
-    //     3000
-    // )
-    Game.findById(req.params.id, function(err, user) {
-        if(user)
-            res.json(user);  
+    Game.findById(req.params.id, function(err, game) {
+        if(game)
+            res.json(game);  
         else
             res.json({_id:req.params.id, name:"Not Found", price:"0", mainImage:"enslaved/main.png", extraImages:["enslaved/main.png", "enslaved/1.png"], desc:"This is a place holder for now"})
     });

@@ -3,6 +3,8 @@ import {observer} from "mobx-react"
 import ReactLoading from "react-loading";
 import PageBanner from "../Partials/pageBanner.js"
 import Post from './post'
+import {Link} from 'react-router-dom'
+
 @observer
 export default class Blog extends React.Component {
 
@@ -16,7 +18,7 @@ export default class Blog extends React.Component {
             <div className="col-md-8 col-lg-9 p-b-80">
               <div className="p-r-45 p-r-0-lg">
                 {this.props.blogStore.posts.map((post, index) => {
-                     return <Post image={post.image} title={post.title} author={post.author} date={post.date} categories={post.categories} key={index} />
+                     return <Post id={post._id} image={post.image} text={post.text} title={post.title} author={post.author} date={post.date} categories={post.categories} key={index} />
                 })}              
               </div>
             </div>
@@ -61,9 +63,9 @@ export default class Blog extends React.Component {
                   </button>
                 </div>
                 <div className="bor17 of-hidden pos-relative m-t-10">
-                <button className="flex-c-m stext-101 cl0 size-121 center bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                <Link to="/blog/post" className="flex-c-m stext-101 cl0 size-121 center bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
                     Add New Post
-                </button>
+                </Link>
                 </div>
               </div>
             </div>

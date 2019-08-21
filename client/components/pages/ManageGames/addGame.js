@@ -63,11 +63,11 @@ class AddGame extends React.Component {
   }
   platformChanged(options) {
     addGameStore.Platforms = options;
-    addGameStore.Errors.platforms = undefined;
+    addGameStore.Errors.platform = undefined;
   }
   genreChanged(options) {
     addGameStore.Genres = options;
-    addGameStore.Errors.genres = undefined;
+    addGameStore.Errors.genre = undefined;
   }
   descriptionChanged(e) {
     addGameStore.Description = e.target.value;
@@ -81,6 +81,7 @@ class AddGame extends React.Component {
   }
   onSubmit(e) {
     e.preventDefault();
+    console.log("test")
     let data = {
       name: addGameStore.Name,
       image: addGameStore.Image[0],
@@ -91,7 +92,7 @@ class AddGame extends React.Component {
       controller: addGameStore.Controller,
       description: addGameStore.Description,
   }
-    const { errors, isValid } = gameValidator(data);
+    const { errors, isValid } = gameValidator(data, data.image);
     if (!isValid) {
       addGameStore.Errors = {
         ...addGameStore.Errors,
@@ -172,7 +173,7 @@ class AddGame extends React.Component {
               <input
                 className={classnames(
                   "stext-111 cl2 plh3 size-116 p-r-30 form-control",
-                  { "is-invalid": addGameStore.Errors.password }
+                  { "is-invalid": addGameStore.Errors.price }
                 )}
                 type="number"
                 name="price"
@@ -214,7 +215,7 @@ class AddGame extends React.Component {
                  options={platforms}
                  value={addGameStore.Platforms}
                  onChange={this.platformChanged}
-                 className={"basic-multi-select  m-b-20 how-pos4-parent " + (addGameStore.Errors.genre? "bor8-invalid" : "bor8")} 
+                 className={"basic-multi-select  m-b-20 how-pos4-parent " + (addGameStore.Errors.platform? "bor8-invalid" : "bor8")} 
                  classNamePrefix="select"
                  placeholder="Select Supported Platforms..."
           />  

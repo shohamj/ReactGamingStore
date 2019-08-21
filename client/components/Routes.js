@@ -27,6 +27,8 @@ import Chat from './pages/Chat/chat.js';
 import CreateGroup from './pages/Chat/Groups/createGroup.js';
 import ManageRequests from './pages/Chat/Groups/manageRequests/manageRequests';
 import Blog from './pages/Blog/blog.js';
+import FullPost from './pages/Blog/fullPost.js';
+import AddPost from './pages/Blog/addPost';
 
 
 // Stores
@@ -47,6 +49,8 @@ import passwordRecoveryStore from "../stores/passwordRecoveryStore.js"
 import resetStore from '../stores/resetStore.js';
 import ReactLoading from "react-loading";
 
+import ScrollToTop from 'react-router-scroll-top'
+
 @observer
 export default class Routes extends React.Component {
 
@@ -59,6 +63,7 @@ export default class Routes extends React.Component {
         return "";
       return (
           <BrowserRouter>
+              <ScrollToTop>
               <div>
                   <Favicon url="/images/icons/controller.png" />
                   <NavBar navbarStore={navbarStore} authStore={authStore} cartStore={cartStore}/>
@@ -213,6 +218,28 @@ export default class Routes extends React.Component {
                     }
                     />
                     <Route
+                      path="/blog/details/:id"
+                      exact
+                      render={(req) => (
+                        authStore.currentUser != undefined ? 
+                          <FullPost id={req.match.params.id}/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
+                      path="/blog/post"
+                      exact
+                      render={() => (
+                        authStore.currentUser != undefined ? 
+                          <AddPost/>
+                          :
+                          <Redirect to="/sign-in"/> 
+                      )
+                    }
+                    />
+                    <Route
                       path="/sign-up"
                       exact
                       render={() => (
@@ -236,6 +263,7 @@ export default class Routes extends React.Component {
                   </Switch>
                   <Footer />
               </div>
+              </ScrollToTop>
           </BrowserRouter>
           )
       }

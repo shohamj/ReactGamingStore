@@ -3,7 +3,9 @@ import isEmpty from 'lodash/isEmpty'
 
 function gameValidator(data, image){
     let errors = {};
+    console.log("data");
     console.log(data);
+    console.log("image");
     console.log(image);
 
     if (image == undefined)

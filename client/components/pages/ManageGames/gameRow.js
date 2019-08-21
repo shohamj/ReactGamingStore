@@ -76,18 +76,11 @@ export default class GameRow extends React.Component {
                  className="basic-multi-select"
                  classNamePrefix="select"
           /></td>        
-          {!this.state.isEditing &&   
 					<td>
-          <button className="edit" title="Edit" onClick={this.edit}><Icon icon={editIcon} color="#428bca" height="20" width="20" className="edit"/></button>
           <button  title="Delete" onClick={() => this.deleteGame(_id)}><Icon icon={deleteIcon} color="#d9534f" height="20" width="20" className="delete"/></button>
 					</td>
-          }
-          {this.state.isEditing &&   
-					<td>
-          <button className="edit" title="Update" onClick={this.updateUser}><Icon icon={checkCircle} color="#5cb85c" height="22" width="22" className="edit"/></button>
-          <button  title="Cancel" onClick={this.cancel}><Icon icon={closeCircle} color="#d9534f" height="22" width="22" className="delete"/></button>
-					</td>
-          }
+          
+
           </tr>
           
       );
