@@ -13,10 +13,9 @@ import SignIn from "./pages/Sign-In/sign-in.js"
 import SignUp from "./pages/Sign-Up/sign-up.js"
 import Shop from './pages/Shop/shop.js';
 import Cart from './pages/Cart/cart.js';
-import aaa from "./pages/aaa.js"
 import NavBar from "./NavBar/NavBar.js";
 import CartBar from "./CartBar/cartBar.js";
-import SideBar from './SideBar/SideBar.js';
+import SideBar from './Sidebar/SideBar.js';
 import Footer from './Footer/Footer.js';
 import GameDetails from './pages/Shop/Games/gameDetails.js';
 import ManageUsers from './pages/ManageUsers/manageUsers.js';

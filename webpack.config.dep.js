@@ -10,9 +10,9 @@ module.exports =  {
         path: path.join(__dirname, '/public'),
         publicPath: path.join(__dirname, '/public')
     },
-    plugins: [
-      new CaseSensitivePathsPlugin()
-    ],
+    // plugins: [
+    //   new CaseSensitivePathsPlugin()
+    // ],
     module: {
         rules: [
             {
