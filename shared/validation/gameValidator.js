@@ -14,7 +14,7 @@ function gameValidator(data, image){
         errors.name = "This field is required";
     if (data.genre.length < 1)
         errors.genre = "You must choose at least one genre";
-    if (data.genre.length < 1)
+    if (data.platform.length < 1)
         errors.platform = "You must choose at least one platform";
     if (data.price == undefined)
         errors.price = "This field is required";

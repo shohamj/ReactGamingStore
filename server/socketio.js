@@ -22,7 +22,10 @@ function listenSocket(server) {
                 }
             })
         })
-
+        socket.on('new post', function(id){
+            console.log("Socket.IO: new post");
+            io.emit("reload posts");
+        })
         socket.on('user created', function(id){
             console.log("Socket.IO: user created");
             io.emit("new user");

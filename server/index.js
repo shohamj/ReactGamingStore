@@ -76,7 +76,7 @@ app.use('/api/orders', orders);
 app.use('/api/forgot', forgot);
 app.use('/api/contact', contact)
 app.use('/api/chat', chat)
-app.use('/api/blogs', blog)
+app.use('/api/blog', blog)
 
 //socket.io
 const server = http.Server(app)

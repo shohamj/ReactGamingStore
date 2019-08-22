@@ -241,7 +241,7 @@ export default class Routes extends React.Component {
                       exact
                       render={() => (
                         authStore.currentUser != undefined ? 
-                          <AddPost/>
+                          <AddPost blogStore={blogStore}/>
                           :
                           <Redirect to="/sign-in"/> 
                       )

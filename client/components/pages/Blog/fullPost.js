@@ -6,31 +6,39 @@ import PageBanner from "../Partials/pageBanner.js"
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
+function isEmpty(obj) {
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
+}
 @observer
 export default class FullPost extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {blog: {}, loading: true};
+        this.state = {post: {}, loading: true};
     }
     componentDidMount(){
-        fetch(`/api/blogs/blog/${this.props.id}`)
+        fetch(`/api/blog/getPost/${this.props.id}`)
         .then(res => res.json())
-        .then(res => this.setState({blog: res, loading: false}))
-        .catch(() => this.setState({blog: {}, loading: false}))
+        .then(res => this.setState({post: res, loading: false}))
+        .catch(() => this.setState({post: {}, loading: false}))
     }
     render() {
         console.log(this.state.blog);
-        const {author, title, image, categories, text} = this.state.blog;
-        const date = new Date(this.state.blog.date);
+        const {author, title, image, categories, text} = this.state.post;
+        const date = new Date(this.state.post.date);
         return (
         <div>
             <PageBanner title="Blog Post"/>
             {this.state.loading &&<ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70} />}
-            {!this.state.loading && <section className="bg0 p-t-62 p-b-60">
+            {(isEmpty(this.state.post) && !this.state.loading) && <h1>Blog Not found</h1>}
+            {!this.state.loading && !isEmpty(this.state.post) && <section className="bg0 p-t-62 p-b-60">
             <div className="container ">
               <div className="col-md-12 col-lg-12 p-b-80">                 
                   <div className="wrap-pic-w how-pos5-parent">
-                    <img src={image} alt="IMG-BLOG" />
+                    <img src={`/images/blog/${image}`} alt="IMG-BLOG" />
                     <div className="flex-col-c-m size-123 bg9 how-pos5">
                       <span className="ltext-107 cl2 txt-center">
                         {date.getDate()}
@@ -52,7 +60,7 @@ export default class FullPost extends React.Component {
                         <span className="cl12 m-l-4 m-r-6">|</span>
                       </span>
                       <span>
-                        {categories.toString()}  
+                        {categories.join(", ")}  
                         <span className="cl12 m-l-4 m-r-6">|</span>
                       </span>
                     </span>
