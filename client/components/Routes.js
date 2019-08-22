@@ -14,10 +14,10 @@ import SignUp from "./pages/Sign-Up/sign-up.js"
 import Shop from './pages/Shop/shop.js';
 import Cart from './pages/Cart/cart.js';
 import aaa from "./pages/aaa.js"
-import NavBar from "./NavBar/NavBar";
-import CartBar from "./CartBar/cartBar";
-import SideBar from './SideBar/SideBar';
-import Footer from './Footer/Footer';
+import NavBar from "./NavBar/NavBar.js";
+import CartBar from "./CartBar/cartBar.js";
+import SideBar from './SideBar/SideBar.js';
+import Footer from './Footer/Footer.js';
 import GameDetails from './pages/Shop/Games/gameDetails.js';
 import ManageUsers from './pages/ManageUsers/manageUsers.js';
 import ManageGames from './pages/ManageGames/manageGames.js';
@@ -28,7 +28,7 @@ import CreateGroup from './pages/Chat/Groups/createGroup.js';
 import ManageRequests from './pages/Chat/Groups/manageRequests/manageRequests';
 import Blog from './pages/Blog/blog.js';
 import FullPost from './pages/Blog/fullPost.js';
-import AddPost from './pages/Blog/addPost';
+import AddPost from './pages/Blog/addPost.js';
 
 
 // Stores

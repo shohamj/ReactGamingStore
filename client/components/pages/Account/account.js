@@ -13,7 +13,7 @@ import accountIcon from '@iconify/icons-zmdi/account';
 import lockOutline from '@iconify/icons-ant-design/lock-outline';
 import { observer } from "mobx-react"
 
-import UpdatePasswordValidator from "../../../../shared/validation/updatePasswordValidation";
+import UpdatePasswordValidator from "../../../../shared/validation/updatePasswordValidation.js";
 
 @observer
 class Account extends React.Component {
