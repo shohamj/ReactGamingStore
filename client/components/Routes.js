@@ -32,21 +32,22 @@ import AddPost from './pages/Blog/addPost';
 
 
 // Stores
-import navbarStore from "../stores/navbarStore.js"
-import cartStore from "../stores/cartStore.js"
-import signupStore from "../stores/signupStore.js"
-import signinStore from "../stores/signinStore.js"
-import authStore from "../stores/authStore.js"
-import shopStore from "../stores/shopStore.js"
-import userStore from "../stores/userStore.js"
-import orderStore from "../stores/orderStore.js"
+import navbarStore from "../stores/navbarStore.js";
+import cartStore from "../stores/cartStore.js";
+import signupStore from "../stores/signupStore.js";
+import signinStore from "../stores/signinStore.js";
+import authStore from "../stores/authStore.js";
+import shopStore from "../stores/shopStore.js";
+import userStore from "../stores/userStore.js";
+import orderStore from "../stores/orderStore.js";
 import chatStore from "../stores/chatStore.js"
 import PasswordRecovery from './pages/Sign-In/passwordRecovery.js';
 import ResetPass from './pages/Sign-In/forgotPass/reset.js';
-import HomeCategoriesStore from "../stores/HomeCategoriesStore.js"
-import blogStore from "../stores/blogStore.js"
-import passwordRecoveryStore from "../stores/passwordRecoveryStore.js"
+import HomeCategoriesStore from "../stores/HomeCategoriesStore.js";
+import blogStore from "../stores/blogStore.js";
+import passwordRecoveryStore from "../stores/passwordRecoveryStore.js";
 import resetStore from '../stores/resetStore.js';
+import contactMailStore from '../stores/contactMailStore.js';
 import ReactLoading from "react-loading";
 
 import ScrollToTop from 'react-router-scroll-top'
@@ -96,7 +97,14 @@ export default class Routes extends React.Component {
                     }
                     />
                     <Route path="/about" exact component={About} />
-                    <Route path="/contact" exact component={Contact} />
+                    <Route
+                      path="/contact"
+                      exact
+                      render={() => (
+                        <Contact contactMailStore={contactMailStore}/>
+                      )
+                    }
+                    />
                     <Route
                       path="/orders"
                       exact

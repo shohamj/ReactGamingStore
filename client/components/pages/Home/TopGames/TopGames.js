@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import SingleTopGames from './SingleTopGames';
+import GameCard from './../../Shop/Games/gameCard'
 import {observer} from "mobx-react";
 import ReactLoading from "react-loading";
 import { th } from 'date-fns/esm/locale';
@@ -23,6 +23,7 @@ export default class TopGame extends React.Component {
         });
         var value = topGames.then(function(result){
             that.state.games = result;
+            console.log("this is data",  that.state.games);
             that.setState({Loading:false});
             return result;
         });
@@ -38,7 +39,7 @@ export default class TopGame extends React.Component {
                 <tr>
                     {this.state.games.map((game, index) => (
                         <td style={{"padding":"10px"}} key={index}>
-                            <SingleTopGames  name={game.name} image={'/images/games/' + game.mainImage} price={game.price} id={game.id} key={index} /> 
+                            <GameCard  name={game.name} image={game.mainImage} price={game.price} id={game._id} key={index} /> 
                         </td>
                     ))}
                 </tr>

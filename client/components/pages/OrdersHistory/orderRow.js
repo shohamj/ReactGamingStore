@@ -16,13 +16,42 @@ export default class GameRow extends React.Component {
       super(props);
       this.cancel = this.cancel.bind(this);
       this.accept = this.accept.bind(this);
+      this.sendEmail = this.sendEmail.bind(this);
+      this.getData = this.getData.bind(this);
     } 
 
     edit(){
       this.setState({isEditing: true, lastRole: this.state.role});
     }
+    getData(status)
+    {
+      let data = {
+        user: this.props.order.user,
+        game: this.props.order.game,
+        price: this.props.order.price,
+        amount: this.props.order.amount,
+        total: this.props.order.total,
+        status: status,
+        ordered: this.props.order.ordered,
+      }
+      return data;
+      
+    }
+    sendEmail(data,email)
+    {
+      console.log("hello", email);
+        data.email = email;
+        fetch('/api/orders/sendOrderStatus', {
+          method: 'POST', 
+          body: JSON.stringify(data), 
+          headers:{
+            'Content-Type': 'application/json'
+          }})
+    }
     cancel(){
       var self = this;
+      let data = this.getData("canceled");
+
       fetch('/api/orders/cancelOrder', {
         method: 'POST', 
         body: JSON.stringify({id: this.props.order._id}), 
@@ -30,16 +59,26 @@ export default class GameRow extends React.Component {
           'Content-Type': 'application/json'
         }
       })
+      .then(response => response.json())
+      .then((response) => {
+        self.sendEmail(data, response.email);
+      })
       .then(() => self.props.orderStore.getOrders())
     }
     accept(){
       var self = this;
+      let data = this.getData("accepted");
+     
       fetch('/api/orders/acceptOrder', {
         method: 'POST', 
         body: JSON.stringify({id: this.props.order._id}), 
         headers:{
           'Content-Type': 'application/json'
         }
+      })
+      .then(response => response.json())
+      .then((response) => {
+        self.sendEmail(data, response.email);
       })
       .then(() => self.props.orderStore.getOrders())
     }

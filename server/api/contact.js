@@ -1,7 +1,7 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
 import { extname } from 'path';
-import {outputCustomer, outputCompany, outputCompanyAnswer} from '../contactEmailTemplate/emailTemplate.js';
+import {outputCustomer, outputCompany, outputCompanyAnswer} from '../mailTemplate/emailTemplate.js';
 let router = express.Router();  
 
 
@@ -72,9 +72,8 @@ router.post('/sendEmail', (req,res) => {
     {
       if(err)
       {
-        console.log(err);
+        console.log("error", err);
       }else{
-        console.log('Email sent' + info.response);
         var mailOptionsToCustomer = {
           from: 'React2019JCT@gmail.com',
           to: email,
@@ -86,9 +85,11 @@ router.post('/sendEmail', (req,res) => {
         {
           if(err)
           {
-            console.log(err);
+            console.log("error", err);
+            return res.status(400).send('error');
           }else{
             console.log('Email sent' + info.response);
+            return res.send('Success');
           }
         })
       }
