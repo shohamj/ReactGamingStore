@@ -1,5 +1,6 @@
 import React from 'react';
 import {observer} from "mobx-react";
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 import { Icon } from '@iconify/react';
 import editIcon from '@iconify/icons-zmdi/edit';
@@ -40,13 +41,25 @@ export default class GameRow extends React.Component {
     sendEmail(data,email)
     {
       console.log("hello", email);
-        data.email = email;
-        fetch('/api/orders/sendOrderStatus', {
-          method: 'POST', 
-          body: JSON.stringify(data), 
-          headers:{
-            'Content-Type': 'application/json'
-          }})
+      data.email = email;
+      fetch('/api/orders/sendOrderStatus', {
+        method: 'POST', 
+        body: JSON.stringify(data), 
+        headers:{
+          'Content-Type': 'application/json'
+        }})
+        .then(()=> {
+          confirmAlert({
+            title: 'Success',
+            message: 'The order has been ' + data.status + ' successfully.',
+            buttons: [
+              {
+                label: 'Ok',
+                onClick: undefined
+              },
+            ]
+          })
+        });
     }
     cancel(){
       var self = this;
