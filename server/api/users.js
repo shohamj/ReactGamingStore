@@ -9,7 +9,7 @@ import pbkdf2_sha256_promise from '../../shared/encryption/pbkdf2.js';
 import {Decrypt, CreateKeyFromPublic, Encrypt} from '../../shared/encryption/RSAUtills.js';
 import crypto from 'crypto';
 import request from 'request';
-
+import userMiddleware from '../middlewares/userMiddleware'
 let router = express.Router();  
 
 function extendedSignupValidator(data, validator){
@@ -121,11 +121,12 @@ router.get('/signout', (req,res) => {
 })
 
 router.get('/key', (req,res) => {
-    //setTimeout(() => res.send(getPublicKey()), 5000);
     res.send(getPublicKey());
 })
 
-router.post('/deleteUser', (req,res) => {
+router.post('/deleteUser',userMiddleware(['manager']), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError);
     User.remove({ _id: req.body.id }, function(err) {
         if (!err) {
             res.send("error");
@@ -136,7 +137,9 @@ router.post('/deleteUser', (req,res) => {
     });
 })
 
-router.post('/updateUser', (req,res) => {
+router.post('/updateUser',userMiddleware(['manager']), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError);
     User.findOneAndUpdate({ _id: req.body.id}, req.body.update , function(err) {
         if (!err) {
             res.send("error");
@@ -147,7 +150,9 @@ router.post('/updateUser', (req,res) => {
     });
 })
 
-router.post('/updatePassword', (req,res) => {
+router.post('/updatePassword',userMiddleware(), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError);
     let key = getKey();
     let currentPassword = Decrypt(req.body.currentPassword, key);
     let newPassword = Decrypt(req.body.newPassword, key);
@@ -187,7 +192,7 @@ router.post('/challenge_response', async (req, res) => {
     }).select("+salt")
   });
 
-router.get('/user', (req,res) => {
+router.get('/user',userMiddleware(['manager']), (req,res) => {
     if (req.user)
         res.json({
             username:req.user.username, 
@@ -202,6 +207,8 @@ router.get('/user', (req,res) => {
 })
 
 router.get('/usersList', function(req, res) {
+    if (req.userError)
+        return res.status(401).send(req.userError);
     User.find({}, function(err, users) {
       res.send(users);  
     });

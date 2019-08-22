@@ -135,6 +135,7 @@ class AddGame extends React.Component {
                   { "is-invalid": addGameStore.Errors.image }
                 )}
                 type="file"
+                accept="image/x-png,image/gif,image/jpeg"
                 name="image"
                 files={addGameStore.Image}
                 onChange={this.imageChanged}

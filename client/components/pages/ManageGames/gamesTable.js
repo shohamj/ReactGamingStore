@@ -11,6 +11,7 @@ import {toJS} from "mobx"
 import ReactLoading from "react-loading";
 import SkyLight from 'react-skylight';
 import CustomScroll from 'react-custom-scroll';
+import logoGameControllerB from '@iconify/icons-ion/logo-game-controller-b';
 
 var dialog = {
     height: '80%',
@@ -75,7 +76,7 @@ export default class GamesTable extends React.Component {
                             <h2>Game <b>Management</b></h2>
                         </div>
                         <div className="col-sm-7">
-                            <button className="btn btn-primary" style={{height:"35px"}} onClick={this.showModal}><i className="material-icons"><Icon className="material-icons" icon={userPlus} height="20" width="20" /></i> <span>Add New Game</span></button>
+                            <button className="btn btn-primary" style={{height:"35px"}} onClick={this.showModal}><i className="material-icons"><Icon className="material-icons" icon={logoGameControllerB} height="20" width="20" /></i> <span>Add New Game</span></button>
                             <button className="btn btn-primary" style={{height:"35px"}} onClick={this.reload}><i className="material-icons"><Icon className="material-icons" icon={redoIcon} height="20" width="20" /></i> <span>Reload Games</span></button>
                             <div    className="btn btn-primary" style={{height:"35px"}}><i className="material-icons"><Icon className="material-icons" icon={searchIcon} height="20" width="20" /></i> <input type="text" placeholder="Search..." value={this.props.gameStore.search} onChange={this.onSearchChange} style={{background:"transparent"}}></input></div>
                         </div>

@@ -4,6 +4,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import gameValidator from '../../shared/validation/gameValidator.js';
+import userMiddleware from '../middlewares/userMiddleware'
 
 let router = express.Router();  
 
@@ -24,7 +25,9 @@ const upload = multer({
     storage: storage
 }).single('image');
 
-router.get('/game/:id', (req,res) => {
+router.get('/game/:id',userMiddleware(), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError)
     Game.findById(req.params.id, function(err, game) {
         if(game)
             res.json(game);  
@@ -34,7 +37,9 @@ router.get('/game/:id', (req,res) => {
 
 })
 
-router.post('/addGame', (req,res) => {
+router.post('/addGame',userMiddleware(['manager', 'employee']), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError)
     upload(req,res,(err) =>{
         let data = {...req.body};
         data.genre = JSON.parse(data.genre);
@@ -65,7 +70,9 @@ router.post('/addGame', (req,res) => {
     })
     
 })
-router.post('/deleteGame', (req,res) => {
+router.post('/deleteGame',userMiddleware(['manager', 'employee']), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError)
     Game.remove({ _id: req.body.id }, function(err) {
         if (!err) {
             res.send("error");
@@ -76,7 +83,9 @@ router.post('/deleteGame', (req,res) => {
     });
 })
 
-router.post('/addCart', function(req, res) {
+router.post('/addCart',userMiddleware(), function(req, res) {
+    if (req.userError)
+        return res.status(401).send(req.userError)
     let game = {
         id: req.body.id,
         name: req.body.name,
@@ -100,7 +109,9 @@ router.post('/addCart', function(req, res) {
     res.send("Done");
 });
 
-router.post('/removeCart', function(req, res) {
+router.post('/removeCart',userMiddleware(), function(req, res) {
+    if (req.userError)
+        return res.status(401).send(req.userError)
     if (req.session.cart == undefined)
         req.session.cart = []
     let index = req.session.cart.findIndex(item => item.id == req.body.id);
@@ -110,19 +121,26 @@ router.post('/removeCart', function(req, res) {
     res.send("Removed");
 });
 
-router.get('/getCart', function(req, res) {
+router.get('/getCart',userMiddleware(), function(req, res) {
+    if (req.userError)
+        return res.status(401).send(req.userError)
     console.log(req.session.cart);
     if (req.session.cart == undefined)
         req.session.cart = []
     res.send(req.session.cart);
 });
 
-router.get('/clearCart', function(req, res) {
+router.get('/clearCart',userMiddleware(), function(req, res) {
+    if (req.userError)
+        return res.status(401).send(req.userError)
     req.session.cart = []
     res.send(req.session.cart);
 });
   
-router.get('/gamesList', function(req, res) {
+router.get('/gamesList',userMiddleware(), function(req, res) {
+    if (req.userError)
+        return res.status(401).send(req.userError)
+    console.log(req.user);
     Game.find({}, function(err, games) {
       res.send(games);  
     });

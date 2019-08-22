@@ -4,11 +4,14 @@ import Game from '../models/game.js';
 import User from '../models/user.js';
 import nodemailer from 'nodemailer';
 import {outputKeysGenerate} from '../mailTemplate/emailTemplate'
+import userMiddleware from '../middlewares/userMiddleware'
 
 let router = express.Router();  
 
-router.get('/addOrder', (req,res) => {
-    if (req.user == undefined || req.session.cart == undefined || req.session.cart.length < 1)
+router.get('/addOrder',userMiddleware(), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError);
+    if (req.session.cart == undefined || req.session.cart.length < 1)
         res.send("Empty Cart");
     else {
         var orders = req.session.cart.map(function(game){
@@ -32,7 +35,9 @@ router.get('/addOrder', (req,res) => {
     }
 })  
 
-router.post('/cancelOrder', (req,res) => {
+router.post('/cancelOrder',userMiddleware(['manager','employee']), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError);
     Order.findOneAndUpdate({_id: req.body.id}, {status:"Canceled"}, function(err, order) {
         Game.findOne({_id: order.gameID}, function(err, game) {
             User.findOne({_id: order.userID}, function(err, user) {
@@ -42,7 +47,9 @@ router.post('/cancelOrder', (req,res) => {
     });
 })  
 
-router.post('/acceptOrder', (req,res) => {
+router.post('/acceptOrder',userMiddleware(['manager','employee']), (req,res) => {
+    if (req.userError)
+        return res.status(401).send(req.userError);
     Order.findOneAndUpdate({_id: req.body.id}, {status:"Accepted"}, function(err, order) {
         Game.findOneAndUpdate({_id: order.gameID}, {$inc: {sold: order.amount}}, function(err) {
             User.findOneAndUpdate({_id: order.userID}, {$inc: {games_bought: order.amount, money_spent: order.total}}, function(err, user) {
@@ -97,7 +104,7 @@ router.post('/sendOrderStatus', (req,res) => {
       });
 })
 
-router.get('/ordersList', function(req, res) {
+router.get('/ordersList',userMiddleware(), function(req, res) {
     if (req.user.role == "customer"){
         Order.find({userID: req.user._id}, function(err, users) {
             res.send(users);  
@@ -111,7 +118,7 @@ router.get('/ordersList', function(req, res) {
         }
         else
             res.send([]);  
-  });
+});
 
 
 export default router;

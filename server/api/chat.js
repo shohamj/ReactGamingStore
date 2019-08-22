@@ -7,7 +7,6 @@ import JoinGroupRequest from '../models/joinGroupRequest';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import chatUserValidator from '../../shared/validation/chatUserValidator.js';
 
 let router = express.Router();  
 
@@ -54,6 +53,8 @@ router.get('/getGroups', (req,res) => {
         }).lean();
 })
 router.get('/getGroupsRequests', (req,res) => {
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");
     ChatUser.findOne({userID: req.user._id}, function (err, user) {
         if (req.user.role == "customer" || req.user.role == "employee"){
             CreateChatGroupRequest.find({status: "Pending", managerId: user._id}, function (err, requests) {
@@ -72,6 +73,8 @@ router.get('/getGroupsRequests', (req,res) => {
 })
 
 router.get('/getJoinRequests', (req,res) => {
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");
     ChatUser.findOne({userID: req.user._id}, function (err, user) {
         if (req.user.role == "customer" || req.user.role == "employee"){
             ChatGroup.find({manager: user._id}, function(err, groupsIDs){
@@ -116,6 +119,8 @@ router.get('/getMessages', (req,res) => {
 
 
 router.post('/addUser', (req,res) => {
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");
     upload(req,res,(err) =>{
         let name = req.body.name;
         const {errors, isValid} = chatUserValidator(name, req.file);
@@ -141,6 +146,8 @@ router.post('/addUser', (req,res) => {
     }) 
 }) 
 router.post('/addGroup', (req,res) => {
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");
     upload(req,res,(err) =>{
         let name = req.body.name;
         const {errors, isValid} = chatUserValidator(name, req.file);
@@ -174,9 +181,9 @@ router.post('/addGroup', (req,res) => {
     }) 
 }) 
 
-
-
 router.post('/addMessage', (req,res) => {
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");
     console.log(req.body);
     let data = {
         data: req.body.data, 
@@ -213,14 +220,9 @@ router.post('/acceptGroupRequest', (req,res) => {
     });
 }) 
 
-router.post('/cancelJoinRequest', (req,res) => {
-    if( req.user == undefined || req.user.role != "manager")
-        return res.status(401).send("Unauthorized");  
-    JoinGroupRequest.findOneAndUpdate({_id: req.body.id}, {status:"Canceled"}, function(err) {
-        res.send("Canceled");  
-    });
-})  
 router.post('/cancelJoinRequest', (req,res) => {  
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");
     JoinGroupRequest.findOne({_id: req.body.id}, function(err, request) {
         ChatUser.findOne({userID: req.user._id}, function (err, user) {
             ChatGroup.findOne({_id:request.groupId}, function(err, group){
@@ -240,7 +242,9 @@ router.post('/cancelJoinRequest', (req,res) => {
     })
 });
 
-router.post('/acceptJoinRequest', (req,res) => {  
+router.post('/acceptJoinRequest', (req,res) => {
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");  
     JoinGroupRequest.findOne({_id: req.body.id}, function(err, request) {
         ChatUser.findOne({userID: req.user._id}, function (err, user) {
             ChatGroup.findOne({_id:request.groupId}, function(err, group){

@@ -82,6 +82,7 @@ export default class CreateGroup extends React.Component {
                     { "is-invalid": chatStore.errors.image }
                   )}
                   type="file"
+                  accept="image/x-png,image/gif,image/jpeg"
                   name="image"
                   files={ chatStore.registerImage }
                   onChange={this.imageChanged}

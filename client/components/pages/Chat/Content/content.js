@@ -150,7 +150,7 @@ export default class Content extends React.Component {
                 })}
               </ul>
             </div>
-            <input ref={fileInput => this.fileInput = fileInput} type="file" onChange={this.sendImage} hidden/>
+            <input ref={fileInput => this.fileInput = fileInput} type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.sendImage} hidden/>
             {(this.props.chatStore.active._id == "everyone" || this.props.chatStore.active.type == "user" || this.props.chatStore.activeInfo.isMember ) && <div className="message-input">
               <div className="wrap">
                 <input type="text" placeholder="Write your message..." value={this.props.chatStore.textMessage} onChange={this.onTextMessageChange}/>

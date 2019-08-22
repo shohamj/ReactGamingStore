@@ -114,6 +114,7 @@ export default class AddPost extends React.Component {
                 )}
                 type="file"
                 name="image"
+                accept="image/x-png,image/gif,image/jpeg"
                 ref={ref => this.image = ref}
                 files={addPostStore.Image}
                 onChange={this.imageChanged}
