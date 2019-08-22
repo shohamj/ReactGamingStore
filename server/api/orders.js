@@ -89,8 +89,10 @@ router.post('/sendOrderStatus', (req,res) => {
       if(err)
       {
         console.log("error", err);
+        res.send("error");
       }else{     
-            console.log('Email sent' + info.response);   
+            console.log('Email sent' + info.response); 
+            res.send("success"); 
         }
       });
 })
