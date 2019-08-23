@@ -33,8 +33,9 @@ export default class MobileHeader extends React.Component {
     return (
         <div className="wrap-header-mobile topZero">
           <div className="logo-mobile">
-            <a href="index.html"><img src="/images/icons/react2019logosmall.png" alt="IMG-LOGO" /></a>
-          </div>
+            <Link to="/">
+                <img src="/images/icons/buygames.png" width="133" hegiht="17" alt="IMG-LOGO" />
+            </Link>          </div>
           { !this.props.authStore.currentUser &&      
                     <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
                       <Link to="/sign-in">
@@ -58,14 +59,13 @@ export default class MobileHeader extends React.Component {
               </div>
             </div>
           </div>
-        }
-        { this.props.authStore.currentUser &&      
+        }    
           <div className={"btn-show-menu-mobile hamburger hamburger--squeeze " + (showMobile?"is-active":"") } onClick={this.toggleMobileMenu}>
             <span className="hamburger-box">
               <span className="hamburger-inner" />
             </span>
           </div>
-        }       
+       
        </div>
         
       );

@@ -38,9 +38,9 @@ export default class NavBar extends React.Component {
           <div className="container-menu-desktop trans-03">
             <div className="wrap-menu-desktop">
               <nav className="limiter-menu-desktop p-l-45 bot-border">
-                <a href="#" className="logo">
-                  <img src="/images/icons/react2019logosmall.png" alt="IMG-LOGO" />
-                </a>
+                <Link to="/" className="logo">
+                  <img src="/images/icons/buygames.png" width="133" hegiht="17" alt="IMG-LOGO" />
+                </Link>
                 <div className="menu-desktop">
                   <ul className="main-menu">
                     <li>
