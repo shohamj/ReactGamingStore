@@ -37,6 +37,9 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   background: #dddddd;
   cursor: not-allowed;
 }
+.cursor-pointer{
+  cursor: pointer;
+}
 .center_recaptcha{
   margin-left: calc((100% - 300px)/2)
 }
@@ -316,6 +319,9 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 .header-v2 .wrap-menu-desktop {
   background-color: #fff;
+  top: 0;
+}
+.topZero{
   top: 0;
 }
 
@@ -892,11 +898,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   right: 0;
 }
 
-@media (max-width: 991px) {
-  .wrap-sidebar {
-    display: none;
-  }
-}
 
 /*---------------------------------------------*/
 .sidebar-content {
@@ -2018,7 +2019,6 @@ input.num-product::-webkit-inner-spin-button {
 [ Block1 ]*/
 .block1 {
   position: relative;
-  border: 1px solid #e6e6e6;
 }
 
 .block1-txt {

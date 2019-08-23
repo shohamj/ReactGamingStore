@@ -23,7 +23,7 @@ class SingleCategoryCard extends React.Component {
     render(){
         var {name, src} = this.props;
         return (
-          <div className="size-202 p-all-10 m-lr-auto respon4">
+          <div className="size-202 p-all-10 m-lr-auto respon4 cursor-pointer" >
             <div className="block1 wrap-pic-w"  >
               <img className="card-img-top" src={src} alt="Card image" style={{"borderRadius": "10px"}} />
               <a onClick={this.onSubmit} className="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">

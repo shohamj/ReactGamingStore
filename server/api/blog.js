@@ -25,7 +25,7 @@ const upload = multer({
 
 router.get('/getPost/:id', (req,res) => {
     if (req.user == undefined)
-        res.status(500).send("Unauthorized");
+        return res.status(500).send("Unauthorized");
     Post.findById(req.params.id, function(err, blog) {
         if(blog)
             res.json(blog);  
@@ -37,7 +37,7 @@ router.get('/getPost/:id', (req,res) => {
 
 router.get('/postsList', function(req, res) {
     if (req.user == undefined)
-        res.status(500).send("Unauthorized");
+        return res.status(500).send("Unauthorized");
     Post.find({}, function(err, posts) {
       res.send(posts);  
     });
@@ -45,7 +45,7 @@ router.get('/postsList', function(req, res) {
 
 router.post('/addPost', (req,res) => {
     if (req.user == undefined)
-        res.status(500).send("Unauthorized");
+        return res.status(500).send("Unauthorized");
     upload(req,res,(err) =>{
         let data = {...req.body};
         data.categories = JSON.parse(data.categories);

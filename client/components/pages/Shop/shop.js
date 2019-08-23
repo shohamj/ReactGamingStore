@@ -6,6 +6,7 @@ import SearchPanel from './Filters/Panels/search_panel.js';
 import Categories from './Filters/Categories/categories.js'
 import GameCard from './Games/gameCard.js';
 import ReactLoading from "react-loading";
+import ReactGridLayout from 'react-grid-layout';
 
 import { CSSGrid, layout } from 'react-stonecutter';
 @observer
@@ -43,22 +44,31 @@ export default class Shop extends React.Component {
                 </div>
                 }
                 {this.props.shopStore.filteredGames.length > 0 &&
-                <CSSGrid className="row" 
-                  style={{width: "auto", height: "auto"}}
-                  component="div"
-                  columns={4}
-                  columnWidth={300}
-                  gutterWidth={10}
-                  gutterHeight={15}
-                  layout={layout.pinterest}
-                  duration={300}
-                  easing="ease-out">
-                  {this.props.shopStore.filteredGames.map( (game, index) => (
-                    <div key={index} className="col-sm-6 col-md-4 col-lg-3 p-b-35" itemHeight={200}> 
-                      <GameCard name={game.name} price={game.price} image={game.mainImage} id={game._id} />
+                // <CSSGrid className="row" 
+                //   style={{width: "auto", height: "auto"}}
+                //   component="div"
+                //   columns={4}
+                //   columnWidth={300}
+                //   gutterWidth={10}
+                //   gutterHeight={15}
+                //   layout={layout.pinterest}
+                //   duration={300}
+                //   easing="ease-out">
+                //   {this.props.shopStore.filteredGames.map( (game, index) => (
+                //     <div key={index} className="col-sm-6 col-md-4 col-lg-3 p-b-35" itemHeight={200}> 
+                //       <GameCard name={game.name} price={game.price} image={game.mainImage} id={game._id} />
+                //     </div>
+                //   ))}
+                // </CSSGrid>
+                <div className="container">
+                  <div className="row">
+                    {this.props.shopStore.filteredGames.map( (game, index) => (
+                    <div key={index} className="col-sm-6 col-md-4 col-lg-3 p-b-35"> 
+                    <GameCard  name={game.name} price={game.price} image={game.mainImage} id={game._id} />
                     </div>
                   ))}
-                </CSSGrid>
+                  </div>
+                </div>
                 }
               </div>
             </div>

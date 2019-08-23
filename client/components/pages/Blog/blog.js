@@ -22,7 +22,7 @@ export default class Blog extends React.Component {
         return (
         <div>
         <PageBanner title="Blog"/>	
-        {this.props.blogStore.loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70} />}
+        {this.props.blogStore.loading && <div className="m-t-50"><ReactLoading type={"spin"} className="center" color={"#428bca"} height={70} width={70} /></div>}
         {!this.props.blogStore.loading && <section className="bg0 p-t-62 p-b-60">
         <div className="container">
           <div className="row">

@@ -122,7 +122,7 @@ class Contact extends React.Component {
                     Address
                   </span>
                   <p className="stext-115 cl6 size-213 p-t-18">
-                    Coza Store Center 8th floor, 379 Hudson St, New York, NY 10018 US
+                    BuyGames, React Gaming Store, HaVaad HaLeumi 21, Jerusalem.
                   </p>
                 </div>
               </div>
@@ -135,7 +135,7 @@ class Contact extends React.Component {
                     Lets Talk
                   </span>
                   <p className="stext-115 cl1 size-213 p-t-18">
-                    +972 054 3536632
+                    +972-543536632
                   </p>
                 </div>
               </div>

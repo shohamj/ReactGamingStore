@@ -1,11 +1,10 @@
 import React from 'react';
 
 
-
 export default class Footer extends React.Component {
     render() {
       return (
-        <footer className="bg3 p-t-75 p-b-32">
+        <footer className="bg3 p-t-75 p-b-32 footer">
           <div className="container">
             <div className="row">
               <div className="col-sm-6 col-lg-3 p-b-50">

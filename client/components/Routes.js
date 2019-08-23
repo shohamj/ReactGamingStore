@@ -14,6 +14,8 @@ import SignUp from "./pages/Sign-Up/sign-up.js"
 import Shop from './pages/Shop/shop.js';
 import Cart from './pages/Cart/cart.js';
 import NavBar from "./NavBar/NavBar.js";
+import MobileHeader from "./NavBar/Mobile/mobileHeader";
+import MobileMenu from "./NavBar/Mobile/mobileMenu";
 import CartBar from "./CartBar/cartBar.js";
 import SideBar from './Sidebar/SideBar.js';
 import Footer from './Footer/Footer.js';
@@ -64,12 +66,15 @@ export default class Routes extends React.Component {
       return (
           <BrowserRouter>
               <ScrollToTop>
-              <div>
+              <div id="page-container">
                   <Favicon url="/images/icons/controller.png" />
                   <NavBar navbarStore={navbarStore} authStore={authStore} cartStore={cartStore}/>
+                  <MobileHeader navbarStore={navbarStore} authStore={authStore} cartStore={cartStore}/>
+                  <MobileMenu navbarStore={navbarStore} authStore={authStore} cartStore={cartStore}/>
                   <CartBar navbarStore={navbarStore} cartStore={cartStore}/> 
                   <SideBar navbarStore={navbarStore} authStore={authStore} chatStore={chatStore}/>
-                  <Switch>
+                  <div id="content-wrap">
+                  <Switch >
                   <Route
                       path="/"
                       exact
@@ -268,7 +273,10 @@ export default class Routes extends React.Component {
                     />
                     <Route component={NotFound}/>
                   </Switch>
-                  <Footer />
+                  </div>
+                  <div id="footer">
+                    <Footer />
+                  </div>
               </div>
               </ScrollToTop>
           </BrowserRouter>

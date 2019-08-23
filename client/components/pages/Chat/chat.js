@@ -15,7 +15,7 @@ export default class Chat extends React.Component {
     render() {
       const {loading, loadingUsers, loadingGroups, loadingMessages} = this.props.chatStore;
       if (loading || loadingUsers || loadingGroups || loadingMessages)
-        return (<ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70} />);
+        return (<div className="m-t-50"><ReactLoading type={"spin"} className="center" color={"#428bca"} height={70} width={70} /></div>);
       else if(this.props.chatStore.user != undefined)
         return (<ChatWindow chatStore={this.props.chatStore}/>);
       else

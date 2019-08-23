@@ -130,11 +130,11 @@ class SignIn extends React.Component {
                   {Loading ? "Submiting..." : "Submit"}
                 </button> 
             </form>
-            <p className="mtext-107 cl2 txt-center p-b-30 pad-top">
+            <p className="mtext-107 cl2 txt-center pad-top">
                   Or <Link to="/sign-up" className="mtext-107 cl2 txt-center p-b-30">Sign Up</Link>
             </p>
-            <p className="txt-center">
-                  <Link className="txt-center" to="/forgotPassword"><u>Forgot password?</u></Link>
+            <p className="mtext-107 cl2 txt-center p-b-30 pad-top">
+                  <Link className="mtext-107 cl2 txt-center p-b-30" to="/forgotPassword"><u>Forgot password?</u></Link>
             </p>
         </div>
         )

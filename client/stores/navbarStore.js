@@ -6,6 +6,7 @@ class navbarStore {
     @observable selectedTab = "Home";
     @observable showSidebar = false;
     @observable showCartBar = false;
+    @observable showMobileMenu = false;
 
     //***********Actions***********//
     @action 

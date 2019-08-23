@@ -26,7 +26,8 @@ import './vendor/slick/slick.css'
 import './vendor/MagnificPopup/magnific-popup.css'
  
 import './vendor/perfect-scrollbar/perfect-scrollbar.css'
- 
+
+import './css/footer.css'
 import './css/notfound.css'
 import './css/util.css'
 import './css/main.css'
