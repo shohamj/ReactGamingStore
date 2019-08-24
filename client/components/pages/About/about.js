@@ -1,5 +1,7 @@
 import React from 'react';
 import PageBanner from "../Partials/pageBanner.js"
+import ReactPlayer from 'react-player'
+
 export default class About extends React.Component {
     render() {
       return (
@@ -7,6 +9,7 @@ export default class About extends React.Component {
         <PageBanner title="About"/>	
         {/* Content page */}
         <section className="bg0 p-t-75 p-b-120">
+       
           <div className="container">
             <div className="row p-b-148">
               <div className="col-md-7 col-lg-8">
@@ -15,8 +18,7 @@ export default class About extends React.Component {
                     Our Story
                   </h3>
                   <p className="stext-113 cl6 p-b-26">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas varius egestas diam, eu sodales metus scelerisque congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas gravida justo eu arcu egestas convallis. Nullam eu erat bibendum, tempus ipsum eget, dictum enim. Donec non neque ut enim dapibus tincidunt vitae nec augue. Suspendisse potenti. Proin ut est diam. Donec condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
-                  </p>
+                    That’s the spirit and also our dream. In sport, as well as in life, you should not simply write off someone or something. In fact, everything and everyone has a second breath. To find this, you sometimes need a helping hand. Together with Sports for Children we revitalize old gym equipment and attributes. By restoring them. Or by turning them into a fashionable object. From chairs to bags. From box to mat. Good job right?                  </p>
                   <p className="stext-113 cl6 p-b-26">
                     Donec gravida lorem elit, quis condimentum ex semper sit amet. Fusce eget ligula magna. Aliquam aliquam imperdiet sodales. Ut fringilla turpis in vehicula vehicula. Pellentesque congue ac orci ut gravida. Aliquam erat volutpat. Donec iaculis lectus a arcu facilisis, eu sodales lectus sagittis. Etiam pellentesque, magna vel dictum rutrum, neque justo eleifend elit, vel tincidunt erat arcu ut sem. Sed rutrum, turpis ut commodo efficitur, quam velit convallis ipsum, et maximus enim ligula ac ligula. 
                   </p>
@@ -33,6 +35,9 @@ export default class About extends React.Component {
                 </div>
               </div>
             </div>
+            
+          
+ 
             <div className="row">
               <div className="order-md-2 col-md-7 col-lg-8 p-b-30">
                 <div className="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
@@ -60,6 +65,14 @@ export default class About extends React.Component {
                 </div>
               </div>
             </div>
+            <div className="m-t-20 flex-w flex-c-m p-t-50 p-b-20">
+            <ReactPlayer
+              url={"https://www.youtube.com/watch?v=UIUJh2mA8vg"}
+              playing
+              volume={0.3}
+            />
+            </div>
+            
           </div>
         </section>
       </div>
