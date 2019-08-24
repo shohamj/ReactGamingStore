@@ -2161,6 +2161,11 @@ input.num-product::-webkit-inner-spin-button {
 .cl0 {color: #fff;}
 .cl1 {color: #717fe0;}
 .cl2 {color: #333;}
+.clmy {
+  color: white;
+  text-shadow: 4px 4px 2px #2d2e2d;
+
+}
 .cl3 {color: #666;}
 .cl4 {color: #999;}
 .cl5 {color: #222;}

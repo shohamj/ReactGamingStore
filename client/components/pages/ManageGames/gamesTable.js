@@ -39,6 +39,7 @@ export default class GamesTable extends React.Component {
     }
     onSearchChange(e){
         this.props.gameStore.search = e.target.value;
+        this.props.gameStore.currentpage = 1;
     }
     reload(){
         this.props.gameStore.getGames();

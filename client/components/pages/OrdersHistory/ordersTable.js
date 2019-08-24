@@ -27,6 +27,8 @@ export default class OrdersTable extends React.Component {
     }
     onSearchChange(e){
         this.props.orderStore.search = e.target.value;
+        this.props.orderStore.currentpage = 1;
+
     }
     reload(){
         this.props.orderStore.getOrders();
