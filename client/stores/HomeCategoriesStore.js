@@ -4,7 +4,6 @@ class HomeCategroiesStore {
 
     //***********Observables***********//
     @observable genre = "";
-
     //***********Actions***********//
 }
 

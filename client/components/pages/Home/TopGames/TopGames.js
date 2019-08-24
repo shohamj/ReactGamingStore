@@ -35,22 +35,20 @@ export default class TopGame extends React.Component {
                 <h3 className="ltext-105 cl5 txt-center respon1 p-b-20">
                   Top Games
                 </h3>
-              </div>
-            <div className="flex-w flex-c-m">
-                {this.state.Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
-                {!this.state.Loading && <table>
-                <tbody>              
-                    <tr>
-                        {this.state.games.map((game, index) => (
-                            <td style={{"padding":"15px"}} key={index}>
-                                <GameCard  name={game.name} image={game.mainImage} price={game.price} id={game._id} key={index} /> 
-                            </td>
-                        ))}
-                    </tr>
-                </tbody>
-            </table> }
-            </div>
-            </div>
+                </div>
+                <div className="container">
+                        {this.state.Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
+                        {!this.state.Loading && 
+                            <div className="row">
+                                {this.state.games.map((game, index) => (
+                                <div className="col-sm-6 col-md-4 p-b-40" key={index}>
+                                    <GameCard  name={game.name} image={game.mainImage} price={game.price} id={game._id} key={index} /> 
+                                </div>
+                                ))}
+                             </div>
+                        }
+                </div>
+                </div>
         </section>
         
         );

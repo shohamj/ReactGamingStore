@@ -16,7 +16,13 @@ export default class HomeCategories extends React.Component {
         return (
         <section className="sec-product bg0 p-t-10">
         <div className="container">
-       
+         {/* 
+              <div className="p-b-32">
+                <h3 className="ltext-105 cl5 txt-center respon1">
+                  Categories
+                </h3>
+              </div>
+          */}
           
         </div>
         <div className="m-t-20 flex-w flex-c-m">

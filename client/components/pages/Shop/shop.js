@@ -19,8 +19,17 @@ export default class Shop extends React.Component {
     componentDidMount(){
       this.props.shopStore.getGames();
       var genre = this.props.HomeCategoriesStore.genre;
-      this.props.shopStore.genre = genre;
+      this.props.shopStore.isFiltersPanelOpen =  false;
+      this.props.shopStore.genre = "";
+      if(genre != "")
+      {
+        console.log("im filtered");
+        this.props.shopStore.genre = genre;
+        this.props.shopStore.isFiltersPanelOpen =  true;
+      }
+      genre = "";
       this.props.HomeCategoriesStore.genre = "";
+      console.log("is it true 3", this.props.shopStore.isFiltersPanelOpen, genre);
     }
     render(){
         return (
