@@ -427,6 +427,7 @@ function outputKeysGenerate(userName,amount,game,price,total,status)
     <!DOCTYPE html>
     <html>
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Add icon library -->
     <style>
     body {font-family: Arial, Helvetica, sans-serif;}

@@ -275,7 +275,7 @@ export default class Routes extends React.Component {
                   </Switch>
                   </div>
                   <div id="footer">
-                    <Footer />
+                    <Footer HomeCategoriesStore={HomeCategoriesStore} />
                   </div>
               </div>
               </ScrollToTop>

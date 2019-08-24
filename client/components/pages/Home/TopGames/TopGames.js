@@ -23,29 +23,35 @@ export default class TopGame extends React.Component {
         });
         var value = topGames.then(function(result){
             that.state.games = result;
-            console.log("this is data",  that.state.games);
             that.setState({Loading:false});
             return result;
         });
     }
     render() {
-        if(this.state.games != undefined)
-            console.log("im rendering", this.state.games);
         return (
-        <div className="flex-w flex-c-m">
-            {this.state.Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
-            {!this.state.Loading && <table>
-            <tbody>              
-                <tr>
-                    {this.state.games.map((game, index) => (
-                        <td style={{"padding":"10px"}} key={index}>
-                            <GameCard  name={game.name} image={game.mainImage} price={game.price} id={game._id} key={index} /> 
-                        </td>
-                    ))}
-                </tr>
-          </tbody>
-                </table> }
-        </div>
+        <section className="sec-product bg0 p-t-70">
+            <div className="container">
+              <div className="p-b-32">
+                <h3 className="ltext-105 cl5 txt-center respon1 p-b-20">
+                  Top Games
+                </h3>
+              </div>
+            <div className="flex-w flex-c-m">
+                {this.state.Loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
+                {!this.state.Loading && <table>
+                <tbody>              
+                    <tr>
+                        {this.state.games.map((game, index) => (
+                            <td style={{"padding":"15px"}} key={index}>
+                                <GameCard  name={game.name} image={game.mainImage} price={game.price} id={game._id} key={index} /> 
+                            </td>
+                        ))}
+                    </tr>
+                </tbody>
+            </table> }
+            </div>
+            </div>
+        </section>
         
         );
 

@@ -150,9 +150,6 @@ router.get('/topGamesList', function(req, res) {
    
     Game.find().sort({sold: -1}).limit(3)
     .then(function(games, err) {
-        console.log(games);
-        console.log('----------------------');
-        console.log(games[0]);
         res.send(games);  
     });
 });

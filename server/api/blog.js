@@ -1,5 +1,6 @@
 import express from 'express';
 import Post from '../models/post.js';
+
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -42,6 +43,17 @@ router.get('/postsList', function(req, res) {
       res.send(posts);  
     });
 });
+
+router.get('/limitPostsList', function(req, res) {
+    Post.find().sort({date: -1}).limit(3)
+    .then(function(posts, err) {
+        console.log(posts.length);
+        console.log('----------------------');
+        console.log(posts[0]);
+        res.send(posts);  
+    });
+});
+
 
 router.post('/addPost', (req,res) => {
     if (req.user == undefined)

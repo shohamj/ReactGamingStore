@@ -1,7 +1,18 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 
 export default class Footer extends React.Component {
+        constructor(props) {
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+      }
+
+      onSubmit(data) {
+        console.log(this.props.HomeCategoriesStore);
+        console.log(data);
+        this.props.HomeCategoriesStore.genre = data;
+      }
     render() {
       return (
         <footer className="bg3 p-t-75 p-b-32 footer">
@@ -9,28 +20,23 @@ export default class Footer extends React.Component {
             <div className="row">
               <div className="col-sm-6 col-lg-3 p-b-50">
                 <h4 className="stext-301 cl0 p-b-30">
-                  Categories
+                  Navigate
                 </h4>
                 <ul>
                   <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04"> 
-                      Racing
-                    </a>
+                    <Link to="/blog" className="stext-107 cl7 hov-cl1 trans-04"> 
+                      Blog
+                    </Link>
                   </li>
                   <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Shooting
-                    </a>
+                    <Link to="/about" className="stext-107 cl7 hov-cl1 trans-04">
+                      About us
+                    </Link>
                   </li>
                   <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Arcade
-                    </a>
-                  </li>
-                  <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Sports
-                    </a>
+                    <Link to="/contact" className="stext-107 cl7 hov-cl1 trans-04">
+                      Contact Us
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -40,24 +46,19 @@ export default class Footer extends React.Component {
                 </h4>
                 <ul>
                   <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Track Order
-                    </a>
+                    <Link to="/sign-up" className="stext-107 cl7 hov-cl1 trans-04">
+                      Join now
+                    </Link>
                   </li>
                   <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Returns 
-                    </a>
+                    <Link to="about" className="stext-107 cl7 hov-cl1 trans-04">
+                      Learn more
+                    </Link>
                   </li>
                   <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      Shipping
-                    </a>
-                  </li>
-                  <li className="p-b-10">
-                    <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
-                      FAQs
-                    </a>
+                    <Link to="Account" className="stext-107 cl7 hov-cl1 trans-04">
+                      Manage Account
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -66,19 +67,8 @@ export default class Footer extends React.Component {
                   GET IN TOUCH
                 </h4>
                 <p className="stext-107 cl7 size-201">
-                  Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+                  Any questions? Let us know in store at 8th floor, 21 H'avad Haleomi St, Jerusalem, IL or call us on (+972) 054 716 6879
                 </p>
-                <div className="p-t-27">
-                  <a href="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                    <i className="fa fa-facebook" />
-                  </a>
-                  <a href="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                    <i className="fa fa-instagram" />
-                  </a>
-                  <a href="#" className="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                    <i className="fa fa-pinterest-p" />
-                  </a>
-                </div>
               </div>
               <div className="col-sm-6 col-lg-3 p-b-50">
                 <h4 className="stext-301 cl0 p-b-30">
