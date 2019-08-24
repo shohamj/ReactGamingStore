@@ -16,7 +16,7 @@ export default class Blog extends React.Component {
         this.props.blogStore.getPosts();
     }
     onSearchChanged(e){
-        this.props.blogStore.search = e.target.value;
+      this.props.blogStore.search = e.target.value;
     }
     render() {
         return (

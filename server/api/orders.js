@@ -106,14 +106,14 @@ router.post('/sendOrderStatus', (req,res) => {
 
 router.get('/ordersList',userMiddleware(), function(req, res) {
     if (req.user.role == "customer"){
-        Order.find({userID: req.user._id}, function(err, users) {
-            res.send(users);  
+        Order.find({userID: req.user._id}, function(err, orders) {
+            res.send(orders);  
         });
     }
     else
         if (req.user.role == "manager" || req.user.role == "employee"){
-            Order.find({}, function(err, users) {
-                res.send(users);  
+            Order.find({}, function(err, orders) {
+                res.send(orders);  
             });
         }
         else

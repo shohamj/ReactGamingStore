@@ -28,6 +28,8 @@ export default class ManageUsersTable extends React.Component {
     }
     onSearchChange(e){
         this.props.userStore.search = e.target.value;
+        this.props.userStore.currentpage = 1;
+
     }
     reload(){
         this.props.userStore.getUsers();
