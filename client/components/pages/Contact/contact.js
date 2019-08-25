@@ -28,6 +28,7 @@ class Contact extends React.Component {
     this.props.contactMailStore.EmailMessage = e.target.value;
   }
   onMessageDismiss() {
+    this.props.contactMailStore.Errors.general = undefined;
     this.props.contactMailStore.HasMessage = false;
 
   }

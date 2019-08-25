@@ -25,6 +25,7 @@ class resetPassword extends React.Component {
     this.confirmPasswordChanged = this.confirmPasswordChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onMessageDismiss = this.onMessageDismiss.bind(this);
+    this.props.resetPassStore.HasMessage = false;
   }
 
  
@@ -37,7 +38,8 @@ class resetPassword extends React.Component {
     this.props.resetPassStore.Errors.confirmPassword = undefined;
   }
   onMessageDismiss() {
-    this.props.resetPassStore.Errors.general = undefined;
+    console.log("on Message dismis 2019");
+    this.props.resetPassStore.HasMessage = false;
   }
   onSubmit(e) {
     e.preventDefault();

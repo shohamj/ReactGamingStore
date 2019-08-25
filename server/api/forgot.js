@@ -1,5 +1,6 @@
 import express from 'express';
 import emailValidation from '../../shared/validation/emailValidation.js';
+import {outputPasswordRecovery} from '../mailTemplate/emailTemplate'
 
 let router = express.Router();  
 
@@ -52,11 +53,9 @@ router.post('/',function(req, res, next) {
       var mailOptions = {
         to: user.email,
         from: 'React2019JCT@gmail.com',
-        subject: 'Exercise 6 Password Reset',
-        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/forgotPassword/reset/' + token + '\n\n' +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        subject: 'React2019 Password Reset',
+        text: 'Hello',
+        html: outputPasswordRecovery(req.headers.host, token)
       };
       smtpTransport.sendMail(mailOptions, function(err) {
         console.log('mail sent');

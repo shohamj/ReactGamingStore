@@ -6,7 +6,6 @@ import { withToastManager } from "react-toast-notifications";
 import { Alert} from "reactstrap";
 
 import ReactLoading from "react-loading";
-
 // Icons
 import { Icon } from "@iconify/react";
 import emailIcon from "@iconify/icons-mdi-light/email";
@@ -21,6 +20,8 @@ class passwordRecovery extends React.Component {
     this.emailChanged = this.emailChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onMessageDismiss = this.onMessageDismiss.bind(this);
+    this.props.passwordRecoveryStore.HasMessage = false;
+    this.props.passwordRecoveryStore.Email = "";
   }
  
   emailChanged(e) {
@@ -30,6 +31,8 @@ class passwordRecovery extends React.Component {
   
   onMessageDismiss() {
     this.props.passwordRecoveryStore.Errors.general = undefined;
+    this.props.passwordRecoveryStore.HasMessage = false;
+
   }
   onSubmit(e) {
     e.preventDefault();

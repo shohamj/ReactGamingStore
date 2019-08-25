@@ -329,11 +329,6 @@ function outputCustomer(message)
                                       <td>
                                           <table  width="100%">
                                               <tbody >
-                                                  <tr  style="border-collapse:collapse;">
-                                                      <td align="center" class="es-m-txt-с es-m-txt-l" esdev-links-color="#333333" align="left" style="padding:0;Margin:0;padding-bottom:10px;">
-                                                          <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#4A7EB0;"><span align="center" style="font-size:20px;line-height:30px;">+972 0546763237<br></span></p>
-                                                      </td>
-                                                  </tr>
                                                   <tr style="border-collapse:collapse;">
                                                       <td align="center" class="es-m-txt-с" esdev-links-color="#333333" align="left" style="padding:0;Margin:0;padding-bottom:10px;">
                                                           <div>
@@ -532,7 +527,7 @@ function outputKeysGenerate(userName,amount,game,price,total,status)
     
                         <tr style="background: rgb(5, 5, 44)"  style="border-collapse:collapse;"> 
                          <td>
-                          <img align="left" style="padding:0;Margin:0;width: 4.5vw;height: 4.5vw;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Video-Game-Controller-Icon.svg/1024px-Video-Game-Controller-Icon.svg.png">
+                          <img align="left" style="padding:0;Margin:0;width: 4.5vw;height: 4.5vw;" src="https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiz9Iv-h57kAhUC1RoKHYI8CqAQjRx6BAgBEAQ&url=%2Furl%3Fsa%3Di%26source%3Dimages%26cd%3D%26ved%3D%26url%3Dhttp%253A%252F%252Fwww.coluxrecruitment.com%252Fhome%252Fvideo-game-controller-icon-svg%252F%26psig%3DAOvVaw1x6gHFvH53PAv3ZxXc45L3%26ust%3D1566823861024314&psig=AOvVaw1x6gHFvH53PAv3ZxXc45L3&ust=1566823861024314">
                           <h1 align="top" style="margin-top: 3%; margin-center:10%; line-height:36px;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:25px;margin-top:12px;font-style:normal;font-weight:normal;color:#4A7EB0;">React 2019
                           </h1>
                          </td> 
@@ -564,33 +559,27 @@ function outputKeysGenerate(userName,amount,game,price,total,status)
                         <div style="height: 100%; width: 70%; background: rgb(3, 3, 31)">
                             <div align="center" style="height: 100%; width: 70%;" >
                             <p style="padding-top:3px;background: rrgb(3, 3, 31); text-align: center; color: white">
-                                    <h3 style="color: #789bb6">This email was generated because of a login attempt from a computer located at 127.0.0.1 (IL). The login attempt included your correct account name and password.
+                                    <h3 style="color: #789bb6">This email was generated because of an order request to buy games
                                     </h3>
                                 </p>
                                 <p style="background: rgb(41, 41, 112); text-align: center; color: white">
-                                    <h5 style="color: #789bb6">The React game code is required to complete the login to the game. <b style="color: white">No one can access your account without also accessing this email.</b>
-                                    </h5>
+                                    <h3 style="color: #789bb6">The React game code is required to complete the login to the game. <b style="color: white">No one can access your account without also accessing this email</b>
+                                    </h3>
                                 </p>
                                 <p style="background: rgb(41, 41, 112); text-align: center; color: white">
-                                    <h5 style="color: #789bb6"> <b style="color: white">If you are not attempting to login</b> then please change your Steam password, and consider changing your email password as well to ensure your account security.
-                                    </h5>
+                                    <h3 style="color: #789bb6"> <b style="color: white">If something went wrong with your order </b> then please send a message to the email down below and we will reply your request ASAP
+                                    </h3>
                                 </p>
                             </div>
                         </div>
                          <hr style="width: 50%; margin-top:15px;" />
                          <table  width="100%">
                                 <tbody >
-                                    <tr  style="border-collapse:collapse;">
-                                        <td align="center" class="es-m-txt-с es-m-txt-l" esdev-links-color="#333333" align="center" style="padding:0;Margin:0;padding-bottom:10px;">
-                                            <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#4A7EB0;"><span align="center" style="font-size:20px;line-height:30px;">+972 0546763237<br></span></p>
-                                        </td>
-                                    </tr>
                                     <tr style="border-collapse:collapse;">
                                         <td align="center" class="es-m-txt-с" esdev-links-color="#333333" align="center" style="padding:0;Margin:0;padding-bottom:10px;">
                                             <div>
                                                 <span style="font-size:14px;color:#4A7EB0;">React2019JCT@gmail.com</span>
                                             </div>
-    
                                         </td>
                                     </tr>
                                 </tbody>
@@ -615,4 +604,193 @@ function outputKeysGenerate(userName,amount,game,price,total,status)
     `)
 }
 
-export default {outputCustomer, outputCompany, outputCompanyAnswer, outputKeysGenerate};
+function outputPasswordRecovery(host, token)
+{
+    return(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Add icon library -->
+    <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+    * {box-sizing: border-box;}
+    
+    #outlook a {
+        padding:0;
+    }
+    .ExternalClass {
+        width:100%;
+    }
+    .ExternalClass,
+    .ExternalClass p,
+    .ExternalClass span,
+    .ExternalClass font,
+    .ExternalClass td,
+    .ExternalClass div {
+        line-height:100%;
+    }
+    .es-button {
+        mso-style-priority:100!important;
+        text-decoration:none!important;
+    }
+    a[x-apple-data-detectors] {
+        color:inherit!important;
+        text-decoration:none!important;
+        font-size:inherit!important;
+        font-family:inherit!important;
+        font-weight:inherit!important;
+        line-height:inherit!important;
+    }
+    .es-desk-hidden {
+        display:none;
+        float:left;
+        overflow:hidden;
+        width:0;
+        max-height:0;
+        line-height:0;
+        mso-hide:all;
+    }
+    
+    
+    .input-container {
+      display: -ms-flexbox; /* IE10 */
+      display: flex;
+      height: 120%;
+      margin-bottom: 15px;
+    }
+    
+    .icon {
+      padding: 10px;
+      background: rgb(5, 5, 44);
+      color: white;
+      min-width: 50px;
+      text-align: center;
+    }
+    
+    .input-field {
+      width: 100%;
+      padding: 6px;
+      outline: none;
+    }
+    
+    .input-field:focus {
+      border: 2px solid rgb(5, 5, 44);
+    }
+    
+    /* Set a style for the submit button */
+    .btn {
+      background-color: rgb(5, 5, 44);
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      opacity: 0.9;
+    }
+    
+    .ow {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
+    }
+    
+    .btn:hover {
+      opacity: 1;
+    }
+    </style>
+	</head>
+	<!--
+		\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/forgotPassword/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+	-->
+    <body>
+        <div class="es-wrapper-color" style="background-color:#CCCCCC;"> 
+              
+            <table class="es-header-body" style="background: rgb(5, 5, 44)"  width="600" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;"> 
+             <tbody>
+              <tr  style="border-collapse:collapse;"> 
+               <td align="left" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:40px;"> 
+                <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
+                 <tbody><tr style="border-collapse:collapse;">
+                  <td width="520" valign="top" align="left" style="padding:0;Margin:0;"> 
+                   <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
+                    <tbody>
+    
+                        <tr style="background: rgb(5, 5, 44)"  style="border-collapse:collapse;"> 
+                         <td>
+                          <img align="left" style="padding:0;Margin:0;width: 4.5vw;height: 4.5vw;" src="https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiz9Iv-h57kAhUC1RoKHYI8CqAQjRx6BAgBEAQ&url=%2Furl%3Fsa%3Di%26source%3Dimages%26cd%3D%26ved%3D%26url%3Dhttp%253A%252F%252Fwww.coluxrecruitment.com%252Fhome%252Fvideo-game-controller-icon-svg%252F%26psig%3DAOvVaw1x6gHFvH53PAv3ZxXc45L3%26ust%3D1566823861024314&psig=AOvVaw1x6gHFvH53PAv3ZxXc45L3&ust=1566823861024314">
+                          <h1 align="top" style="margin-top: 3%; margin-center:10%; line-height:36px;mso-line-height-rule:exactly;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-size:25px;margin-top:12px;font-style:normal;font-weight:normal;color:#4A7EB0;">React 2019
+                          </h1>
+                         </td> 
+                        </tr>
+                    </tbody>
+                </table>
+                <hr />
+    
+               </td> 
+              </tr> 
+             </tbody>
+            </table>
+            <table style="background: rgb(5, 5, 44)"  class="es-content-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center"> 
+             <tbody>
+              <tr style="border-collapse:collapse;"> 
+               <td align="center" style="Margin:0;padding-top:20px;padding-bottom:20px;padding-left:40px;padding-right:40px;"> 
+                <table  align="center" width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
+                   <tbody>
+                   <tr align="center" style="border-collapse:collapse;" > 
+                       <form onSubmit="sendEmail" align="center" style="margin:auto">
+                         <div align="center" style="margin-top: 30px; height: 100%; width: 70%;" >
+                                <p style="text-align: center; color:#4A7EB0;"> <h2 style="text-align: center; color:#4A7EB0;">You are receiving this email because you (or someone else) have requested the reset of the password for your account</h2> </p>
+                        </div>
+                        <div align="center" style="margin-top: 30px; height: 100%; width: 70%;" >
+                            <h2 id="gamesKey" style="text-align: center; ">` + `http://` + host + `/forgotPassword/reset/` + token + `</h2>
+                        </div>
+                        <div style="height: 100%; width: 70%; background: rgb(3, 3, 31)">
+                            <div align="center" style="height: 100%; width: 70%;" >
+                            <p style="padding-top:3px;background: rrgb(3, 3, 31); text-align: center; color: white">
+                                    <h3 style="color: #789bb6">This email was send because you or someone else try to access or reset your password
+                                    </h3>
+                                </p>
+                                <p style="background: rgb(41, 41, 112); text-align: center; color: white">
+                                    <h3 style="color: #789bb6">If you are receiving this email and you didn't try to access your account please contact us on the mail down below and let us know <br /> <b style="color: white">No one can access your account without also accessing this email</b> 
+                                    </h3>
+                                </p>
+                                <p style="background: rgb(41, 41, 112); text-align: center; color: white">
+                                    <h3 style="color: #789bb6"> <b style="color: white">If something went wrong with reseting your password </b> then please send us a message and we will reply to your request ASAP
+                                    </h3>
+                                </p>
+                            </div>
+                        </div>
+                         <hr style="width: 50%; margin-top:15px;" />
+                         <table  width="100%">
+                                <tbody >
+                                    <tr style="border-collapse:collapse;">
+                                        <td align="center" class="es-m-txt-с" esdev-links-color="#333333" align="center" style="padding:0;Margin:0;padding-bottom:10px;">
+                                            <div>
+                                                <span style="font-size:14px;color:#4A7EB0;">React2019JCT@gmail.com</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                           </form>
+                         </tr> 
+                     </tbody>
+                </table>
+               </td> 
+              </tr> 
+             </tbody>
+            </table>
+            </td> 
+           </tr> 
+          </tbody>
+         </table> 
+        </div>
+       
+    </html>
+    `)
+}
+export default {outputCustomer, outputCompany, outputCompanyAnswer, outputKeysGenerate, outputPasswordRecovery};
