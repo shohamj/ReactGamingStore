@@ -179,8 +179,8 @@ class chatStore {
         });
         var last = filtered.slice(-1)[0];
         if(last)
-            return last.data;
-        return "";
+            return {data:last.data, date:last.date};
+        return {data:"", date:new Date(0).toUTCString()};
     }
     @action 
     pullGroupsRequests(silent=false){
