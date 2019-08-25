@@ -197,7 +197,12 @@ function listenSocket(server) {
         
         socket.on('join requests accepted', function({userId,groupId}){
             console.log("Socket.IO: join requests accepted");
-            io.to(userToSocket[userId]).emit("group joined", groupId);
+            ChatGroup.findById(groupId, function(err, group){
+                    if(!err){
+                        io.sockets.connected[userToSocket[userId]].join("group-" + group.name);
+                        io.to(userToSocket[userId]).emit("group joined", groupId);
+                    }
+            });
         })
 
     })

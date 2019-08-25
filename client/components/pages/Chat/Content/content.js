@@ -23,6 +23,7 @@ export default class Content extends React.Component {
         this.setFocusedInput = this.setFocusedInput.bind(this);
         this.setShowLater = this.setShowLater.bind(this);
         this.loadMoreMessages = this.loadMoreMessages.bind(this);
+        this.enterClickedFunction = this.enterClickedFunction.bind(this);
     }
     loadMoreMessages(){
       this.props.chatStore.numberOfMessages += 20;
@@ -77,6 +78,17 @@ export default class Content extends React.Component {
         containerId: "messages",
         duration:200
       });
+    }
+    componentDidMount(){
+      document.addEventListener("keydown", this.enterClickedFunction, false);
+    }
+    componentWillUnmount(){
+      document.removeEventListener("keydown", this.enterClickedFunction, false);
+    }
+    enterClickedFunction(event){
+      if(event.keyCode === 13) {
+        this.sendMessage()
+      }
     }
     notMember(){
       if (this.props.chatStore.active.type == "group" && !this.props.chatStore.activeInfo.isMember)
