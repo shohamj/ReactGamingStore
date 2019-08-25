@@ -14,7 +14,6 @@ var tokenW = "";
 // forgot password
 router.post('/',function(req, res, next) {
   var response = res;
-  console.log('email sent: ', req.body.email);
   async.waterfall([
     function(done) {
       crypto.randomBytes(20, function(err, buf) {

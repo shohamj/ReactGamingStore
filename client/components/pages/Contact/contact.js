@@ -16,9 +16,10 @@ class Contact extends React.Component {
     this.emailMessageChanged = this.emailMessageChanged.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
     this.onMessageDismiss = this.onMessageDismiss.bind(this);
+    this.props.contactMailStore.HasMessage = false;
+    this.props.contactMailStore.Errors = {};
   }
 
-  
   emailChanged(e) {
     this.props.contactMailStore.Email = e.target.value;
     this.props.contactMailStore.Errors.email = undefined;  }
@@ -32,20 +33,22 @@ class Contact extends React.Component {
   }
   sendEmail(e) {
     e.preventDefault();
-
+    console.log("sendEmail");
     let data = {
       email: this.props.contactMailStore.Email,
       emailMessage: this.props.contactMailStore.EmailMessage
     };
-    this.props.contactMailStore.Email = "";
-    this.props.contactMailStore.EmailMessage = "";
+
+    console.log("data", data);
     const { errors, isValid } = emailValidator(data);
+    console.log("error", errors);
+    console.log("sendEmailWhen Error");
     if (!isValid) {
       this.props.contactMailStore.Errors = {
         ...this.props.contactMailStore.Errors,
         ...errors
       };
-      console.log(this.props.contactMailStore.Errors);
+      console.log("Proxy", this.props.contactMailStore.Errors);
     } else
     {
       this.props.contactMailStore.submitForm(data).then(
@@ -77,6 +80,7 @@ class Contact extends React.Component {
       MessageTitle,
       MessageType,
       HasMessage,
+      Errors
     } = this.props.contactMailStore;
     return (
       <div>
@@ -103,10 +107,15 @@ class Contact extends React.Component {
                    placeholder="Your Email Address" />
                   <img className="how-pos4 pointer-none" src="/images/icons/icon-email.png" alt="ICON" />
                 </div>
+                {Errors.email && (
+                  <small className="form-text small-helper text-danger p-b-20">
+                    {Errors.email}
+                  </small>
+                )}
                 <div className="bor8 m-b-30">
                   <textarea id="emailMessage" onChange={this.emailMessageChanged} className="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?" defaultValue={""} />
                 </div>
-                <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={this.props.contactMailStore.Loading}>
+                <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" disabled={Loading}>
                   {Loading ? "Submiting..." : "Submit"}
                 </button>
               </form>

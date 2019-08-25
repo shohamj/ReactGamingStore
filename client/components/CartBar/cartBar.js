@@ -63,11 +63,11 @@ export default class CartBar extends React.Component {
                   Total: ${this.props.cartStore.overAllPrice}
                 </div>
                 <div className="header-cart-buttons flex-w w-full">
-                  <Link to="/cart" className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                    View Cart
+                  <Link {...this.closeCartBar} to="/cart" className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                    <span onClick={this.closeCartBar}>View Cart</span>
                   </Link>
-                  <Link to="/shop" className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                    Keep Shopping
+                  <Link {...this.closeCartBar} to="/shop" className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                  <span onClick={this.closeCartBar}>Keep Shopping</span>
                   </Link>
                 </div>
               </div>

@@ -18,12 +18,14 @@ export default class About extends React.Component {
                     Our Story
                   </h3>
                   <p className="stext-113 cl6 p-b-26">
-                    That’s the spirit and also our dream. In sport, as well as in life, you should not simply write off someone or something. In fact, everything and everyone has a second breath. To find this, you sometimes need a helping hand. Together with Sports for Children we revitalize old gym equipment and attributes. By restoring them. Or by turning them into a fashionable object. From chairs to bags. From box to mat. Good job right?                  </p>
-                  <p className="stext-113 cl6 p-b-26">
-                    Donec gravida lorem elit, quis condimentum ex semper sit amet. Fusce eget ligula magna. Aliquam aliquam imperdiet sodales. Ut fringilla turpis in vehicula vehicula. Pellentesque congue ac orci ut gravida. Aliquam erat volutpat. Donec iaculis lectus a arcu facilisis, eu sodales lectus sagittis. Etiam pellentesque, magna vel dictum rutrum, neque justo eleifend elit, vel tincidunt erat arcu ut sem. Sed rutrum, turpis ut commodo efficitur, quam velit convallis ipsum, et maximus enim ligula ac ligula. 
+                  BuyGames is an open marketplace for video games. It’s a platform that enables anyone to buy any game they want. As a seller you’re in charge of how it’s done: you set the price, you run sales, and you design your pages. It’s never necessary to get votes, likes, or follows to get your content approved, and you can make changes to how you distribute your work as frequently as you like.
                   </p>
                   <p className="stext-113 cl6 p-b-26">
-                    Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+                  Every year, we create dozens of experiments around discoverability, video, and more. You know who we thought might enjoy seeing them? Everyone.                  
+                  We offer thousands of games on the Humble Store with sales happening every day.When you buy a cross-platform game, you get a version for each available OS.
+                  </p>
+                  <p className="stext-113 cl6 p-b-26">
+                    We’re focused on playing a major role in the digital video game ecosystem and becoming the platform of choice to buy, discuss, promote and publish games. We place the customer at the centre of everything we do, driven by our technology, data, community, brand, partnerships and own publishing division.
                   </p>
                 </div>
               </div>
@@ -45,14 +47,14 @@ export default class About extends React.Component {
                     Our Mission
                   </h3>
                   <p className="stext-113 cl6 p-b-26">
-                    Mauris non lacinia magna. Sed nec lobortis dolor. Vestibulum rhoncus dignissim risus, sed consectetur erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam maximus mauris sit amet odio convallis, in pharetra magna gravida. Praesent sed nunc fermentum mi molestie tempor. Morbi vitae viverra odio. Pellentesque ac velit egestas, luctus arcu non, laoreet mauris. Sed in ipsum tempor, consequat odio in, porttitor ante. Ut mauris ligula, volutpat in sodales in, porta non odio. Pellentesque tempor urna vitae mi vestibulum, nec venenatis nulla lobortis. Proin at gravida ante. Mauris auctor purus at lacus maximus euismod. Pellentesque vulputate massa ut nisl hendrerit, eget elementum libero iaculis.
+                    To become THE global gaming destination of choice by bringing the magic of games to everyone, everywhere. We’re creating the portal to a million magical worlds. Anddamn, it’s going to be good. We believe the future of the digital entertainment industry will be driven by access to global gamers and great engaging content. And we’re ready to drive that ecosystem.
                   </p>
+                 
                   <div className="bor16 p-l-29 p-b-9 m-t-22">
                     <p className="stext-114 cl6 p-r-40 p-b-11">
-                      Creativity is just connecting things. When you ask creative people how they did something, they feel a little guilty because they didn't really do it, they just saw something. It seemed obvious to them after a while.
-                    </p>
+                      “Action video games are fast-paced, and there are peripheral images and events popping up, and disappearing. These video games are teaching people to become better at taking sensory data in, and translating it into correct decisions.”                    </p>
                     <span className="stext-111 cl8">
-                      - Steve Job’s 
+                      - Nobody
                     </span>
                   </div>
                 </div>
@@ -65,14 +67,6 @@ export default class About extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="m-t-20 flex-w flex-c-m p-t-50 p-b-20">
-            <ReactPlayer
-              url={"https://www.youtube.com/watch?v=UIUJh2mA8vg"}
-              playing
-              volume={0.3}
-            />
-            </div>
-            
           </div>
         </section>
       </div>
