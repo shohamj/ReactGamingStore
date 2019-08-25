@@ -60,7 +60,7 @@ function extendedSigninValidator(data, challenge, validator){
     .then( () => {return { errors, isValid: isEmpty(errors)}})
 }
 router.post('/signup', (req,res) => {
-    if (req.body.captcha === undefined ||req.body.captcha === '' ||req.body.captcha === null )
+    if ((!req.user || req.user.role !=="manager") && (req.body.captcha === undefined || req.body.captcha === '' || req.body.captcha === null) )
         return res.status(400).json({general: 'Missing human verification'});
 
     const secretKey = "6LeC3LMUAAAAAKoCaeLAaiOju8BG5K6vZEblrwhH";
@@ -74,16 +74,15 @@ router.post('/signup', (req,res) => {
     extendedSignupValidator(req.body, signupValidator)
     .then(({errors, isValid}) => {
         if (!isValid){
-            //setTimeout(() => res.status(400).json(errors), 5000);
             res.status(400).json(errors);
         }
         else
             request(verifyUrl, function (error, response, body) {
                 body = JSON.parse(body);
-                if (!body.success)
+                if ((!req.user || req.user.role !=="manager") && !body.success)
                     return res.status(400).json({general: 'Human verification failed'});
                 let data = {...req.body};
-                if (data.role == undefined)
+                if (data.role == undefined || !req.user || req.user.role!=='manager')
                     data.role="customer";
                 let password = data.password;
                 delete data.confirmPassword;
@@ -96,7 +95,7 @@ router.post('/signup', (req,res) => {
 })
 
 router.post('/signin', (req,res) => {
-    if (req.body.captcha === undefined || req.body.captcha === '' || req.body.captcha === null )
+    if (req.body.captcha === undefined || req.body.captcha === '' || req.body.captcha === null)
         return res.status(400).json({general: 'Missing human verification'});
 
     const secretKey = "6LeC3LMUAAAAAKoCaeLAaiOju8BG5K6vZEblrwhH";
