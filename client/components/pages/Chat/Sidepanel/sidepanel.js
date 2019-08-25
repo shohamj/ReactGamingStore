@@ -2,6 +2,13 @@ import React from 'react';
 import {observer} from "mobx-react"
 import Contact from './contact.js'
 
+function getLastMessage(messages){
+  if (messages.length > 0)
+    return messages[messages.length-1].data
+  else
+    return "";
+
+}
 @observer
 export default class SidePanel extends React.Component {
 
@@ -15,8 +22,7 @@ export default class SidePanel extends React.Component {
     }
 
     render() {
-      console.log(this.props.chatStore.user);
-      console.log(this.props.chatStore.user.image);
+      console.log("length" +this.props.chatStore.messages.length);
       return (
         <div id="sidepanel">
           <div id="profile">
@@ -36,7 +42,7 @@ export default class SidePanel extends React.Component {
                 isOnline={true}
                 isActive={this.props.chatStore.active.type == "all" && this.props.chatStore.active._id == "all messages"}
                 image='/images/chat/avatars/system/all.png'
-                lastMsg={this.props.chatStore.messages[this.props.chatStore.messages.length-1].data}
+                lastMsg={getLastMessage(this.props.chatStore.messages)}
                 type="all"
                 id="all messages"
                 chatStore={this.props.chatStore}

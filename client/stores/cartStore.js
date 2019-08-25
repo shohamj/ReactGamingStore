@@ -1,5 +1,6 @@
 import {observable, action, autorun, computed} from "mobx"
- 
+
+
 class cartStore {
 
     //***********Observables***********//
@@ -11,8 +12,7 @@ class cartStore {
         this.Items.forEach(function (item, index) {
             sum += item.price * item.amount;
         });
-        console.log(sum);
-        return sum;
+        return this.round(sum);
     }
 
     @computed get overAllAmount(){
@@ -33,6 +33,13 @@ class cartStore {
             self.Items = items;
         })
         .catch(err => console.log(err))
+    }
+
+    round(number){
+        let num = Number(number);
+        var roundedString = num.toFixed(2);
+        var rounded = Number(roundedString); 
+        return rounded;
     }
 }
 

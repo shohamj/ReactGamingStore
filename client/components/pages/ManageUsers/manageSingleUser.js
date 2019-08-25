@@ -18,36 +18,44 @@ const options = [
 export default class ManageSingleUser extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {isEditing: false ,role: this.props.user.role, lastRole: this.props.user.role },
+      this.state = {isEditing: false ,role: this.props.user.role, lastRole: this.props.user.role, email:props.user.email, error:{}},
       this.deleteUser = this.deleteUser.bind(this);
       this.edit = this.edit.bind(this);
       this.cancel = this.cancel.bind(this);
       this.onRoleChange = this.onRoleChange.bind(this);
+      this.onEmailChange = this.onEmailChange.bind(this);
       this.updateUser = this.updateUser.bind(this);
     } 
 
     updateUser(){
+      if(this.state.email == ''){
+        this.setState({error:{email: "Can't be empty"}});
+        return;
+      }
       fetch('/api/users/updateUser', {
         method: 'POST', 
-        body: JSON.stringify({id: this.props.user._id, update:{role: this.state.role}}), 
+        body: JSON.stringify({id: this.props.user._id, update:{role: this.state.role, email:this.state.email}}), 
         headers:{
           'Content-Type': 'application/json'
         }
       })
       this.props.user.role = this.state.role;
-      this.setState({isEditing: false});
+      this.setState({isEditing: false, error:{}});
 
 
     }
     onRoleChange(e){
       this.setState({role: e.value});
     }
+    onEmailChange(e){
+      this.setState({email: e.target.value});
+    }
     edit(){
       this.setState({isEditing: true, lastRole: this.state.role});
     }
     cancel(){
       this.setState({isEditing: false});
-      this.setState({role: this.state.lastRole});
+      this.setState({role: this.state.lastRole,email:this.props.user.email, error:{}});
 
     }
     deleteUser(id){
@@ -55,13 +63,22 @@ export default class ManageSingleUser extends React.Component {
       this.props.showDeleteDialog();
     }
     render() {
+        console.log(this.state.email);
         const {username, email, role,joined, games_bought, money_spent, _id} = this.props.user;
         console.log("***",this.props.user);
         return (
           <tr  >
           <td>{this.props.index}</td>
           <td>{username}</td>
+          {!this.state.isEditing &&   
           <td>{email}</td>
+          }
+          {this.state.isEditing &&  
+            <td>
+              <input type="text" className={"bor8 form-control " + (this.state.error.email?"is-invalid":"")} value={this.state.email} onChange={this.onEmailChange}/>
+              {this.state.error.email && ( <small className="form-text small-helper text-danger">{this.state.error.email}</small>)}               
+            </td> 
+          }
           <td>{joined.split('T')[0].split('-').reverse().join("/")}</td>                        
           <td>{games_bought}</td>                        
           <td>${money_spent}</td>                        

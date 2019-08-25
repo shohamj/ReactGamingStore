@@ -46,9 +46,9 @@ class chatStore {
     @observable focusedInput = null;
     @observable registerLoading = false;
     @observable loading = true;
-    @observable loadingUsers = false;
-    @observable loadingGroups = false;
-    @observable loadingMessages = false;
+    @observable loadingUsers = true;
+    @observable loadingGroups = true;
+    @observable loadingMessages = true;
     @observable registerName = "";
     @observable registerImage = {};
     @observable errors = {};
@@ -123,7 +123,8 @@ class chatStore {
         .then(response => response.json())
         .then(user => {
             self.user = user;
-            socket.emit('user connected', user._id)
+            if(user)
+                socket.emit('user connected', user._id)
         })
         .catch(self.user = undefined)
         .finally(() => self.loading = false)
@@ -161,9 +162,11 @@ class chatStore {
         fetch('/api/chat/getMessages?amount=' + this.numberOfMessages)
         .then(response => response.json())
         .then(messages => {
-           self.messages = messages
+           self.messages = messages;
+           console.log("messages");
+           console.log(messages);
         })
-        .catch(err => {alert(err);self.messages = []})
+        .catch(err => {self.messages = []})
         .finally(() => self.loadingMessages = false)
     }
     @action 

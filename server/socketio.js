@@ -136,6 +136,10 @@ function listenSocket(server) {
                                     console.log(group);
                                     io.to("group-" + group.name).emit("message likes changed", {id: message_id, likes: message.likes, unlikes:  message.unlikes});
                                 })
+                            else if (message.receiveType == 'all'){
+                                io.emit("message likes changed", {id: message_id, likes: message.likes, unlikes:  message.unlikes});
+                            }
+
                             message.save()     
                         })
                     })
@@ -166,6 +170,9 @@ function listenSocket(server) {
                                 ChatGroup.findById(message.to, function(err, group){
                                     io.to("group-" + group.name).emit("message likes changed", {id: message_id, likes: message.likes, unlikes:  message.unlikes});
                                 })
+                            else if (message.receiveType == 'all'){
+                                io.emit("message likes changed", {id: message_id, likes: message.likes, unlikes:  message.unlikes});
+                            }
                             message.save()     
                         })
                     })

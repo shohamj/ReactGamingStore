@@ -8,13 +8,10 @@ import ReactLoading from "react-loading";
 export default class Chat extends React.Component {
     componentDidMount(){
       this.props.chatStore.pullUser();
-      this.props.chatStore.pullUsers();
-      this.props.chatStore.pullGroups();
-      this.props.chatStore.pullMessages();
     }
     render() {
       const {loading, loadingUsers, loadingGroups, loadingMessages} = this.props.chatStore;
-      if (loading || loadingUsers || loadingGroups || loadingMessages)
+      if (loading)
         return (<div className="m-t-50"><ReactLoading type={"spin"} className="center" color={"#428bca"} height={70} width={70} /></div>);
       else if(this.props.chatStore.user != undefined)
         return (<ChatWindow chatStore={this.props.chatStore}/>);

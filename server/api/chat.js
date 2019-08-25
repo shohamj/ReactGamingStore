@@ -4,6 +4,8 @@ import ChatGroup from '../models/chatGroup.js';
 import ChatMessage from '../models/chatMessage.js';
 import CreateChatGroupRequest from '../models/createChatGroupRequest';
 import JoinGroupRequest from '../models/joinGroupRequest';
+import chatUserValidator from '../../shared/validation/chatUserValidator.js';
+
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -33,9 +35,14 @@ router.get('/getUsers', (req,res) => {
     if (req.user == undefined)
         res.status(500).send("Unauthorized");
     else
+    ChatUser.findOne({userID: req.user._id}, function (err, user) {
+        if (!user)
+            return res.status(403).send("Unauthorized");
         ChatUser.find({}, function (err, users) {
             res.json(users);
         });
+    })
+        
 })
 router.get('/getGroups', (req,res) => {
     if (req.user == undefined)
@@ -43,6 +50,8 @@ router.get('/getGroups', (req,res) => {
     else
         ChatGroup.find({}, function (err, groups) {
             ChatUser.findOne({userID: req.user._id}, function (err, user) {
+                if (!user)
+                    return res.status(403).send("Unauthorized");
                 var userGroups = groups.map(function(group){
                     let grp = Object.assign(group, {isMember: group.members.some(u => u.toString() == user._id.toString())})
                     delete group["members"]
@@ -56,6 +65,8 @@ router.get('/getGroupsRequests', (req,res) => {
     if (req.user == undefined)
         res.status(500).send("Unauthorized");
     ChatUser.findOne({userID: req.user._id}, function (err, user) {
+        if (!user)
+            return res.status(403).send("Unauthorized");
         if (req.user.role == "customer" || req.user.role == "employee"){
             CreateChatGroupRequest.find({status: "Pending", managerId: user._id}, function (err, requests) {
                 res.json(requests);
@@ -76,6 +87,8 @@ router.get('/getJoinRequests', (req,res) => {
     if (req.user == undefined)
         res.status(500).send("Unauthorized");
     ChatUser.findOne({userID: req.user._id}, function (err, user) {
+        if (!user)
+            return res.status(403).send("Unauthorized");
         if (req.user.role == "customer" || req.user.role == "employee"){
             ChatGroup.find({manager: user._id}, function(err, groupsIDs){
                 console.log(groupsIDs);
@@ -100,7 +113,9 @@ router.get('/getMessages', (req,res) => {
         res.status(500).send("Unauthorized");
     else{
         ChatUser.findOne({userID: req.user._id}, function(err, user){
-            if (!err && user){
+            if (!user)
+                return res.status(403).send("Unauthorized");
+            if (!err){
                 const ids = user.messages.map(msg => msg.id);
                 ChatMessage.find({'_id': { $in: ids}} , function (err, messages) {
                     const messageWithLiked = messages.map((msg, index) => {
@@ -159,6 +174,8 @@ router.post('/addGroup', (req,res) => {
             }
             else{
                 ChatUser.findOne({userID: req.user._id}, function (err, user) {
+                    if (!user)
+                        return res.status(403).send("Unauthorized");
                     let data = {
                         name: req.body.name, 
                         image: "/images/chat/avatars/" + req.file.filename,
@@ -184,21 +201,24 @@ router.post('/addGroup', (req,res) => {
 router.post('/addMessage', (req,res) => {
     if (req.user == undefined)
         res.status(500).send("Unauthorized");
-    console.log(req.body);
-    let data = {
-        data: req.body.data, 
-        dataType: req.body.dataType,
-        receiveType: req.body.receiveType,
-        from: req.body.from,
-        to: req.body.to
-    }
-    var chatMessage= new ChatMessage(data);
-    chatMessage.save(function (err) {
-        if (err) {
-            console.log(err)
+    ChatUser.findOne({userID: req.user._id}, function (err, user) {
+        if (!user)
+            return res.status(403).send("Unauthorized");
+        let data = {
+            data: req.body.data, 
+            dataType: req.body.dataType,
+            receiveType: req.body.receiveType,
+            from: req.body.from,
+            to: req.body.to
         }
-        res.send("Message added")
-    });   
+        var chatMessage= new ChatMessage(data);
+        chatMessage.save(function (err) {
+            if (err) {
+                console.log(err)
+            }
+            res.send("Message added")
+        }); 
+    });  
 })
 
 router.post('/cancelGroupRequest', (req,res) => {
@@ -225,6 +245,8 @@ router.post('/cancelJoinRequest', (req,res) => {
         res.status(500).send("Unauthorized");
     JoinGroupRequest.findOne({_id: req.body.id}, function(err, request) {
         ChatUser.findOne({userID: req.user._id}, function (err, user) {
+            if (!user && (req.user == undefined || req.user.role != "manager"))
+                return res.status(403).send("Unauthorized");
             ChatGroup.findOne({_id:request.groupId}, function(err, group){
                 if( req.user == undefined  ||  (req.user.role != "manager" && !group.manager.equals(user._id)))
                     return res.status(401).send("Unauthorized");
@@ -247,6 +269,8 @@ router.post('/acceptJoinRequest', (req,res) => {
         res.status(500).send("Unauthorized");  
     JoinGroupRequest.findOne({_id: req.body.id}, function(err, request) {
         ChatUser.findOne({userID: req.user._id}, function (err, user) {
+            if (!user && (req.user == undefined || req.user.role != "manager"))
+                return res.status(403).send("Unauthorized");
             ChatGroup.findOne({_id:request.groupId}, function(err, group){
                 if( req.user == undefined  ||  (req.user.role != "manager" && !group.manager.equals(user._id)))
                     return res.status(401).send("Unauthorized");
@@ -271,6 +295,8 @@ router.post('/requestJoin', (req,res) => {
         res.status(500).send("Unauthorized");
     else
         ChatUser.findOne({userID: req.user._id}, function (err, user) {
+            if (!user)
+                return res.status(403).send("Unauthorized");
             ChatGroup.findById(req.body.id, function (err, group) {
                 if (!group)
                     return res.send("Error");

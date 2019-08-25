@@ -1,6 +1,12 @@
 import React from 'react';
 import {observer} from "mobx-react"
 
+function round(number){
+  let num = Number(number);
+  var roundedString = num.toFixed(2);
+  var rounded = Number(roundedString); 
+  return rounded;
+}
 @observer
 export default class CartItem extends React.Component {
 
@@ -76,7 +82,7 @@ export default class CartItem extends React.Component {
                         </div>
                       </div>
                     </td>
-                    <td className="column-5">${item.price * item.amount}</td>
+                    <td className="column-5">${round(item.price * item.amount)}</td>
             </tr>
           );
       
