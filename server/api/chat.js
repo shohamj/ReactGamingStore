@@ -41,8 +41,7 @@ router.get('/getUsers', (req,res) => {
         ChatUser.find({}, function (err, users) {
             res.json(users);
         });
-    })
-        
+    })    
 })
 router.get('/getGroups', (req,res) => {
     if (req.user == undefined)
@@ -128,6 +127,33 @@ router.get('/getMessages', (req,res) => {
             }  
             else
                 res.json({});
+        });
+    }
+})
+
+router.get('/getOverallReaction', (req,res) => {
+    if (req.user == undefined)
+        res.status(500).send("Unauthorized");
+    else{
+        ChatUser.findOne({userID: req.user._id}, function(err, user){
+            if (!user)
+                return res.status(403).send("Unauthorized");
+            if (!err){
+                const ids = user.messages.map(msg => msg.id);
+                ChatMessage.find({'_id': { $in: ids}} , function (err, messages) {
+                    let likes = 0;
+                    let unlikes = 0;
+                    messages.forEach(function(message) {
+                        if (user._id.equals(message.from)){
+                            likes += message.likes;
+                            unlikes += message.unlikes;
+                        }
+                    });
+                    return res.json({likes, unlikes});
+                })
+            }  
+            else
+                res.json({likes:-1, unlikes:-1});
         });
     }
 })

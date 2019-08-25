@@ -60,8 +60,10 @@ export default class SidePanel extends React.Component {
           <div id="profile">
             <div className="wrap">
               <img id="profile-img" src={this.props.chatStore.user.image} className="online" alt="" />
-              <p>{this.props.chatStore.user.name}</p>   
+              <p>{this.props.chatStore.user.name}</p> 
             </div>
+            <p>Overall: Likes: {this.props.chatStore.likes}, Unlikes: {this.props.chatStore.unlikes}</p> 
+      
           </div>
           <div id="search">
             <label><i className="fa fa-search" aria-hidden="true" /></label>

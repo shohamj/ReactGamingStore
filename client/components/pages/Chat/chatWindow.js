@@ -13,10 +13,11 @@ export default class ChatWindow extends React.Component {
       this.props.chatStore.pullUsers();
       this.props.chatStore.pullGroups();
       this.props.chatStore.pullMessages();
+      this.props.chatStore.getOverallReactions();
     }
     render() {
-      const {loading, loadingUsers, loadingGroups, loadingMessages} = this.props.chatStore;
-      if (loading || loadingUsers || loadingGroups || loadingMessages)
+      const {loading, loadingUsers, loadingGroups, loadingMessages,loadingOverallReactions} = this.props.chatStore;
+      if (loading || loadingUsers || loadingGroups || loadingMessages || loadingOverallReactions)
         return (<div className="m-t-50"><ReactLoading type={"spin"} className="center" color={"#428bca"} height={70} width={70} /></div>);
       else return (
         <div id="frame">

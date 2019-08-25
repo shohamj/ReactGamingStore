@@ -41,6 +41,8 @@ class chatStore {
     @observable active = {type: "all", _id: "all messages"};
     @observable searchContacts = "";
     @observable searchMessages = "";
+    @observable likes = 0;
+    @observable unlikes = 0;
     @observable startDate = null;
     @observable endDate = null;
     @observable focusedInput = null;
@@ -49,6 +51,7 @@ class chatStore {
     @observable loadingUsers = true;
     @observable loadingGroups = true;
     @observable loadingMessages = true;
+    @observable loadingOverallReactions = true;
     @observable registerName = "";
     @observable registerImage = {};
     @observable errors = {};
@@ -112,6 +115,7 @@ class chatStore {
        
         return {};         
     }
+
 
 
     //***********Actions***********//
@@ -205,6 +209,19 @@ class chatStore {
         })
         .catch(self.joinRequests = [])
         .finally(() => self.loadingJoinRequests = false)
+    }
+    @action 
+    getOverallReactions(silent=false){
+        var self = this;
+        this.loadingOverallReactions = true && !silent;
+        fetch('/api/chat/getOverallReaction')
+        .then(response => response.json())
+        .then(({likes,unlikes}) => {
+            self.likes = likes;
+            self.unlikes = unlikes;
+        })
+        .catch(err => {self.likes = 0;self.unlikes=0;})
+        .finally(() => self.loadingOverallReactions = false)
     }
 
 
@@ -342,6 +359,8 @@ class chatStore {
             if(index != -1){
                 this.messages[index].likes = likes;
                 this.messages[index].unlikes = unlikes;
+                if  (this.messages[index].from == this.user._id)
+                    this.getOverallReactions(true);
             }
     }
 
