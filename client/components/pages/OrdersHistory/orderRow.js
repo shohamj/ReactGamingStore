@@ -49,16 +49,6 @@ export default class GameRow extends React.Component {
           'Content-Type': 'application/json'
         }})
         .then(()=> {
-          confirmAlert({
-            title: 'Success',
-            message: 'The order has been ' + data.status + ' successfully.',
-            buttons: [
-              {
-                label: 'Ok',
-                onClick: undefined
-              },
-            ]
-          })
         });
     }
     cancel(){
