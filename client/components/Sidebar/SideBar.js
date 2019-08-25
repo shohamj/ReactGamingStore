@@ -60,7 +60,7 @@ export default class SideBar extends React.Component {
             </li>
               <SidebarLink to="/account" icon={accountIcon} text="My Account" onClick={this.closeSidebar}/>
               {role == "manager" && <SidebarLink to="/manage_users" icon={userFriends} text="Manage Users" onClick={this.closeSidebar}/>}
-              {role == "employee" || role == "manager" && <SidebarLink to="/manage_games" icon={logoGameControllerB} text="Manage Games" onClick={this.closeSidebar}/>}
+              {(role == "employee" || role == "manager") && <SidebarLink to="/manage_games" icon={logoGameControllerB} text="Manage Games" onClick={this.closeSidebar}/>}
               <SidebarLink to="/cart" icon={shoppingCart} text="Cart" onClick={this.closeSidebar}/>
               <SidebarLink to="/orders" icon={formatListBulleted} text="Order History" onClick={this.closeSidebar}/>  
             <li className="p-b-13">

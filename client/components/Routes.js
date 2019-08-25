@@ -179,7 +179,7 @@ export default class Routes extends React.Component {
                       path="/manage_games"
                       exact
                       render={() => (
-                        (authStore.currentUser != undefined && authStore.role == "manager")? 
+                        (authStore.currentUser != undefined && (authStore.role == "manager" || authStore.role == "employee"))? 
                           <ManageGames gameStore={shopStore}/>
                           :
                           <Redirect to="/sign-in"/> 

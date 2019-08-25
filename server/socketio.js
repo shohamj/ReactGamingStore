@@ -185,16 +185,20 @@ function listenSocket(server) {
             io.emit("reload groups");
         })
 
-        socket.on('group requests changed', function(id){
+        socket.on('group requests changed', function(){
             console.log("Socket.IO: group requests changed");
             io.emit("reload group requests");
         })
 
-        socket.on('join requests changed', function(id){
+        socket.on('join requests changed', function(){
             console.log("Socket.IO: join requests changed");
             io.emit("reload join requests");
         })
-
+        
+        socket.on('join requests accepted', function({userId,groupId}){
+            console.log("Socket.IO: join requests accepted");
+            io.to(userToSocket[userId]).emit("group joined", groupId);
+        })
 
     })
     return io

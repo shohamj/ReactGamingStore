@@ -38,7 +38,8 @@ export default class JoinRequestRow extends React.Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(() => self.props.chatStore.joinRequestsChanged())
+      .then(res => res.json())
+      .then(res => self.props.chatStore.joinRequestsAccepted(res))
     }
 
     render() {

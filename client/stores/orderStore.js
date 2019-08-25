@@ -24,6 +24,16 @@ class orderStore {
             order.game.includes(self.search) ||
             order.status.includes(self.search)
         })
+        filtered = filtered.slice().sort(function(a,b){
+            if(a.status === "Pending" && b.status !== "Pending")
+                return -1;
+            else if(a.status === "Pending" && b.status === "Pending")
+                return Date.parse(b.ordered) - Date.parse(a.ordered);
+            else if(a.status !== "Pending" && b.status === "Pending")
+                return 1;
+            else if(a.status !== "Pending" && b.status !== "Pending")
+                return Date.parse(b.ordered) - Date.parse(a.ordered);
+        })
         return filtered;
     }
 

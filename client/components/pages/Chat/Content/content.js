@@ -93,6 +93,7 @@ export default class Content extends React.Component {
                 'Content-Type': 'application/json'
               }
             })
+            .then(() =>  this.props.chatStore.joinRequestsChanged())
           },
           {
             label: 'Cancel',

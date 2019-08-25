@@ -329,6 +329,12 @@ class chatStore {
     joinRequestsChanged(){
         socket.emit('join requests changed');
     }
+    @action
+    joinRequestsAccepted({userId,groupId}){
+        socket.emit('join requests changed');
+        socket.emit('join requests accepted', {userId,groupId});
+    }
+    
 
     @action
     updateMessageLikes(id, likes, unlikes){
@@ -339,6 +345,13 @@ class chatStore {
             }
     }
 
+    @action
+    groupJoined(gorupId){
+        var index = this.groups.findIndex(x => x._id == gorupId);
+            if(index != -1){
+                this.groups[index].isMember = true;
+            }
+    }
 
 }
 var store = new chatStore;
@@ -367,6 +380,10 @@ function initializeEvents(){
     socket.on('reload groups', function(){
         store.pullGroups(true);
     })
+    socket.on('group joined', function(groupId){
+        store.groupJoined(groupId);
+    })
+    
 }
 initializeEvents();
 

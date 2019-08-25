@@ -251,9 +251,8 @@ router.post('/cancelJoinRequest', (req,res) => {
                 if( req.user == undefined  ||  (req.user.role != "manager" && !group.manager.equals(user._id)))
                     return res.status(401).send("Unauthorized");
                     if (!err){
-                        group.members.push(user._id);
                         request.status="Canceled";
-                        group.save(function(){
+                        request.save(function(){
                             res.send("Canceled"); 
                         })    
                     }
@@ -275,11 +274,11 @@ router.post('/acceptJoinRequest', (req,res) => {
                 if( req.user == undefined  ||  (req.user.role != "manager" && !group.manager.equals(user._id)))
                     return res.status(401).send("Unauthorized");
                 if (!err){
-                    group.members.push(user._id);
+                    group.members.push(request.userId);
                     request.status="Accepted";
                     group.save(function(){
                         request.save(function(){
-                            res.send("Accepted"); 
+                            res.json({userId:request.userId, groupId:request.groupId}); 
                         })
                     })    
                 }
@@ -300,7 +299,7 @@ router.post('/requestJoin', (req,res) => {
             ChatGroup.findById(req.body.id, function (err, group) {
                 if (!group)
                     return res.send("Error");
-                JoinGroupRequest.findOne({groupId: user.image,userId: user._id}, function (err, result) {
+                JoinGroupRequest.findOne({groupId: group._id,userId: user._id, status:"Pending"}, function (err, result) {
                     if (!result) {
                         const data = {
                             groupName: group.name,
