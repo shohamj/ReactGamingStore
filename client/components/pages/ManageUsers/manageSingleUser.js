@@ -6,6 +6,7 @@ import editIcon from '@iconify/icons-zmdi/edit';
 import deleteIcon from '@iconify/icons-zmdi/delete';
 import checkCircle from '@iconify/icons-zmdi/check-circle';
 import closeCircle from '@iconify/icons-zmdi/close-circle';
+import emailValidator from '../../../../shared/validation/emailValidation';
 
 import Select from 'react-select';
 const options = [
@@ -28,8 +29,10 @@ export default class ManageSingleUser extends React.Component {
     } 
 
     updateUser(){
-      if(this.state.email == ''){
-        this.setState({error:{email: "Can't be empty"}});
+      var self = this;
+      const {errors, isValid} = emailValidator({email: this.state.email})
+      if(!isValid){
+        this.setState({error:errors});
         return;
       }
       fetch('/api/users/updateUser', {
@@ -39,16 +42,25 @@ export default class ManageSingleUser extends React.Component {
           'Content-Type': 'application/json'
         }
       })
-      this.props.user.role = this.state.role;
-      this.setState({isEditing: false, error:{}});
-
+      .then(function(response){
+        if (response.status == 200){
+          self.props.user.role = self.state.role;
+          self.props.user.email = self.state.email;
+          self.setState({isEditing: false})
+          return {}
+        }
+        else
+          return response.json();
+      })
+      .then(errors => self.setState({error:errors}))
+      .catch(err => console.log(err));
 
     }
     onRoleChange(e){
       this.setState({role: e.value});
     }
     onEmailChange(e){
-      this.setState({email: e.target.value});
+      this.setState({email: e.target.value,error:{}});
     }
     edit(){
       this.setState({isEditing: true, lastRole: this.state.role});
@@ -76,7 +88,7 @@ export default class ManageSingleUser extends React.Component {
           {this.state.isEditing &&  
             <td>
               <input type="text" className={"bor8 form-control " + (this.state.error.email?"is-invalid":"")} value={this.state.email} onChange={this.onEmailChange}/>
-              {this.state.error.email && ( <small className="form-text small-helper text-danger">{this.state.error.email}</small>)}               
+              {this.state.error.email && ( <small className="form-text text-danger">{this.state.error.email}</small>)}               
             </td> 
           }
           <td>{joined.split('T')[0].split('-').reverse().join("/")}</td>                        

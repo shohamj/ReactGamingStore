@@ -13,35 +13,39 @@ import accountIcon from '@iconify/icons-zmdi/account';
 import lockOutline from '@iconify/icons-ant-design/lock-outline';
 import { observer } from "mobx-react"
 
-import UpdatePasswordValidator from "../../../../shared/validation/updatePasswordValidation.js";
+import UpdateInfoValidator from "../../../../shared/validation/updateInfoValidation.js";
 
 @observer
 class Account extends React.Component {
   constructor(props) {
     super(props);
-    this.state ={currentPassword: "", newPassword: "", errors:{}, loading: false}
+    this.state ={currentPassword: "", newPassword: "", email:this.props.authStore.email, errors:{}, loading: false}
     this.onCurrentChanged = this.onCurrentChanged.bind(this);
     this.onNewChanged = this.onNewChanged.bind(this);
+    this.onEmailChanged = this.onEmailChanged.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 }
 
 onCurrentChanged(e){
   this.setState({currentPassword: e.target.value, errors: {currentPassword: undefined, newPassword: this.state.errors.newPassword}})
-
 }
 
 onNewChanged(e){
   this.setState({newPassword: e.target.value, errors: {newPassword: undefined, currentPassword: this.state.errors.currentPassword}})
 }
-
-submitPasswords(){
+onEmailChanged(e){
+  let errors = this.state.errors;
+  errors.email = undefined;
+  this.setState({email: e.target.value, errors})
+}
+submitInfo(){
   this.setState({loading:true});
   return fetch('/api/users/key')
         .then(response => response.text())
         .then(publicKeyString => CreateKeyFromPublic(publicKeyString))
         .then(key => { return {"currentPassword": Encrypt(this.state.currentPassword, key), 
-        "newPassword": Encrypt(this.state.newPassword, key)}})
-        .then(data => fetch('/api/users/updatePassword', {
+        "newPassword": Encrypt(this.state.newPassword, key),"email":this.state.email}})
+        .then(data => fetch('/api/users/updateInfo', {
             method: 'POST', 
             body: JSON.stringify(data), 
             headers:{
@@ -62,15 +66,16 @@ onSubmit(e) {
   let data = {
     currentPassword: this.state.currentPassword,
     newPassword: this.state.newPassword,
+    email: this.state.email,
   };
-  const { errors, isValid } = UpdatePasswordValidator(data);
+  const { errors, isValid } = UpdateInfoValidator(data);
   if (!isValid) {
     this.setState({errors: {
       ...this.state.errors,
       ...errors
     }});
   } else
-    this.submitPasswords()
+    this.submitInfo()
     .then(
       data => {
         this.setState({loading:false, errors:data});
@@ -78,9 +83,10 @@ onSubmit(e) {
       () => {
         this.setState({loading:false});
         this.setState({newPassword: "", currentPassword: ""})
+        this.props.authStore.email = this.state.email;
         confirmAlert({
           title: 'Success',
-          message: 'Your password has been changed.',
+          message: 'Your info has been updated.',
           buttons: [
             {
               label: 'Ok',
@@ -117,15 +123,9 @@ onSubmit(e) {
                   </div>
                   <label>Email</label>
                   <div className="bor8 m-b-20 how-pos4-parent">
-                    <input className="p-r-30 form-control" type="text" value={email} disabled/>
+                    <input className={classnames("p-r-30 form-control", { "is-invalid": this.state.errors.email })} type="email" value={this.state.email} onChange={this.onEmailChanged}/>
                   </div>
-                  <div className="form-group">
-                    <label>Current Password</label>
-                    <div className="bor8 m-b-20 how-pos4-parent">
-                      <input className={classnames("p-r-30 form-control", { "is-invalid": this.state.errors.currentPassword })} type="password" value={this.state.currentPassword} onChange={this.onCurrentChanged} placeholder="Enter current password..."/>
-                    </div>  
-                    {this.state.errors.currentPassword && ( <small className="form-text small-helper text-danger">{this.state.errors.currentPassword}</small>)}               
-                  </div>
+                  {this.state.errors.email && ( <small className="form-text small-helper text-danger">{this.state.errors.email}</small>)}               
                   <div className="form-group">
                   <label>New Password</label>
                   <div className="bor8 m-b-20 how-pos4-parent">
@@ -133,9 +133,16 @@ onSubmit(e) {
                   </div> 
                   {this.state.errors.newPassword && ( <small className="form-text small-helper text-danger">{this.state.errors.newPassword}</small>)}               
                   </div> 
-                  {this.state.loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
+                  <div className="form-group">
+                    <label>Current Password *</label>
+                    <div className="bor8 m-b-20 how-pos4-parent">
+                      <input className={classnames("p-r-30 form-control", { "is-invalid": this.state.errors.currentPassword })} type="password" value={this.state.currentPassword} onChange={this.onCurrentChanged} placeholder="Enter current password..." autoComplete="new-password"/>
+                    </div>  
+                    {this.state.errors.currentPassword && ( <small className="form-text small-helper text-danger">{this.state.errors.currentPassword}</small>)}               
+                  </div>
+                 {this.state.loading && <ReactLoading type={"spin"} className="center pad-bot" color={"#428bca"} height={70} width={70}/>}
                   <button className="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer m-t-50" disabled={this.state.loading}>
-                    {this.state.loading ? "Updating..." : "Update Password"}
+                    {this.state.loading ? "Updating..." : "Update Info"}
                   </button>                 
               </form>
               </div>

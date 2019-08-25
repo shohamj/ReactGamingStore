@@ -1,7 +1,8 @@
 import express from 'express';
 import signupValidator from '../../shared/validation/signupValidation.js';
 import signinValidator from '../../shared/validation/signinValidation.js';
-import updatePasswordValidator from '../../shared/validation/updatePasswordValidation.js';
+import emailValidator from '../../shared/validation/emailValidation.js';
+import updateInfoValidator from '../../shared/validation/updateInfoValidation.js';
 import User from '../models/user';
 import isEmpty from 'lodash/isEmpty';
 import {getKey, getPublicKey} from '../../shared/encryption/RSAKey.js';
@@ -26,6 +27,15 @@ function extendedSignupValidator(data, validator){
     })
 }
 
+function extendedEmailValidator(id, data, validator){
+    let {errors} = validator(data);
+    return User.findOne({email:data.email}).exec()
+    .then(userFound => {
+        if (userFound && !userFound._id.equals(id))
+            errors.email = "Email already exists"
+        return { errors, isValid: isEmpty(errors) }
+    })
+}
 
 function extendedSigninValidator(data, challenge, validator){
     let {errors} = validator(data);
@@ -140,30 +150,60 @@ router.post('/deleteUser',userMiddleware(['manager']), (req,res) => {
 router.post('/updateUser',userMiddleware(['manager']), (req,res) => {
     if (req.userError)
         return res.status(401).send(req.userError);
-    User.findOneAndUpdate({ _id: req.body.id}, req.body.update , function(err) {
-        if (!err) {
-            res.send("error");
+    extendedEmailValidator(req.body.id, req.body.update, emailValidator)
+    .then(({errors, isValid}) => {
+        if (!isValid){
+            res.status(400).json(errors);
         }
-        else {
-            res.send("success");
-        }
-    });
+        else User.findOneAndUpdate({ _id: req.body.id}, req.body.update , function(err) {
+            if (err) {
+                console.log(err);
+                return res.status(400).json({general: 'Database Error'});
+            }
+            else {
+                res.send("success");
+            }
+        });
+    })
+    
 })
 
-router.post('/updatePassword',userMiddleware(), (req,res) => {
+router.post('/updateInfo',userMiddleware(), (req,res) => {
     if (req.userError)
         return res.status(401).send(req.userError);
     let key = getKey();
     let currentPassword = Decrypt(req.body.currentPassword, key);
     let newPassword = Decrypt(req.body.newPassword, key);
-    const { errors, isValid } = updatePasswordValidator({currentPassword, newPassword});
-    if (!isValid)
-        res.status(400).json(errors);
-    else
-        User.findOne({username: req.user.username})
-        .then(user => user.changePassword(currentPassword, newPassword))
-        .then(() => res.send("Password Updated"))
-        .catch(err => res.status(400).json({currentPassword: "Incorrect password"}))
+    console.log(newPassword);
+    if (newPassword === '' || newPassword === undefined)
+        newPassword = currentPassword;
+
+    extendedEmailValidator(req.user._id, {currentPassword, email:req.body.email}, updateInfoValidator)
+    .then(({errors, isValid}) => {
+        if (!isValid)
+            res.status(400).json(errors);
+        else
+            User.findOne({username: req.user.username}, function (err,user){
+                if (err || !user)
+                    return res.status(400).json({general: "Database Error"})
+                user.changePassword(currentPassword, newPassword, function(err){
+                    if (!err){
+                        user.email = req.body.email;
+                        user.save(function(saveErr){
+                            if(!saveErr)
+                                return res.send("Info Updated")
+                            else
+                                return res.status(400).json({general: "Database Error"})
+                        })
+                    }
+                    else{
+                        console.log(err);
+                        return res.status(400).json({currentPassword: "Incorrect password"})
+                    }
+                })
+            })
+    })
+
 })
 
 //Async and not promise because we were noobs at lab7
