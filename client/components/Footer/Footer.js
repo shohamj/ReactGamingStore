@@ -70,22 +70,12 @@ export default class Footer extends React.Component {
                   Any questions? Let us know in store at 8th floor, 21 H'avad Haleomi St, Jerusalem, IL or call us on (+972) 054 716 6879
                 </p>
               </div>
-              <div className="col-sm-6 col-lg-3 p-b-50">
+              {/* <div className="col-sm-6 col-lg-3 p-b-50">
                 <h4 className="stext-301 cl0 p-b-30">
-                  Newsletter
+                  What ever u say
                 </h4>
-                <form>
-                  <div className="wrap-input1 w-full p-b-4">
-                    <input className="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com" />
-                    <div className="focus-input1 trans-04" />
-                  </div>
-                  <div className="p-t-18">
-                    <button className="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                      Subscribe
-                    </button>
-                  </div>
-                </form>
-              </div>
+               
+              </div> */}
             </div>
             <div className="p-t-40">
               <p className="stext-107 cl6 txt-center">
