@@ -133,7 +133,7 @@
     "read-more-react": "^1.0.9",
     "request": "^2.88.0",
     "save": "^2.4.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.2.0",
     "style-loader": "^0.23.1",
     "ttf-loader": "^1.0.2",
